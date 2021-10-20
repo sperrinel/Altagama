@@ -16,18 +16,20 @@ import { SingleProduitComponent } from './components/boutique/single-produit/sin
 import { PanierComponent } from './components/boutique/panier/panier.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CommonModule } from '@angular/common';
+import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 
 const appRoutes: Routes = [
-  { path: 'accueil', component: AccueilComponent },
-  { path: 'boutique', component: BoutiqueComponent },
-  { path: 'panier', component: PanierComponent },
-  { path: 'single-produit/:id', component: SingleProduitComponent },
-  { path: 'contact', component: ContactComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'produits', component: ProduitsComponent },
+  { path: 'accueil', component: ComingSoonComponent },
+  // { path: 'accueil', component: AccueilComponent },
+  // { path: 'boutique', component: BoutiqueComponent },
+  // { path: 'panier', component: PanierComponent },
+  // { path: 'single-produit/:id', component: SingleProduitComponent },
+  // { path: 'contact', component: ContactComponent },
+  // { path: 'login', component: LoginComponent },
+  // { path: 'register', component: RegisterComponent },
+  // { path: 'produits', component: ProduitsComponent },
   { path: 'notfound', component: NotfoundComponent },
-  { path: '', component: AccueilComponent },
+  { path: '', component: ComingSoonComponent },
   { path: '**', redirectTo: 'notfound', pathMatch:'full'},
 ]
 
@@ -44,7 +46,8 @@ const appRoutes: Routes = [
     ProduitsComponent,
     SingleProduitComponent,
     PanierComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    ComingSoonComponent
   ],
   imports: [
     BrowserModule,
