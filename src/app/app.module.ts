@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   // { path: 'contact', component: ContactComponent },
   // { path: 'login', component: LoginComponent },
   // { path: 'register', component: RegisterComponent },
-  // { path: 'produits', component: ProduitsComponent },
+  { path: 'produits', component: ProduitsComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: '', component: ComingSoonComponent },
   { path: '**', redirectTo: 'notfound', pathMatch:'full'},

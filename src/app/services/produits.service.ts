@@ -37,7 +37,7 @@ export class ProduitsService {
   getProduitsFromServer() {
     firebase
       .database()
-      .ref('/produits')
+      .ref('/produits/vins')
       .on('value', (data: DataSnapshot) => {
         this.produits = data.val() ? data.val() : [];
         this.emitProduitsSubject();

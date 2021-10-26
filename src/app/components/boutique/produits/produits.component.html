@@ -6,21 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   <title>Document</title>
 </head>
-<body>
-  {{produits | json}}
+ <body>
 
-<div id="columns" class="columns_5" *ngFor="let item of produits">
-  <figure>
-  <img src="https://i.imgur.com/ruU04I6.jpg">
-	<figcaption>Green Checkered Shirt</figcaption>
-    <span class="price">{{item.prix}}</span>
-    <a class="button" href="#">Buy Now</a>
-	</figure>
-	</div>
-</body>
-</html>
+<div class="container">
+  <div class="row">
+  <div class="list-inline">
+    <div class="col-lg-3 col-md-9 list-inline-item" *ngFor="let item of produits">
+        <div >
+            <div class="card h-100">
+              <a href="#"><img width="100%" height="100%"  class="card-img-top" src={{item.image}} alt="Altagama-produit-vin"></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="#">{{item.nom}}</a>
+                </h4>
+                <h5>{{item.prix}} €</h5>
+                <p class="card-text">{{item.id}}</p>
+                <a class="button" href="#">Ajouter <i class="fa fa-fw fa-shopping-basket"></i></a>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  </body>

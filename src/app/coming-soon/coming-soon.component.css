@@ -13,13 +13,18 @@ html {
 }
 
 body {
+  background: url('https://images.pexels.com/photos/51947/tuscany-grape-field-nature-51947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
   font-size: 1.4rem; /* 1.4 rem vaut 14px */
   height: 100%;
 }
 
 .wrapper {
 display: flex;
-background-image: url('https://images.pexels.com/photos/51947/tuscany-grape-field-nature-51947.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
 background-size: cover;
 color: rgb(245,245,245);
 flex-direction: column;
@@ -89,4 +94,24 @@ span{
   color:#f5f6f8;
   font-weight:bold;
   font-size: 38px;
+}
+
+#altagama{
+  font-weight: bold;
+  color:#651321;
+  text-align: center;
+  font-size: 80px;;
+}
+
+.contact-footer{
+  background: #000000a1;
+}
+
+@media screen and (max-width: 395px){
+  #altagama{
+    font-size: 55px;
+  }
+  .contact-footer{
+    font-size: 18px;
+  }
 }
