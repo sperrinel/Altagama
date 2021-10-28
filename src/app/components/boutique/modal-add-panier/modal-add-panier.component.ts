@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Produits } from 'src/app/modeles/produits';
 
 @Component({
-  selector: 'app-single-produit',
-  templateUrl: './single-produit.component.html',
-  styleUrls: ['./single-produit.component.css'],
+  selector: 'app-modal-add-panier',
+  templateUrl: './modal-add-panier.component.html',
+  styleUrls: ['./modal-add-panier.component.css'],
 })
-export class SingleProduitComponent implements OnInit {
+export class ModalAddPanierComponent implements OnInit {
   @Input() produits: Produits[];
   constructor() {}
 

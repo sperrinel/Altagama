@@ -9,7 +9,7 @@ import { Subject } from 'rxjs/internal/Subject';
   providedIn: 'root',
 })
 export class ProduitsService {
-  produitsSubject = new Subject<any[]>();
+  produitsSubject = new Subject<Produits[]>();
   produits: Produits[] = [];
   imageParDefaut: string =
     '';

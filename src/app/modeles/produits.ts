@@ -5,8 +5,8 @@ export class Produits {
     public categorie: string,
     public description: string,
     public image: string,
-    public prix: string,
-    public producteur: string,
-    public stock: string,
+    public prix: number,
+    public bodega: string,
+    public stock: number,
   ) {}
 }

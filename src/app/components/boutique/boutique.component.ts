@@ -1,6 +1,7 @@
 import { ProduitsService } from './../../services/produits.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { Produits } from 'src/app/modeles/produits';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 })
 export class BoutiqueComponent implements OnInit, OnDestroy {
 
-  produits;
+  produits : Produits [] = [];
   prodSub : Subscription;
   constructor(private produitsService : ProduitsService) { }
 

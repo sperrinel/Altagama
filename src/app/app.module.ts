@@ -17,12 +17,13 @@ import { PanierComponent } from './components/boutique/panier/panier.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CommonModule } from '@angular/common';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
+import { ModalAddPanierComponent } from './components/boutique/modal-add-panier/modal-add-panier.component';
 
 const appRoutes: Routes = [
   { path: 'accueil', component: ComingSoonComponent },
   // { path: 'accueil', component: AccueilComponent },
-  // { path: 'boutique', component: BoutiqueComponent },
-  // { path: 'panier', component: PanierComponent },
+  { path: 'boutique', component: BoutiqueComponent },
+  { path: 'panier', component: PanierComponent },
   // { path: 'single-produit/:id', component: SingleProduitComponent },
   // { path: 'contact', component: ContactComponent },
   // { path: 'login', component: LoginComponent },
@@ -30,8 +31,8 @@ const appRoutes: Routes = [
   { path: 'produits', component: ProduitsComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: '', component: ComingSoonComponent },
-  { path: '**', redirectTo: 'notfound', pathMatch:'full'},
-]
+  { path: '**', redirectTo: 'notfound', pathMatch: 'full' },
+];
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
     SingleProduitComponent,
     PanierComponent,
     NotfoundComponent,
-    ComingSoonComponent
+    ComingSoonComponent,
+    ModalAddPanierComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,6 @@ const appRoutes: Routes = [
     CommonModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
