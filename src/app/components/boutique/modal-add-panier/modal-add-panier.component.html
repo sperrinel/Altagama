@@ -23,7 +23,7 @@
     <div class="modal-content">
       <div class="modal-header bg-color-header text-light align-items-center">
         <h5 class="modal-title" id="staticBackdropLabel">
-          Ajouter au panier
+          Combien de bouteille(s) souhaitez-vous ?
           <i
             class="fa fa-shopping-cart align-items-center"
             aria-hidden="true"
@@ -31,6 +31,7 @@
         </h5>
         <button
           type="button"
+          (click)="retour()"
           class="btn btn-outline-info btn-sm pull-right"
           data-bs-dismiss="modal"
           aria-label="Close"
@@ -73,22 +74,28 @@
                 <div class="col-sm-2">
                   <div class="quantity">
                     <input
+                      type="button"
+                      value="+"
+                      class="plus"
+                      (click)="ajoutArticle()"
+                    />
+                    <input
                       type="number"
                       step="1"
-                      max="99"
                       min="1"
-                      value="1"
+                      [(ngModel)]="nbArticle"
                       title="Qty"
                       class="qty"
                       size="4"
+                      disabled="true"
+                    />
+                    <input
+                      type="button"
+                      value="-"
+                      class="minus"
+                      (click)="supprimerArticle()"
                     />
                   </div>
-                </div>
-
-                <div class="col-sm-1">
-                  <button type="button" class="btn btn-outline-danger btn-xs">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button>
                 </div>
               </div>
 
@@ -159,11 +166,11 @@
               <hr /> -->
               <!-- END PRODUCT -->
 
-              <div class="pull-right">
+              <!-- <div class="pull-right">
                 <a href="" class="btn btn-outline-secondary pull-right">
                   Mettre à jour le panier
                 </a>
-              </div>
+              </div> -->
             </div>
             <div class="card-footer">
               <div
@@ -192,25 +199,32 @@
                   </div>
                 </div> -->
 
-                <p><strong>Montant HT :</strong>&nbsp;{{ produit.prix }} €</p>
+                <p>
+                  <strong>Montant HT :</strong>&nbsp;{{
+                    (produit.prix * nbArticle).toFixed(2)
+                  }}
+                  €
+                </p>
                 <p>
                   <strong>TVA (20%) :</strong>&nbsp;
-                  {{ (produit.prix * 0.2).toFixed(2) }} €
+                  {{ (produit.prix * nbArticle * 0.2).toFixed(2) }} €
                 </p>
                 <p>
                   <strong>TOTAL:</strong>&nbsp;{{
-                    (produit.prix * 1.2).toFixed(2)
+                    (produit.prix * nbArticle * 1.2).toFixed(2)
                   }}
                   €
                 </p>
               </div>
               <div class="pull-right" style="margin: 10px">
-                <a href="" class="btn btn-success pull-right"
-                  >Accéder au panier</a
+                <button
+                  (click)="validerPanier(produit, nbArticle)"
+                  class="btn btn-success pull-right"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
                 >
-                <div class="pull-right" style="margin: 5px">
-                  Total : <b>{{ produit.prix }} €</b>
-                </div>
+                  VALIDER
+                </button>
               </div>
             </div>
           </div>

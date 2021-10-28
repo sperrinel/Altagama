@@ -28,7 +28,17 @@
         <h4 class="sub-title">Reference: {{ produit.id }}</h4>
         <span class="new-price">{{ produit.prix }} €</span>
         <p>Description : {{ produit.description }}</p>
+        <button
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          [attr.data-bs-target]="'#add-panier-' + produit.id"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          Ajouter au panier <i class="fa fa-fw fa-shopping-basket"></i>
+        </button>
       </div>
     </div>
   </div>
 </div>
+<app-modal-add-panier></app-modal-add-panier>

@@ -1,61 +1,136 @@
-<div class="modal fade style3" id="add-to-cart" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header justify-content-center bg-dark">
-        <h5 class="modal-title" id="add-to-cartCenterTitle">
-          <span class="ion-checkmark-round"></span> Product successfully added
-          to your shopping cart
-        </h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-lg-5 divide-right">
-            <div class="row">
-              <div class="col-md-6">
-                <img width="360" src="http://placeholdit/360" alt="img" />
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<div *ngIf="panier.length == 0" class="">
+  <h1>Le panier est vide</h1>
+</div>
+
+<div class="container" *ngIf="panier.length > 0">
+  <div class="row">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th class="text-center">Price</th>
+            <th class="text-center">Total</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of panier">
+            <td class="col-sm-8 col-md-6">
+              <div class="media">
+                <a class="thumbnail pull-left" href="#">
+                  <img
+                    class="media-object"
+                    src="{{ data.produit.image }}"
+                    style="width: 72px; height: 72px"
+                  />
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading">
+                    <a href="#">{{ data.produit.nom }}</a>
+                  </h4>
+                  <h5 class="media-heading">
+                    by <a href="#">{{ data.produit.id }}</a>
+                  </h5>
+                  <span>Status: </span
+                  ><span class="text-success"
+                    ><strong>{{ data.produit.stock }}</strong></span
+                  >
+                </div>
               </div>
-              <div class="col-md-6 mb-2 mb-md-0">
-                <h4 class="product-name">Product name</h4>
-                <h5 class="price">$30</h5>
-                <h6 class="quantity"><strong>Quantity:</strong>&nbsp;1</h6>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-7">
-            <div class="modal-cart-content">
-              <p class="cart-products-count">There is 1 item in your cart.</p>
-              <p><strong>Total products:</strong>&nbsp;$30</p>
-              <p><strong>Total shipping:</strong>&nbsp;$0.00</p>
-              <p><strong>Taxes 20% :</strong>&nbsp;$7</p>
-              <p><strong>Total:</strong>&nbsp;$37</p>
-              <div class="cart-content-btn">
-                <button
+            </td>
+            <td class="col-sm-1 col-md-1" style="text-align: center">
+              <div class="quantity">
+                <input
                   type="button"
-                  class="btn theme-btn--dark1 btn--md mt-4 mr-2"
-                  data-dismiss="modal"
-                >
-                  Continue shopping
-                </button>
-                <button
-                  routerLink="/checkout"
-                  class="btn theme-btn--dark1 btn--md mt-4"
-                  data-dismiss="modal"
-                >
-                  <i class="ion-checkmark-round"></i>Proceed to checkout
-                </button>
+                  value="+"
+                  class="plus"
+                  (click)="ajouterProduit(data.produit)"
+                />
+                <input
+                  type="text"
+                  step="1"
+                  min="1"
+                  [value]="data.quantite"
+                  title="Qty"
+                  class="qty"
+                  size="4"
+                  disabled="true"
+                />
+                <input
+                  type="button"
+                  value="-"
+                  class="minus"
+                  (click)="supprimerProduit(data.produit)"
+                />
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+            </td>
+            <td class="col-sm-1 col-md-1 text-center">
+              <strong>{{ data.produit.prix }}€</strong>
+            </td>
+            <td class="col-sm-1 col-md-1 text-center">
+              <strong
+                >{{ (data.produit.prix * data.quantite).toFixed(2) }}€</strong
+              >
+            </td>
+            <td class="col-sm-1 col-md-1">
+              <button type="button" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove"></span> Supprimer
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td><h5>Total HT:</h5></td>
+            <td class="text-right">
+              <h5>
+                <strong>{{ dataPanier.valeurTotale.toFixed(2) }}€</strong>
+              </h5>
+            </td>
+          </tr>
+          <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td><h5>TVA (20%):</h5></td>
+            <td class="text-right">
+              <h5>
+                <strong
+                  >{{ (dataPanier.valeurTotale * 0.2).toFixed(2) }}€</strong
+                >
+              </h5>
+            </td>
+          </tr>
+          <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td><h3>TOTAL:</h3></td>
+            <td class="text-right">
+              <h3>
+                <strong
+                  >{{ (dataPanier.valeurTotale * 1.2).toFixed(2) }}€</strong
+                >
+              </h3>
+            </td>
+          </tr>
+          <tr>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td></td>
+            <td>
+              <button type="button" class="btn btn-success">Paiement</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

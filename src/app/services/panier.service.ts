@@ -6,19 +6,42 @@ import { Produits } from '../modeles/produits';
   providedIn: 'root',
 })
 export class PanierService {
-  panier: Panier[] = [];
+  panier: Panier[];
   dataPanier = { nbArticle: 0, valeurTotale: 0 };
-  constructor() {}
+  constructor() {
+    this.initPanier();
+  }
 
-  ajouterProduitAuPanier(nouveauProduit: Produits): void {
+  initPanier(): void {
+    if (typeof localStorage !== 'undefined') {
+      const panier = JSON.parse(localStorage.getItem('panier'));
+      const dataPanier = JSON.parse(localStorage.getItem('dataPanier'));
+      this.panier = panier ? panier : [];
+      this.dataPanier = dataPanier
+        ? dataPanier
+        : { nbArticle: 0, valeurTotale: 0 };
+    } else {
+      this.panier = [];
+      this.dataPanier = { nbArticle: 0, valeurTotale: 0 };
+    }
+  }
+
+  ajouterProduitAuPanier(nouveauProduit: Produits, quantite?: number): void {
+    let nbArticle = 1;
+    console.log(quantite);
+
     const verifDoublon = this.panier.find(
       (element) => element.produit == nouveauProduit
     );
+    if (quantite != null) {
+      nbArticle = quantite;
+      console.log(nbArticle);
+    }
     if (verifDoublon) {
-      verifDoublon.quantite++;
+      verifDoublon.quantite += nbArticle;
     } else {
       const nouveauProduitAajouter = {
-        quantite: 1,
+        quantite: nbArticle,
         produit: nouveauProduit,
       };
       this.panier.push(nouveauProduitAajouter);
@@ -35,13 +58,17 @@ export class PanierService {
     });
     this.dataPanier.nbArticle = nbArticle;
     this.dataPanier.valeurTotale = valeurTotale;
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('panier', JSON.stringify(this.panier));
+      localStorage.setItem('dataPanier', JSON.stringify(this.dataPanier));
+    }
   }
 
   supprimerProduitPanier(produitAsupprimer: Produits): void {
     const indexProduit = this.panier.findIndex(
       (element) => element.produit == produitAsupprimer
     );
-    if (indexProduit) {
+    if (indexProduit !== -1) {
       if (this.panier[indexProduit].quantite > 1) {
         this.panier[indexProduit].quantite--;
       } else {

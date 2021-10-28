@@ -18,6 +18,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CommonModule } from '@angular/common';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { ModalAddPanierComponent } from './components/boutique/modal-add-panier/modal-add-panier.component';
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   { path: 'accueil', component: ComingSoonComponent },
@@ -56,6 +57,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' }),
     HttpClientModule,
     CommonModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

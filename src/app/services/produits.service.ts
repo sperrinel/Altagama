@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Produits } from '../modeles/produits';
 import DataSnapshot = firebase.database.DataSnapshot;
@@ -10,9 +9,9 @@ import { Subject } from 'rxjs/internal/Subject';
 })
 export class ProduitsService {
   produitsSubject = new Subject<Produits[]>();
+  nbDeProduitsParPage = 12;
   produits: Produits[] = [];
-  imageParDefaut: string =
-    '';
+  imageParDefaut: string = '';
   constructor() {
     this.getProduitsFromServer();
   }
@@ -43,8 +42,6 @@ export class ProduitsService {
         this.emitProduitsSubject();
       });
   }
-
-
 
   // uploadFile(file: File) {
   //   return new Promise((resolve, reject) => {
@@ -128,9 +125,16 @@ export class ProduitsService {
   //   this.saveExposantsToServer();
   //   this.emitExposantsSubject();
   // }
+
+  afficherProduitParPage(numPage: number): Produits[] {
+    const nbTotalDePage = this.produits.length / this.nbDeProduitsParPage;
+    if (numPage > 0 || numPage < nbTotalDePage) {
+      const resultatProduit = this.produits.slice(
+        numPage * this.nbDeProduitsParPage,
+        (numPage + 1) * this.nbDeProduitsParPage
+      );
+      return resultatProduit;
+    }
+    return null;
+  }
 }
-
-
-
-
-

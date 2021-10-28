@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Produits } from 'src/app/modeles/produits';
+import { PanierService } from 'src/app/services/panier.service';
 
 @Component({
   selector: 'app-modal-add-panier',
@@ -8,7 +9,24 @@ import { Produits } from 'src/app/modeles/produits';
 })
 export class ModalAddPanierComponent implements OnInit {
   @Input() produits: Produits[];
-  constructor() {}
+  nbArticle: number = 1;
+  constructor(private panierService: PanierService) {}
 
   ngOnInit(): void {}
+
+  ajoutArticle() {
+    this.nbArticle++;
+  }
+  supprimerArticle() {
+    this.nbArticle--;
+  }
+
+  retour() {
+    this.nbArticle = 1;
+  }
+
+  validerPanier(produit: Produits, quantite: number): void {
+    this.panierService.ajouterProduitAuPanier(produit, quantite);
+    this.retour();
+  }
 }
