@@ -16,31 +16,62 @@
         <li class="nav-item active">
           <a class="nav-link" routerLink="/accueil">Accueil </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/produits"> Boutique </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contact"> Contact </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login"> Se connecter </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/register"> créer un compte </a>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            data-bs-toggle="dropdown"
+            style="cursor: pointer"
+          >
+            Les dégustations
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item white" routerLink="/produits">
+                A domicile</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item white" routerLink="/degustation">
+                En boutique
+              </a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
-            href="#"
+            style="cursor: pointer"
             data-bs-toggle="dropdown"
           >
-            Hover me
+            Les vins
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"> Submenu item 1</a></li>
-            <li><a class="dropdown-item" href="#"> Submenu item 2 </a></li>
-            <li><a class="dropdown-item" href="#"> Submenu item 3 </a></li>
+            <li>
+              <a class="dropdown-item white" routerLink="/produits"> Blancs</a>
+            </li>
+            <li>
+              <a class="dropdown-item white" routerLink="/produits"> Rouges </a>
+            </li>
           </ul>
+        </li>
+        <li class="nav-item" *ngIf="isAuth == false">
+          <a class="nav-link" routerLink="/login"> Se connecter </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register" *ngIf="isAuth == false">
+            Créer un compte
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register"> Cadeaux </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact"> Contact </a>
+        </li>
+        <li class="nav-item" *ngIf="isAuth == true">
+          <a class="nav-link" (click)="logout()" style="cursor: pointer">
+            Se déconnecter
+          </a>
         </li>
       </ul>
     </div>

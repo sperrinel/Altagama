@@ -43,7 +43,7 @@
   border-radius: 0;
   -webkit-background-size: 6px 30px;
   -moz-background-size: 6px 30px;
-  color: #bbb;
+  color: rgba(0, 0, 0, 0.507);
   font-size: 20px;
   position: absolute;
   height: 50%;

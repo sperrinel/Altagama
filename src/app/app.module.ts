@@ -18,16 +18,18 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CommonModule } from '@angular/common';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { ModalAddPanierComponent } from './components/boutique/modal-add-panier/modal-add-panier.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DegustationsComponent } from './components/degustations/degustations.component';
 
 const appRoutes: Routes = [
-  { path: 'accueil', component: ComingSoonComponent },
-  // { path: 'accueil', component: AccueilComponent },
+  // { path: 'accueil', component: ComingSoonComponent },
+  { path: 'accueil', component: AccueilComponent },
   { path: 'boutique', component: BoutiqueComponent },
   { path: 'panier', component: PanierComponent },
   // { path: 'single-produit/:id', component: SingleProduitComponent },
-  // { path: 'contact', component: ContactComponent },
-  // { path: 'login', component: LoginComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'degustation', component: DegustationsComponent },
+  { path: 'login', component: LoginComponent },
   // { path: 'register', component: RegisterComponent },
   { path: 'produits', component: ProduitsComponent },
   { path: 'notfound', component: NotfoundComponent },
@@ -51,6 +53,7 @@ const appRoutes: Routes = [
     NotfoundComponent,
     ComingSoonComponent,
     ModalAddPanierComponent,
+    DegustationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

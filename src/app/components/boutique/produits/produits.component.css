@@ -1,64 +1,64 @@
-
-*{
-  box-sizing:border-box;
-  -moz-box-sizing:border-box;
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 body {
-	background: url(//subtlepatterns.com/patterns/scribble_light.png);
+  background: url(//subtlepatterns.com/patterns/scribble_light.png);
   font-family: Calluna, Arial, sans-serif;
   min-height: 1000px;
 }
-.columns_2{
-  -webkit-column-count:2;
-  -moz-column-count:2;
-  column-count:2;
+.columns_2 {
+  -webkit-column-count: 2;
+  -moz-column-count: 2;
+  column-count: 2;
 }
-.columns_3{
-  -webkit-column-count:3;
-  -moz-column-count:3;
-  column-count:3;
+.columns_3 {
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
 }
-.columns_4{
-  -webkit-column-count:4;
-  -moz-column-count:4;
-  column-count:4;
+.columns_4 {
+  -webkit-column-count: 4;
+  -moz-column-count: 4;
+  column-count: 4;
 }
-.columns_5{
-  -webkit-column-count:5;
-  -moz-column-count:5;
-  column-count:5;
+.columns_5 {
+  -webkit-column-count: 5;
+  -moz-column-count: 5;
+  column-count: 5;
 }
 #columns {
-	-moz-column-gap: 5px;
-	-webkit-column-gap: 5px;
-	column-gap: 5px;
+  -moz-column-gap: 5px;
+  -webkit-column-gap: 5px;
+  column-gap: 5px;
   width: 90%;
-	max-width: 1100px;
-	margin: 50px auto;
+  max-width: 1100px;
+  margin: 50px auto;
 }
 
 div#columns figure {
-	background: #fefefe;
-	border: 2px solid #fcfcfc;
-	box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
-	margin: 0 2px 15px;
-	padding: 15px;
-	padding-bottom: 10px;
-	transition: all .7s ease-in-out;
+  background: #fefefe;
+  border: 2px solid #fcfcfc;
+  box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+  margin: 0 2px 15px;
+  padding: 15px;
+  padding-bottom: 10px;
+  transition: all 0.7s ease-in-out;
   display: inline-block;
   column-break-inside: avoid;
 }
 
 div#columns figure img {
-	width: 100%; height: auto;
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 15px;
-	margin-bottom: 5px;
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 div#columns figure figcaption {
-  font-size: .9rem;
-	color: #444;
+  font-size: 0.9rem;
+  color: #444;
   line-height: 1.5;
 }
 
@@ -72,33 +72,37 @@ div#columns small {
 div#columns small a {
   color: #666;
   text-decoration: none;
-  transition: .4s color;
+  transition: 0.4s color;
 }
-div#columns figure:hover{
+div#columns figure:hover {
   padding: 5px;
 }
-a.button{
-  padding:10px;
-  background:rgb(112, 197, 247);
-  margin:10px;
-  display:block;
-  text-align:center;
-  color:#fff;
-  transition:all 1s linear;
-  text-decoration:none;
-  text-shadow:1px 1px 3px rgba(0,0,0,0.3);
-  border-radius:3px;
-  border-bottom:3px solid rgb(112, 197, 247);
-  box-shadow:1px 1px 3px rgba(0,0,0,0.3);
+a.button {
+  padding: 10px;
+  background: rgb(112, 197, 247);
+  margin: 10px;
+  display: block;
+  text-align: center;
+  color: #fff;
+  transition: all 1s linear;
+  text-decoration: none;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  border-bottom: 3px solid rgb(112, 197, 247);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
-a.button:hover{
-  background:rgb(112, 197, 247);
-  border-bottom:3px solid rgb(90, 192, 252);
-  color:#f1f2f3;
+a.button:hover {
+  background: rgb(112, 197, 247);
+  border-bottom: 3px solid rgb(90, 192, 252);
+  color: #f1f2f3;
 }
 @media screen and (max-width: 750px) {
-  #columns { column-gap: 0px; }
-  #columns figure { width: 100%; }
+  #columns {
+    column-gap: 0px;
+  }
+  #columns figure {
+    width: 100%;
+  }
 }
 /*
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800&display=swap');
@@ -188,26 +192,46 @@ a.button:hover{
     margin-left: 4px;
 } */
 
-.card-body{
+.card-body {
   text-align: center;
 }
 
-.card{
-  padding:15px;
+.card {
+  padding: 15px;
 }
 
-.card:hover{
-  padding:5px;
+.card:hover {
+  padding: 5px;
 }
 
-i{
+i {
   font-size: 20px;
   color: white;
   margin-left: 10px;
-  margin-top:5px;
+  margin-top: 5px;
 }
 
-a.button{
+a.button {
   font-size: 20px;
   font-weight: bold;
+}
+
+.activePagination {
+  border-bottom: 2.5px solid rgb(128, 26, 0);
+}
+
+.btn-pagination {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.page-link {
+  border-block: none;
+  border-left: none;
+  border-right: none;
+  font-size: 19px;
+}
+
+.page-link:hover {
+  background: rgba(128, 26, 0, 0.473);
 }

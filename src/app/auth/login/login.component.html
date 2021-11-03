@@ -1,1 +1,62 @@
-<p>login works!</p>
+<html>
+  <head>
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+  </head>
+  <body id="LoginForm">
+    <div class="container">
+      <!-- <h1 class="form-heading">Accès à Mon compte Altagama</h1> -->
+      <div class="login-form">
+        <div class="main-div">
+          <div class="panel">
+            <h2>Accès à mon compte</h2>
+            <p>Veuillez renseigner votre email et votre mot de passe.</p>
+          </div>
+          <form
+            id="Login"
+            [formGroup]="validationFormUser"
+            (ngSubmit)="loginUser(validationFormUser.value)"
+          >
+            <p
+              style="color: darkred; text-align: center"
+              *ngIf="errorMessage !== null"
+            >
+              {{ errorMessage }}
+            </p>
+            <div class="form-group">
+              <input
+                type="email"
+                class="form-control"
+                id="inputEmail"
+                placeholder="Votre adresse Email "
+                formControlName="email"
+              />
+            </div>
+
+            <div class="form-group">
+              <input
+                type="password"
+                class="form-control"
+                id="inputPassword"
+                placeholder="Votre mot de passe"
+                name="password"
+                formControlName="password"
+                data-type="password"
+              />
+            </div>
+            <div class="forgot">
+              <a href="reset.html">Mot de passe oublié ?</a>
+            </div>
+            <button type="submit" class="btn btn-primary">Se connecter</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

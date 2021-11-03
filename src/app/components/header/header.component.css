@@ -31,3 +31,12 @@
   font-size: 40px;
   z-index: -1;
 }
+
+.dropdown-menu {
+  background: #651321;
+}
+
+.dropdown-item:hover {
+  background: #651321;
+  color: #ffffff5e;
+}

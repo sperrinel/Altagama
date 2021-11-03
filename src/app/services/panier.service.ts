@@ -28,14 +28,12 @@ export class PanierService {
 
   ajouterProduitAuPanier(nouveauProduit: Produits, quantite?: number): void {
     let nbArticle = 1;
-    console.log(quantite);
 
     const verifDoublon = this.panier.find(
       (element) => element.produit == nouveauProduit
     );
     if (quantite != null) {
       nbArticle = quantite;
-      console.log(nbArticle);
     }
     if (verifDoublon) {
       verifDoublon.quantite += nbArticle;

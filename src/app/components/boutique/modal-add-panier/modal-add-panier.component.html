@@ -1,3 +1,4 @@
+<!-- CHOIX QTE ARTICLES -->
 <link
   href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
   rel="stylesheet"
@@ -5,7 +6,6 @@
 />
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
 
 <script src="https://use.fontawesome.com/c560c025cf.js"></script>
 
@@ -13,8 +13,6 @@
   *ngFor="let produit of produits"
   class="modal fade"
   [id]="'add-panier-' + produit.id"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
   tabindex="-1"
   aria-labelledby="staticBackdropLabel"
   aria-hidden="true"
@@ -39,6 +37,7 @@
           Retour à la boutique
         </button>
       </div>
+      <!-- start ligne produit -->
       <div class="modal-body">
         <div class="container">
           <div class="card shopping-cart">
@@ -63,7 +62,8 @@
                 </div>
                 <div class="col-sm-2 text-end">
                   <h5>
-                    <strong>{{ produit.prix }} € </strong>
+                    <strong>{{ produit.prix }} €</strong>
+                    <h6>(TTC)</h6>
                   </h5>
                 </div>
                 <div class="col-sm-1">
@@ -90,6 +90,7 @@
                       disabled="true"
                     />
                     <input
+                      [disabled]="nbArticle == 1"
                       type="button"
                       value="-"
                       class="minus"
@@ -98,124 +99,73 @@
                   </div>
                 </div>
               </div>
-
-              <!-- PRODUCT -->
-              <!-- <div class="row">
-                <div class="col-12 col-sm-12 col-md-2 text-center">
-                  <img
-                    class="img-responsive"
-                    src="{{ produit.image }}"
-                    alt="prewiew"
-                    width="120"
-                    height="80"
-                  />
+              <!-- end ligne produit -->
+              <!-- start ligne carton(s) -->
+              <div class="row align-items-center">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4 text-end">
+                  <h6>Carton(s) de 6 bouteilles</h6>
                 </div>
-                <div
-                  class="col-12 text-sm-center col-sm-12 text-md-left col-md-4"
-                >
-                  <h4 class="product-name">
-                    <strong>{{ produit.nom }}</strong>
-                  </h4>
-                  <h4>
-                    <small>{{ produit.description }}</small>
-                  </h4>
+                <div class="col-sm-2 text-end">
+                  <h5>
+                    <strong> {{ produit.prix * 6 }} €</strong>
+                  </h5>
+                  <h6>(TTC)</h6>
                 </div>
-                <div
-                  class="
-                    col-12 col-sm-12
-                    text-sm-center
-                    col-md-4
-                    text-md-right
-                    row
-                  "
-                >
-                  <div
-                    class="col-3 col-sm-3 col-md-6 text-md-right"
-                    style="padding-top: 5px"
-                  >
-                    <h6>
-                      <strong
-                        >{{ produit.prix }}
-                        <span class="text-muted">x</span></strong
-                      >
-                    </h6>
-                  </div>
-                  <div class="col-4 col-sm-4 col-md-5">
-                    <div class="quantity">
-                      <input type="button" value="+" class="plus" />
-                      <input
-                        type="number"
-                        step="1"
-                        max="99"
-                        min="1"
-                        value="1"
-                        title="Qty"
-                        class="qty"
-                        size="4"
-                      />
-                      <input type="button" value="-" class="minus" />
-                    </div>
-                  </div>
-                  <div class="col-2 col-sm-2 col-md-2 text-right">
-                    <button type="button" class="btn btn-outline-danger btn-xs">
-                      <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
+                <div class="col-sm-1">
+                  <h5>
+                    <strong><span class="text-muted">x</span></strong>
+                  </h5>
+                </div>
+                <div class="col-sm-2">
+                  <div class="quantity">
+                    <input
+                      type="button"
+                      value="+"
+                      class="plus"
+                      (click)="ajoutCarton()"
+                    />
+                    <input
+                      type="number"
+                      step="1"
+                      min="1"
+                      [(ngModel)]="nbCarton"
+                      title="Qty"
+                      class="qty"
+                      size="4"
+                      disabled="true"
+                    />
+                    <input
+                      [disabled]="nbCarton == 0 || nbArticle < 6"
+                      type="button"
+                      value="-"
+                      class="minus"
+                      (click)="supprimerCarton()"
+                    />
                   </div>
                 </div>
               </div>
-              <hr /> -->
-              <!-- END PRODUCT -->
-
-              <!-- <div class="pull-right">
-                <a href="" class="btn btn-outline-secondary pull-right">
-                  Mettre à jour le panier
-                </a>
-              </div> -->
+              <!-- end ligne carton(s) -->
             </div>
+            <!-- start infos facturation -->
             <div class="card-footer">
-              <div
-                class="
-                  coupon
-                  col-md-5 col-sm-5
-                  no-padding-left
-                  pull-left
-                  align-items-center
-                "
-              >
-                <!-- <div class="row">
-                  <div class="col-6">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Code promo"
-                    />
-                  </div>
-                  <div class="col-6">
-                    <input
-                      type="submit"
-                      class="btn btn-default"
-                      value="Utiliser mon code"
-                    />
-                  </div>
-                </div> -->
+              <p>
+                <strong>Montant HT :</strong>&nbsp;{{
+                  (produit.prix * nbArticle).toFixed(2)
+                }}
+                €
+              </p>
+              <p>
+                <strong>TVA (20%) :</strong>&nbsp;
+                {{ (produit.prix * nbArticle * 0.2).toFixed(2) }} €
+              </p>
+              <p>
+                <strong>TOTAL:</strong>&nbsp;{{
+                  (produit.prix * nbArticle * 1.2).toFixed(2)
+                }}
+                €
+              </p>
 
-                <p>
-                  <strong>Montant HT :</strong>&nbsp;{{
-                    (produit.prix * nbArticle).toFixed(2)
-                  }}
-                  €
-                </p>
-                <p>
-                  <strong>TVA (20%) :</strong>&nbsp;
-                  {{ (produit.prix * nbArticle * 0.2).toFixed(2) }} €
-                </p>
-                <p>
-                  <strong>TOTAL:</strong>&nbsp;{{
-                    (produit.prix * nbArticle * 1.2).toFixed(2)
-                  }}
-                  €
-                </p>
-              </div>
               <div class="pull-right" style="margin: 10px">
                 <button
                   (click)="validerPanier(produit, nbArticle)"
@@ -227,6 +177,7 @@
                 </button>
               </div>
             </div>
+            <!-- end infos facturation -->
           </div>
         </div>
       </div>

@@ -11,7 +11,18 @@ import { ProduitsService } from 'src/app/services/produits.service';
 })
 export class ProduitsComponent implements OnInit, OnDestroy {
   produits: any[] = [];
+  // produits = [
+  //   {
+  //     id: 5,
+  //     nom: 'Vin test',
+  //     description: 'description test',
+  //     prix: 12.5,
+  //   },
+  // ];
+
   prodSub: Subscription;
+  pageEnCours = 0;
+  pages = [0, 1, 2, 3];
   constructor(
     private produitsService: ProduitsService,
     private panierService: PanierService
@@ -19,7 +30,9 @@ export class ProduitsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.prodSub = this.produitsService.produitsSubject.subscribe((data) => {
-      this.produits = data;
+      this.produits = this.produitsService.afficherProduitParPage(
+        this.pageEnCours
+      );
     });
     this.produitsService.emitProduitsSubject();
   }
@@ -34,5 +47,33 @@ export class ProduitsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.prodSub.unsubscribe();
+  }
+
+  changerDePage(numPage: number): void {
+    const prod = this.produitsService.afficherProduitParPage(numPage);
+    if (prod) {
+      this.produits = prod;
+      this.pageEnCours = numPage;
+    }
+  }
+
+  pageSuivante(): void {
+    const nouvellePageEnCours = this.pageEnCours + 1;
+    const prod =
+      this.produitsService.afficherProduitParPage(nouvellePageEnCours);
+    if (prod) {
+      this.produits = prod;
+      this.pageEnCours = nouvellePageEnCours;
+    }
+  }
+
+  pagePrecedente(): void {
+    const nouvellePageEnCours = this.pageEnCours - 1;
+    const prod =
+      this.produitsService.afficherProduitParPage(nouvellePageEnCours);
+    if (prod) {
+      this.produits = prod;
+      this.pageEnCours = nouvellePageEnCours;
+    }
   }
 }

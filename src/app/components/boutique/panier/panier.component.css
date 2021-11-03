@@ -43,7 +43,7 @@
   border-radius: 0;
   -webkit-background-size: 6px 30px;
   -moz-background-size: 6px 30px;
-  color: #bbb;
+  color: rgba(0, 0, 0, 0.507);
   font-size: 20px;
   position: absolute;
   height: 50%;
@@ -61,4 +61,57 @@
 
 .quantity .minus {
   bottom: 0;
+}
+
+.text-right {
+  float: right;
+}
+
+.ligne-panier {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.39);
+}
+
+img {
+  width: 72px;
+  height: 72px;
+  float: left;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 380px) {
+  img {
+    width: 55px;
+    height: 55px;
+    float: left;
+    margin-right: 10px;
+  }
+}
+
+.media-heading {
+  float: left;
+  margin-right: 10px;
+}
+
+td {
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.row {
+  margin-top: 20px;
+}
+
+.row-produit {
+  border-bottom: solid 1px rgba(0, 0, 0, 0.384);
+}
+
+.row-header {
+  padding-bottom: 5px;
+  border-bottom: solid 2px black;
+  font-weight: bold;
+  color: #651321;
+}
+
+.row-paiement {
+  margin-bottom: 100px;
 }

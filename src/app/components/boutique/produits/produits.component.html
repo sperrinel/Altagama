@@ -14,11 +14,41 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <title>Document</title>
+    <title>Vins argentins</title>
   </head>
   <body>
+    <br />
     <div class="container">
       <div class="row">
+        <nav aria-label="navigation Altagama">
+          <ul class="pagination">
+            <li class="page-item">
+              <button
+                class="btn btn-primary btn-pagination"
+                (click)="pagePrecedente()"
+              >
+                Précédent
+              </button>
+            </li>
+            <li
+              class="page-item"
+              *ngFor="let page of pages"
+              (click)="changerDePage(page)"
+              [ngClass]="{ activePagination: page == pageEnCours }"
+            >
+              <a class="page-link">{{ page + 1 }}</a>
+            </li>
+            <li class="page-item">
+              <button
+                class="btn btn-primary btn-pagination"
+                (click)="pageSuivante()"
+              >
+                Suivant
+              </button>
+            </li>
+          </ul>
+        </nav>
+
         <div class="list-inline">
           <div
             class="col-lg-3 col-md-9 list-inline-item"
@@ -43,11 +73,15 @@
                   <a
                     class="button"
                     href="#"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="true"
                     data-bs-toggle="modal"
                     [attr.data-bs-target]="'#add-panier-' + produit.id"
                     >Ajouter <i class="fa fa-fw fa-shopping-basket"></i
                   ></a>
                   <a
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="true"
                     style="cursor: pointer"
                     data-bs-toggle="modal"
                     [attr.data-bs-target]="'#quick-view-' + produit.id"
