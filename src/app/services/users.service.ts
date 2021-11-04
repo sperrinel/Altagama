@@ -17,6 +17,17 @@ export class UsersService {
   //   this.userSubject.next(this.user);
   // }
 
+  //Inscription
+  async signup(value: { email: string; password: string }) {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(value.email, value.password)
+      .then((res) => {
+        this.isAuth = true;
+        localStorage.setItem('user', JSON.stringify(res.user));
+      });
+  }
+
   //Connexion
   async loginFireauth(value: { email: string; password: string }) {
     return new Promise<any>((resolve, reject) => {
@@ -26,7 +37,7 @@ export class UsersService {
         .then(
           (data) => {
             resolve(data);
-            console.log(data);
+            console.log(data.user);
           },
           (error) => reject(error)
         );

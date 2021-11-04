@@ -30,7 +30,7 @@ const appRoutes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'degustation', component: DegustationsComponent },
   { path: 'login', component: LoginComponent },
-  // { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'produits', component: ProduitsComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: '', component: ComingSoonComponent },
