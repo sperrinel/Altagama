@@ -20,18 +20,28 @@ import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { ModalAddPanierComponent } from './components/boutique/modal-add-panier/modal-add-panier.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DegustationsComponent } from './components/degustations/degustations.component';
+import { ADomicileComponent } from './components/degustations/a-domicile/a-domicile.component';
+import { ContactService } from './services/contact.service';
+import {
+  RecaptchaFormsModule,
+  RecaptchaModule,
+  RecaptchaSettings,
+  RECAPTCHA_SETTINGS,
+} from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
 
 const appRoutes: Routes = [
-  // { path: 'accueil', component: ComingSoonComponent },
-  { path: 'accueil', component: AccueilComponent },
-  { path: 'boutique', component: BoutiqueComponent },
-  { path: 'panier', component: PanierComponent },
+  // { path: 'test', component: ComingSoonComponent },
+  { path: 'accueil', component: ComingSoonComponent },
+  // { path: 'boutique', component: BoutiqueComponent },
+  // { path: 'panier', component: PanierComponent },
   // { path: 'single-produit/:id', component: SingleProduitComponent },
-  { path: 'contact', component: ContactComponent },
-  { path: 'degustation', component: DegustationsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'produits', component: ProduitsComponent },
+  // { path: 'contact', component: ContactComponent },
+  // { path: 'degustations', component: DegustationsComponent },
+  { path: 'degustations-a-domicile', component: ADomicileComponent },
+  // { path: 'login', component: LoginComponent },
+  // { path: 'register', component: RegisterComponent },
+  // { path: 'produits', component: ProduitsComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: '', component: ComingSoonComponent },
   { path: '**', redirectTo: 'notfound', pathMatch: 'full' },
@@ -54,6 +64,7 @@ const appRoutes: Routes = [
     ComingSoonComponent,
     ModalAddPanierComponent,
     DegustationsComponent,
+    ADomicileComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,8 +73,18 @@ const appRoutes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RecaptchaModule,
+    RecaptchaFormsModule,
   ],
-  providers: [],
+  providers: [
+    ContactService,
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

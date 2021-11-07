@@ -1,0 +1,34 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.bg-info,
+.btn {
+  background: #651321 !important;
+  border: 1px solid #651321 !important;
+}
+
+.card {
+  border: 1.5px solid #651321 !important;
+}
+
+.fa:before {
+  color: #651321;
+}
+
+.fa-header:before {
+  color: white !important;
+}
+
+re-captcha.is-invalid > div {
+  border: 1px solid #dc3545 !important;
+  border-radius: 0.2rem;
+}

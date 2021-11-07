@@ -1,1 +1,13 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
+
+.color-altagama {
+  color: #651321;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bg-altagama {
+  color: white;
+  background: #651321;
+  padding: 10px;
+}
