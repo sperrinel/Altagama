@@ -11,3 +11,16 @@
   background: #651321;
   padding: 10px;
 }
+
+@font-face {
+  font-family: LouisGeorgeCafeLight;
+  src: url(/assets/font/LouisGeorgeCafeLight.ttf) format("opentype");
+}
+@font-face {
+  font-family: LettersForLearners;
+  src: url(/assets/font/LettersForLearners.ttf) format("opentype");
+}
+@font-face {
+  font-family: AutumnSunrise;
+  src: url(/assets/font/AutumnSunrise.ttf) format("opentype");
+}

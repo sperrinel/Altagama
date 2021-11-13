@@ -3,7 +3,11 @@ import { Router } from '@angular/router';
 import { Panier } from 'src/app/modeles/panier';
 import { PanierService } from 'src/app/services/panier.service';
 import { UsersService } from 'src/app/services/users.service';
+import * as $ from 'jQuery';
 import firebase from 'firebase';
+import { CategorieService } from 'src/app/services/categorie.service';
+import { Categorie } from 'src/app/modeles/categorie';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +18,10 @@ export class HeaderComponent implements OnInit {
   isAuth: boolean = false;
   panier: Panier[] = [];
   dataPanier;
+  categories: Categorie[];
+  categorieSubscription: Subscription;
   constructor(
+    private categorieService: CategorieService,
     private panierService: PanierService,
     private users: UsersService,
     private router: Router
@@ -32,10 +39,20 @@ export class HeaderComponent implements OnInit {
       this.users.isAuth = this.isAuth;
       this.users.emitIsAuthSubject();
     });
+    this.categorieSubscription =
+      this.categorieService.categorieSubject.subscribe((data: Categorie[]) => {
+        this.categories = data;
+      });
+    this.categorieService.emitCategoriessSubject();
   }
 
   logout() {
     this.users.logout();
     this.router.navigate(['/accueil']);
+  }
+
+  activeClass(number: number) {
+    $('#mainMenu li a.active').removeClass('active');
+    $('#navItem' + number).addClass('active');
   }
 }

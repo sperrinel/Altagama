@@ -1,3 +1,17 @@
+body {
+  background: url("/assets/images/contact/Altagama-contact-bg-2.png") no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@media screen and (min-width: 0px) and (max-width: 768px) {
+  body {
+    height: 100% !important;
+  }
+}
+
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -31,4 +45,38 @@ input[type="number"] {
 re-captcha.is-invalid > div {
   border: 1px solid #dc3545 !important;
   border-radius: 0.2rem;
+}
+
+.contact {
+  background: #ffffff4a;
+  text-align: center;
+  height: 170px;
+  padding: 15px;
+  margin: 20px;
+  color: rgb(255, 255, 255);
+  text-shadow: -1px 1px 0 #000;
+}
+
+.contact-coordonnee-header {
+  color: #651321 !important;
+  text-shadow: -1px 1px 0 #000;
+}
+
+.formulaire {
+  margin-top: 5%;
+}
+
+h1,
+h3 {
+  color: white;
+  text-align: center;
+}
+
+.header-title {
+  background-color: rgba(255, 255, 255, 0.082);
+}
+
+#recaptcha {
+  transform: scale(0.77);
+  transform-origin: 0 0;
 }

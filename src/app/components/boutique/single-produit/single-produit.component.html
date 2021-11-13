@@ -11,7 +11,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">
-          Détails de l'article
+          {{ produit.nom }}
         </h5>
         <button
           type="button"
@@ -20,21 +20,85 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">
-        <img width="460" src="{{ produit.image }}" alt="photo-article" />
-        <h2 class="title">{{ produit.nom }}</h2>
-        <h4 class="sub-title">Reference: {{ produit.id }}</h4>
-        <span class="new-price">{{ produit.prix }} €</span>
-        <p>Description : {{ produit.description }}</p>
-        <button
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          [attr.data-bs-target]="'#add-panier-' + produit.id"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          Ajouter au panier <i class="fa fa-fw fa-shopping-basket"></i>
-        </button>
+      <div class="modal-body modal-body-edit">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-sm-5">
+              <img
+                [ngClass]="{
+                  imgMargin: produit.nom != 'SAN FELIPE 12 UVAS – LA RURAL'
+                }"
+                *ngIf="produit.image"
+                src="{{ produit.image }}"
+                alt="image du produit"
+                class="img-edit"
+              />
+            </div>
+            <div class="col-sm-7">
+              <label class="label-edit">Nom:</label>
+              <p class="p-edit">
+                <strong>{{ produit.nom }}</strong>
+              </p>
+              <label class="label-edit">degrés d'alcool:</label>
+              <p class="p-edit">{{ produit.alcool }}°</p>
+
+              <label class="label-edit">Service:</label>
+              <p class="p-edit">{{ produit.service }}</p>
+            </div>
+            <div class="col-sm-12">
+              <label class="label-edit">Description:</label>
+              <p type="text" class="p-edit">{{ produit.description }}</p>
+            </div>
+            <div class="col-sm-12">
+              <label class="label-edit">Cepage:</label>
+              <p class="p-edit">{{ produit.cepage }}</p>
+            </div>
+            <div class="col-sm-12">
+              <label class="label-edit">Accompagnement:</label>
+              <p class="p-edit">{{ produit.accompagnement }}</p>
+            </div>
+            <div class="col-sm-6">
+              <label class="label-edit">Catégorie:</label>
+              <p *ngIf="produit.categorie == 1" class="p-edit">vin rouge</p>
+              <p *ngIf="produit.categorie == 2" class="p-edit">vin blanc</p>
+            </div>
+            <div class="col-sm-6">
+              <label class="label-edit">Vignification:</label>
+              <p class="p-edit">{{ produit.vignification }}</p>
+            </div>
+            <div class="col-sm-6">
+              <label class="label-edit">Vieillissement:</label>
+              <p class="p-edit">{{ produit.vieillissement }}</p>
+            </div>
+            <div class="col-sm-6">
+              <label class="label-edit">Prix:</label>
+              <p class="p-edit">{{ produit.prix }} €</p>
+            </div>
+            <div class="col-sm-6">
+              <label class="label-edit">Prix d'un carton:</label>
+              <p class="p-edit">{{ produit.prixCarton }} €</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            style="background: #651321"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            [attr.data-bs-target]="'#add-panier-' + produit.id"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            Ajouter au panier <i class="fa fa-fw fa-shopping-basket"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta name="description" content="" />
+    <title>Ajouter un produit</title>
+  </head>
+  <body>
+    <div class="container formBox">
+      <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-6 bg-light boxStyle">
+          <form name="theform" (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <div class="form-group">
+              <h4>Ajouter un article</h4>
+              <div class="width30 floatL"><label>Nom</label></div>
+              <div class="width70 floatR">
+                <input
+                  id="firstname"
+                  class="width100 form-control"
+                  name="nom"
+                  type="text"
+                  value=""
+                  size="20"
+                  ngModel
+                  required
+                />
+              </div>
+              <br /><br />
+              <br />
+              <div class="form-group">
+                <div class="width30 floatL"><label>Description</label></div>
+                <div class="width70 floatR">
+                  <textarea
+                    class="width100 form-control"
+                    name="description"
+                    type="text"
+                    value=""
+                    size="20"
+                    ngModel
+                    required
+                  ></textarea>
+                </div>
+              </div>
+              <br /><br /><br />
+              <div class="form-group">
+                <div class="width30 floatL"><label>Catégorie</label></div>
+                <div class="width70 floatR">
+                  <select
+                    name="categorie"
+                    value=""
+                    class="width100 form-control"
+                    ngModel
+                    required
+                  >
+                    <option value="1">vin rouge</option>
+                    <option value="2">vin blanc</option>
+                  </select>
+                </div>
+              </div>
+              <br /><br />
+              <div class="form-group">
+                <div class="width30 floatL">
+                  <label>Ajouter une photo</label>
+                </div>
+                <div class="width70 floatR">
+                  <input
+                    type="file"
+                    (change)="detectFiles($event)"
+                    class="form-control"
+                    accept="image/*"
+                    name="image"
+                  />
+                  <p class="text-success" *ngIf="fileUploaded">
+                    Fichier chargé !
+                  </p>
+                </div>
+              </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>prix</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="prix"
+                  type="number"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>prix d'un carton</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="prixCarton"
+                  type="number"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>bodega</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="bodega"
+                  type="text"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>alcool</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="alcool"
+                  type="number"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>service</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="service"
+                  type="text"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br /><br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>stock</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="stock"
+                  type="number"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br />
+            <br /><br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>Cepage</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="cepage"
+                  type="text"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>Vignification</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="vignification"
+                  type="text"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>Vieillissement</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="vieillissement"
+                  type="text"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+              <div class="width30 floatL"><label>Accompagnement</label></div>
+              <div class="width70 floatR">
+                <input
+                  class="width100 form-control"
+                  name="accompagnement"
+                  type="text"
+                  value=""
+                  size="20"
+                  ngModel
+                />
+              </div>
+            </div>
+            <br />
+            <br />
+
+            <div class="form-group">
+              <div class="row">
+                <div class="width50">
+                  <input
+                    class="btn btn-success"
+                    type="submit"
+                    value="Valider"
+                    style="font-weight: bold"
+                  />
+                </div>
+                <div class="width50">
+                  <input
+                    class="btn btn-primary"
+                    type="reset"
+                    style="font-weight: bold"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2"></div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -21,164 +21,191 @@
       integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
       crossorigin="anonymous"
     />
+
+    <br />
     <div class="container">
-      <h2 class="text-center">Prenons contact</h2>
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6 pb-5">
-          <form [formGroup]="formData" (ngSubmit)="onSubmit(form)">
-            <div class="card rounded-0">
-              <div class="card-header p-0">
-                <div class="bg-info text-white text-center py-2">
-                  <h3>
-                    <i class="fa fa-envelope fa-header"></i> Contactez nous
-                  </h3>
-                  <p class="m-0">Merci de remplir les champs ci-dessous</p>
-                </div>
-              </div>
-              <div class="card-body p-3">
-                <div class="form-group">
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="fa fa-user text-info"></i>
-                      </div>
-                    </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="nom"
-                      name="nom"
-                      placeholder="Votre nom *"
-                      formControlName="nom"
-                    />
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <img
+            class="bandeau"
+            src="./assets/images/contact/Altagama-contact-header.jpg"
+            alt="Altagama-contact-header"
+          />
+        </div>
+      </div> -->
+      <div class="row">
+        <h1 class="header-title">
+          Vous êtes intéressé par un atelier dégustations à domicile ?
+        </h1>
+        <h3 class="header-title">
+          Merci de nous contacter via les coordonnées ci-dessous.
+        </h3>
+        <div class="col-md-5 align-self-center">
+          <div class="contact">
+            <h3 class="contact-coordonnee-header">Téléphone:</h3>
+            06 75 46 66 27
+            <h3 class="contact-coordonnee-header">Email:</h3>
+            contact.altagama@gmail.com
+          </div>
+        </div>
+        <div class="col-md-7" style="text-align: -webkit-center">
+          <div class="col-12 col-md-12 col-lg-10 pb-5 formulaire">
+            <form [formGroup]="formData" (ngSubmit)="onSubmit(form)">
+              <div class="card rounded-0">
+                <div class="card-header p-0">
+                  <div class="bg-info text-white text-center py-2">
+                    <h3>
+                      <i class="fa fa-envelope fa-header"></i> Contactez nous
+                    </h3>
+                    <p class="m-0">Merci de remplir les champs ci-dessous</p>
                   </div>
                 </div>
-                <div class="form-group">
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="fa fa-envelope text-info"></i>
+                <div class="card-body p-3">
+                  <div class="form-group">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-user text-info"></i>
+                        </div>
                       </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="nom"
+                        name="nom"
+                        placeholder="Votre nom *"
+                        formControlName="nom"
+                      />
                     </div>
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      id="email"
-                      placeholder="Votre email - exemple@gmail.com *"
-                      formControlName="email"
-                    />
                   </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="fa fa-phone text-info"></i>
+                  <div class="form-group">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-envelope text-info"></i>
+                        </div>
                       </div>
+                      <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        id="email"
+                        placeholder="Votre email - exemple@gmail.com *"
+                        formControlName="email"
+                      />
                     </div>
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="telephone"
-                      name="telephone"
-                      placeholder="Votre téléphone (optionnel)"
-                      formControlName="telephone"
-                    />
                   </div>
-                </div>
-                <div class="form-group">
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="fa fa-pen text-info"></i>
+                  <div class="form-group">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-phone text-info"></i>
+                        </div>
                       </div>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="telephone"
+                        name="telephone"
+                        placeholder="Votre téléphone (optionnel)"
+                        formControlName="telephone"
+                      />
                     </div>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="objet"
-                      name="objet"
-                      placeholder="Objet du message"
-                      formControlName="objet"
-                    />
                   </div>
-                </div>
+                  <div class="form-group">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-pen text-info"></i>
+                        </div>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="objet"
+                        name="objet"
+                        placeholder="Objet du message"
+                        formControlName="objet"
+                      />
+                    </div>
+                  </div>
 
-                <div class="form-group">
-                  <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="fa fa-comment text-info"></i>
+                  <div class="form-group">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-comment text-info"></i>
+                        </div>
                       </div>
+                      <textarea
+                        class="form-control"
+                        placeholder="Votre message *"
+                        name="message"
+                        formControlName="message"
+                      ></textarea>
                     </div>
-                    <textarea
-                      class="form-control"
-                      placeholder="Votre message *"
-                      name="message"
-                      formControlName="message"
-                    ></textarea>
                   </div>
-                </div>
 
-                <div class="text-center">
-                  <!-- <div
-                    id="recaptcha"
-                    class="g-recaptcha"
-                    data-sitekey="6LcGVRcdAAAAABot7A1ecGhHWRvKINUhPyjCquG-"
-                  ></div> -->
-                  <form #form="ngForm">
-                    <div class="row mt-3">
-                      <div class="col-sm-12 mb-2">
-                        <re-captcha
+                  <div class="text-center">
+                    <!-- <div
                           id="recaptcha"
-                          name="recaptcha"
-                          #recaptcha="ngModel"
-                          [(ngModel)]="token"
-                          required
-                          [class.is-invalid]="
-                            recaptcha.invalid &&
-                            (recaptcha.dirty || recaptcha.touched)
-                          "
-                        ></re-captcha>
-                        <div
-                          *ngIf="
-                            recaptcha.invalid &&
-                            (recaptcha.dirty || recaptcha.touched)
-                          "
-                          class="invalid-feedback"
-                        >
-                          <div *ngIf="recaptcha.errors?.required">
-                            Ce champ est requis.
+                          class="g-recaptcha"
+                          data-sitekey="6LcGVRcdAAAAABot7A1ecGhHWRvKINUhPyjCquG-"
+                        ></div> -->
+                    <form #form="ngForm">
+                      <div class="row mt-3">
+                        <div class="col-sm-12 mb-2">
+                          <re-captcha
+                            id="recaptcha"
+                            name="recaptcha"
+                            #recaptcha="ngModel"
+                            [(ngModel)]="token"
+                            required
+                            [class.is-invalid]="
+                              recaptcha.invalid &&
+                              (recaptcha.dirty || recaptcha.touched)
+                            "
+                          ></re-captcha>
+                          <div
+                            *ngIf="
+                              recaptcha.invalid &&
+                              (recaptcha.dirty || recaptcha.touched)
+                            "
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="recaptcha.errors?.required">
+                              Ce champ est requis.
+                            </div>
                           </div>
                         </div>
                       </div>
+                    </form>
+                    <div class="form-group">
+                      <input
+                        class="form-control"
+                        type="hidden"
+                        [value]="token"
+                        id="captchaResponse"
+                        name="g-recaptcha-response"
+                        formControlName="g-recaptcha-response"
+                      />
                     </div>
-                  </form>
-                  <div class="form-group">
+                    <br />
                     <input
-                      class="form-control"
-                      type="hidden"
-                      [value]="token"
-                      id="captchaResponse"
-                      name="g-recaptcha-response"
-                      formControlName="g-recaptcha-response"
+                      type="submit"
+                      value="Envoyer"
+                      [disabled]="formData.invalid || form.invalid"
+                      class="btn btn-info btn-block rounded-0 py-2"
                     />
                   </div>
-                  <br />
-                  <input
-                    type="submit"
-                    value="Envoyer"
-                    [disabled]="formData.invalid || form.invalid"
-                    class="btn btn-info btn-block rounded-0 py-2"
-                  />
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
+
     <script>
       grecaptcha.ready(function () {
         grecaptcha
@@ -186,7 +213,6 @@
             action: "homepage",
           })
           .then(function (token) {
-            console.log(token);
             document.getElementById("captchaResponse").value = token;
           });
       });

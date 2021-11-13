@@ -1,6 +1,6 @@
-<!-- <nav class="navbar navbar-expand-lg navbar-dark" style="background: #651321">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: #651321">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Brand</a>
+    <a class="navbar-brand" href="#"></a>
     <button
       class="navbar-toggler"
       type="button"
@@ -12,9 +12,40 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="main_nav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" routerLink="/accueil">Accueil </a>
+      <ul class="navbar-nav" id="mainMenu">
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="navItem1"
+            aria-current="page"
+            routerLink="/accueil"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
+            (click)="activeClass(1)"
+            >Accueil
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="navItem2"
+            routerLink="/degustations-a-domicile"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
+            (click)="activeClass(2)"
+            >Dégustations à domicile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="navItem3"
+            routerLink="/degustations"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse.show"
+            (click)="activeClass(3)"
+            >Dégustations en boutique
+          </a>
         </li>
         <li class="nav-item dropdown">
           <a
@@ -29,12 +60,17 @@
               <a
                 class="dropdown-item white"
                 routerLink="/degustations-a-domicile"
+                (click)="activeClass(4)"
               >
                 A domicile</a
               >
             </li>
             <li>
-              <a class="dropdown-item white" routerLink="/degustations">
+              <a
+                (click)="activeClass(5)"
+                class="dropdown-item white"
+                routerLink="/degustations"
+              >
                 En boutique
               </a>
             </li>
@@ -45,41 +81,60 @@
             class="nav-link dropdown-toggle"
             style="cursor: pointer"
             data-bs-toggle="dropdown"
+            routerLink="/boutique"
           >
             Les vins
           </a>
           <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item white" routerLink="/produits"> Blancs</a>
-            </li>
-            <li>
-              <a class="dropdown-item white" routerLink="/produits"> Rouges </a>
+            <li *ngFor="let categorie of categories">
+              <a
+                class="dropdown-item white"
+                [routerLink]="['/categorie', categorie.idCategory]"
+                (click)="activeClass(6)"
+              >
+                {{ categorie.nom }}</a
+              >
             </li>
           </ul>
         </li>
         <li class="nav-item" *ngIf="isAuth == false">
-          <a class="nav-link" routerLink="/login"> Se connecter </a>
+          <a class="nav-link" routerLink="/login" (click)="activeClass(8)">
+            Se connecter
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/register" *ngIf="isAuth == false">
+          <a
+            class="nav-link"
+            routerLink="/register"
+            *ngIf="isAuth == false"
+            (click)="activeClass(9)"
+          >
             Créer un compte
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/register"> Cadeaux </a>
+          <a class="nav-link" routerLink="/register" (click)="activeClass(10)">
+            Cadeaux
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/contact"> Contact </a>
+          <a class="nav-link" routerLink="/contact" (click)="activeClass(11)">
+            Contact
+          </a>
         </li>
         <li class="nav-item" *ngIf="isAuth == true">
-          <a class="nav-link" (click)="logout()" style="cursor: pointer">
+          <a
+            class="nav-link"
+            (click)="logout()"
+            style="cursor: pointer"
+            (click)="activeClass(12)"
+          >
             Se déconnecter
           </a>
         </li>
       </ul>
     </div>
-    <!-- navbar-collapse.// -->
-<!-- <div>
+    <div>
       <div class="div-panier" style="cursor: pointer" routerLink="/panier">
         <span>
           <i class="bi bi-bag white"></i>
@@ -94,6 +149,5 @@
         {{ dataPanier.valeurTotale.toFixed(2) }}€
       </div>
     </div>
-  </div> -->
-<!-- container-fluid.// -->
-<!-- </nav> -->
+  </div>
+</nav>

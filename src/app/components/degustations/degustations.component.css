@@ -1,0 +1,25 @@
+body {
+  background: url("/assets/images/degustations/Altagama-degustation-bg2.jpg");
+  background-size: cover;
+  scrollbar-base-color: #ff0000;
+}
+
+iframe {
+  margin: 0 0 40% 3%;
+  border: solid 2px #651321;
+}
+
+h1 {
+  font-family: "LettersForLearners", "arial", "sans-serif";
+  font-size: 60px;
+  color: white;
+}
+
+h4 {
+  font-family: "LouisGeorgeCafeLight", "arial", "sans-serif";
+  margin: 10% 0 5% 3%;
+  width: 100%;
+  background: brown;
+  padding: 5px 5px 5px 5px;
+  color: white;
+}

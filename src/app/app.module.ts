@@ -29,21 +29,23 @@ import {
   RECAPTCHA_SETTINGS,
 } from 'ng-recaptcha';
 import { environment } from 'src/environments/environment';
-
+import { AddProduitComponent } from './components/boutique/add-produit/add-produit.component';
+import { CategoriesComponent } from './components/boutique/categories/categories.component';
 const appRoutes: Routes = [
-  // { path: 'test', component: ComingSoonComponent },
-  { path: 'accueil', component: ComingSoonComponent },
-  // { path: 'boutique', component: BoutiqueComponent },
-  // { path: 'panier', component: PanierComponent },
-  // { path: 'single-produit/:id', component: SingleProduitComponent },
-  // { path: 'contact', component: ContactComponent },
-  // { path: 'degustations', component: DegustationsComponent },
+  { path: 'accueil', component: AccueilComponent },
+  { path: 'add', component: AddProduitComponent },
+  { path: 'boutique', component: BoutiqueComponent },
+  { path: 'panier', component: PanierComponent },
+  { path: 'single-produit/:id', component: SingleProduitComponent },
+  { path: 'categorie/:id', component: CategoriesComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'degustations', component: DegustationsComponent },
   { path: 'degustations-a-domicile', component: ADomicileComponent },
-  // { path: 'login', component: LoginComponent },
-  // { path: 'register', component: RegisterComponent },
-  // { path: 'produits', component: ProduitsComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'produits', component: ProduitsComponent },
   { path: 'notfound', component: NotfoundComponent },
-  { path: '', component: ComingSoonComponent },
+  { path: '', component: AccueilComponent },
   { path: '**', redirectTo: 'notfound', pathMatch: 'full' },
 ];
 
@@ -65,6 +67,8 @@ const appRoutes: Routes = [
     ModalAddPanierComponent,
     DegustationsComponent,
     ADomicileComponent,
+    AddProduitComponent,
+    CategoriesComponent,
   ],
   imports: [
     BrowserModule,

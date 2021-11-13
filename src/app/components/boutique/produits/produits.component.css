@@ -3,9 +3,15 @@
   -moz-box-sizing: border-box;
 }
 body {
-  background: url(//subtlepatterns.com/patterns/scribble_light.png);
-  font-family: Calluna, Arial, sans-serif;
-  min-height: 1000px;
+  background: url("/assets/images/boutique/Altagama-boutique-bg.jpg") no-repeat
+    center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  font-size: 1.4rem; /* 1.4 rem vaut 14px */
+  height: 100%;
 }
 .columns_2 {
   -webkit-column-count: 2;
@@ -197,14 +203,16 @@ a.button:hover {
 }
 
 .card {
-  padding: 15px;
+  background: #ffffff1c;
+  padding: 4px;
 }
 
 .card:hover {
-  padding: 5px;
+  padding: 1px;
+  cursor: pointer;
 }
 
-i {
+.fa-shopping-basket {
   font-size: 20px;
   color: white;
   margin-left: 10px;
@@ -234,4 +242,101 @@ a.button {
 
 .page-link:hover {
   background: rgba(128, 26, 0, 0.473);
+}
+
+.btnDelete,
+.btnEdit {
+  color: rgba(128, 26, 0, 0.473);
+  border: none;
+}
+
+.card-img-top {
+  width: 90px;
+  height: 270px;
+  display: block;
+  margin: 0 auto;
+}
+
+.sanFelipe {
+  width: 200px;
+}
+
+.badge-prix {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  background: #651321;
+  color: white;
+}
+
+.description:hover {
+  background: rgba(0, 0, 0, 0.555);
+  color: white;
+}
+
+.description {
+  margin-top: -270px;
+  padding: 0 5px 0 20px;
+  width: 340px;
+  height: fit-content;
+  max-height: 270px;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: justify;
+  color: transparent;
+}
+
+/* Modal edit */
+
+.img-edit {
+  max-width: 20%;
+  height: auto;
+}
+
+.modal-body-edit {
+  background: url("/assets/images/update-produit/Altagama-formulaire-update-produit.png")
+    no-repeat;
+}
+
+.modal-header-edit {
+  background: #651321;
+  color: white;
+}
+
+.input-edit,
+.textarea-edit {
+  width: inherit;
+  background: #ffffff;
+  color: black;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.label-edit {
+  font-weight: bold;
+  color: white;
+}
+
+.col-sm-6-edit {
+  background: #ffffff05;
+}
+
+.textarea-edit {
+  height: 110px;
+}
+
+/* Set the style for a textarea scrollbar. */
+textarea::-webkit-scrollbar {
+  background-color: #f0f0f0;
+  width: 8px;
+}
+/* Set the style for a textarea scrollbar thumb. */
+textarea::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #651321;
+}
+/* Set the style for a textarea scrollbar thumb hover. */
+textarea::-webkit-scrollbar-thumb:hover {
+  background-color: #651321d2;
 }

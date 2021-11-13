@@ -79,3 +79,9 @@
   border: solid 1px white;
   font-size: 18px;
 }
+
+p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

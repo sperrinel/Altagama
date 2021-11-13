@@ -48,17 +48,17 @@
                     class="img-responsive"
                     src="{{ produit.image }}"
                     alt="prewiew"
-                    width="110"
-                    height="120"
+                    width="50"
+                    height="130"
                   />
                 </div>
                 <div class="col-sm-4">
-                  <h4 class="product-name">
+                  <h6 class="product-name">
                     <strong>{{ produit.nom }}</strong>
-                  </h4>
-                  <h4>
+                  </h6>
+                  <p>
                     <small>{{ produit.description }}</small>
-                  </h4>
+                  </p>
                 </div>
                 <div class="col-sm-2 text-end">
                   <h5>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="col-sm-2 text-end">
                   <h5>
-                    <strong> {{ produit.prix * 6 }} €</strong>
+                    <strong> {{ produit.prixCarton }} €</strong>
                   </h5>
                   <h6>(TTC)</h6>
                 </div>
