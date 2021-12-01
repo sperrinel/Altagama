@@ -80,3 +80,11 @@ h3 {
   transform: scale(0.77);
   transform-origin: 0 0;
 }
+
+.message-info-succes {
+  padding: 10px;
+  background: rgb(20, 151, 20);
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}

@@ -70,8 +70,6 @@ export class ProduitsService {
 
   //Récupère un seul produit
   getSingleProduit(id: number) {
-    console.log('coucou ' + id);
-
     return new Promise<Produits>((resolve, reject) => {
       firebase
         .database()

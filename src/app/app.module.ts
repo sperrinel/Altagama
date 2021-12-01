@@ -31,6 +31,8 @@ import {
 import { environment } from 'src/environments/environment';
 import { AddProduitComponent } from './components/boutique/add-produit/add-produit.component';
 import { CategoriesComponent } from './components/boutique/categories/categories.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 const appRoutes: Routes = [
   { path: 'accueil', component: AccueilComponent },
   { path: 'add', component: AddProduitComponent },
@@ -69,6 +71,7 @@ const appRoutes: Routes = [
     ADomicileComponent,
     AddProduitComponent,
     CategoriesComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +82,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     ContactService,

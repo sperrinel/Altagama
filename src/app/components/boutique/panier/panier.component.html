@@ -11,18 +11,20 @@
     <title>Document</title>
   </head>
   <body>
-    <div *ngIf="panier.length == 0" class="">
-      <h1>Le panier est vide</h1>
+    <div *ngIf="panier.length == 0">
+      <h1 style="text-align: center; margin-top: 20%; margin-bottom: 20%">
+        Votre panier est vide
+        <a [routerLink]="['/boutique']">Accès à la boutique</a>
+      </h1>
     </div>
 
     <div class="container" *ngIf="panier.length > 0">
       <div class="row row-header">
-        <div class="col-2">Produit(s)</div>
-        <div class="col-3"></div>
-        <div class="col-2">Quantité</div>
-        <div class="col-1">Prix</div>
-        <div class="col-2">Total</div>
-        <div class="col-2"></div>
+        <div class="col-2 header-col"></div>
+        <div class="col-3 header-col header-col-qty">Quantité</div>
+        <div class="col-3 header-col">Prix</div>
+        <div class="col-3 header-col">Total</div>
+        <div class="col-1 header-col"></div>
       </div>
     </div>
 
@@ -31,15 +33,15 @@
         <div class="col-2">
           <img class="media-object image-vin" src="{{ data.produit.image }}" />
         </div>
-        <div class="col-3">
-          <h4 class="media-heading">
-            {{ data.produit.nom }}
-          </h4>
-          <p class="media-heading">bodega: {{ data.produit.id }}</p>
-        </div>
-        <div class="col-2">
+        <!-- <div class="col-3">
+          <p class="media-heading">
+            <strong>Description: </strong> {{ data.produit.description }}
+          </p>
+        </div> -->
+        <div class="col-3 body-col col-quantity">
           <div class="quantity">
             <input
+              title="Ajouter un article"
               type="button"
               value="+"
               class="plus"
@@ -50,25 +52,50 @@
               step="1"
               min="1"
               [value]="data.quantite"
-              title="Qty"
+              title="Quantité"
               class="qty"
               size="4"
               disabled="true"
             />
             <input
+              title="Enlever un article"
               type="button"
               value="-"
               class="minus"
               (click)="supprimerProduit(data.produit)"
             />
           </div>
+          <span *ngIf="data.quantite == 6">
+            soit <strong>{{ data.carton }} carton</strong></span
+          >
+          <span *ngIf="data.quantite > 6">
+            dont <strong>{{ data.carton }} carton(s)</strong></span
+          >
         </div>
-        <div class="col-1">{{ data.produit.prix }}€</div>
-        <div class="col-2">
+        <div class="col-3 body-col">{{ data.produit.prix.toFixed(2) }}€</div>
+        <div class="col-3 body-col">
           {{ (data.produit.prix * data.quantite).toFixed(2) }}€
         </div>
-        <div class="col-2">
-          <i style="cursor: pointer" class="bi bi-trash"></i>
+        <div class="col-1 body-col">
+          <i
+            (click)="supprimerProduit(data.produit, true)"
+            style="cursor: pointer"
+            class="bi bi-trash"
+            title="Supprimer cet article"
+          ></i>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 product-name-col">
+          <h4
+            class="media-heading product-name"
+            data-bs-backdrop="static"
+            data-bs-keyboard="true"
+            data-bs-toggle="modal"
+            [attr.data-bs-target]="'#quick-view-' + data.produit.id"
+          >
+            <strong>{{ data.produit.nom }} </strong>
+          </h4>
         </div>
       </div>
     </div>
@@ -143,7 +170,7 @@
                   <i style="cursor: pointer" class="bi bi-trash"></i>
                 </td>
               </tr> -->
-    <div class="row row-code-promo">
+    <div class="row row-code-promo" *ngIf="panier.length > 0">
       <div class="col-1"></div>
       <div class="col-3">
         <input type="text" class="form-control" placeholder="Code promo" />
@@ -156,16 +183,16 @@
         />
       </div>
     </div>
-    <div class="row row-prix-total">
+    <div class="row row-prix-total" *ngIf="panier.length > 0">
       <div class="col-11 text-end">
-        <h4>
-          <strong>TOTAL: </strong>
-          &nbsp; {{ (dataPanier.valeurTotale * 1.2).toFixed(2) }}€
-        </h4>
+        <h3>
+          <strong>TOTAL (TTC): </strong>
+          &nbsp; {{ dataPanier.valeurTotale.toFixed(2) }}€
+        </h3>
       </div>
       <div class="col-1"></div>
     </div>
-    <div class="row row-paiement">
+    <div class="row row-paiement" *ngIf="panier.length > 0">
       <div class="col-11 text-end">
         <button type="button" class="btn btn-success">Paiement</button>
       </div>
@@ -219,5 +246,7 @@
         </div>
       </div>
     </div> -->
+    <app-single-produit [produits]="produits"></app-single-produit>
+    <app-modal-add-panier [produits]="produits"></app-modal-add-panier>
   </body>
 </html>

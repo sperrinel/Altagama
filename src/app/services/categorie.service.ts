@@ -28,7 +28,6 @@ export class CategorieService {
           },
           (error) => {
             reject(error);
-            console.log(error);
           }
         );
     });

@@ -40,7 +40,7 @@
                 <strong>{{ produit.nom }}</strong>
               </p>
               <label class="label-edit">degrés d'alcool:</label>
-              <p class="p-edit">{{ produit.alcool }}°</p>
+              <p class="p-edit">{{ produit.alcool }}%</p>
 
               <label class="label-edit">Service:</label>
               <p class="p-edit">{{ produit.service }}</p>
@@ -72,11 +72,11 @@
             </div>
             <div class="col-sm-6">
               <label class="label-edit">Prix:</label>
-              <p class="p-edit">{{ produit.prix }} €</p>
+              <p class="p-edit">{{ produit.prix.toFixed(2) }} €</p>
             </div>
             <div class="col-sm-6">
               <label class="label-edit">Prix d'un carton:</label>
-              <p class="p-edit">{{ produit.prixCarton }} €</p>
+              <p class="p-edit">{{ produit.prixCarton.toFixed(2) }} €</p>
             </div>
           </div>
         </div>

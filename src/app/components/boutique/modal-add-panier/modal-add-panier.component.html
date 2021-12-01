@@ -34,7 +34,7 @@
           data-bs-dismiss="modal"
           aria-label="Close"
         >
-          Retour à la boutique
+          Fermer
         </button>
       </div>
       <!-- start ligne produit -->
@@ -56,14 +56,14 @@
                   <h6 class="product-name">
                     <strong>{{ produit.nom }}</strong>
                   </h6>
-                  <p>
+                  <!-- <p>
                     <small>{{ produit.description }}</small>
-                  </p>
+                  </p> -->
                 </div>
                 <div class="col-sm-2 text-end">
                   <h5>
-                    <strong>{{ produit.prix }} €</strong>
-                    <h6>(TTC)</h6>
+                    <strong>{{ produit.prix.toFixed(2) }} €</strong>
+                    <!-- <h6>(TTC)</h6> -->
                   </h5>
                 </div>
                 <div class="col-sm-1">
@@ -82,7 +82,7 @@
                     <input
                       type="number"
                       step="1"
-                      min="1"
+                      min="0"
                       [(ngModel)]="nbArticle"
                       title="Qty"
                       class="qty"
@@ -90,7 +90,7 @@
                       disabled="true"
                     />
                     <input
-                      [disabled]="nbArticle == 1"
+                      [disabled]="nbArticle == 0"
                       type="button"
                       value="-"
                       class="minus"
@@ -108,9 +108,9 @@
                 </div>
                 <div class="col-sm-2 text-end">
                   <h5>
-                    <strong> {{ produit.prixCarton }} €</strong>
+                    <strong> {{ produit.prixCarton.toFixed(2) }} €</strong>
                   </h5>
-                  <h6>(TTC)</h6>
+                  <!-- <h6>(TTC)</h6> -->
                 </div>
                 <div class="col-sm-1">
                   <h5>
@@ -128,7 +128,7 @@
                     <input
                       type="number"
                       step="1"
-                      min="1"
+                      min="0"
                       [(ngModel)]="nbCarton"
                       title="Qty"
                       class="qty"
@@ -136,7 +136,7 @@
                       disabled="true"
                     />
                     <input
-                      [disabled]="nbCarton == 0 || nbArticle < 6"
+                      [disabled]="nbCarton == 0"
                       type="button"
                       value="-"
                       class="minus"
@@ -149,26 +149,30 @@
             </div>
             <!-- start infos facturation -->
             <div class="card-footer">
-              <p>
+              <!-- <p>
                 <strong>Montant HT :</strong>&nbsp;{{
                   (produit.prix * nbArticle).toFixed(2)
                 }}
                 €
-              </p>
-              <p>
+              </p> -->
+              <!-- <p>
                 <strong>TVA (20%) :</strong>&nbsp;
                 {{ (produit.prix * nbArticle * 0.2).toFixed(2) }} €
-              </p>
-              <p>
+              </p> -->
+              <p style="text-align: right">
                 <strong>TOTAL:</strong>&nbsp;{{
-                  (produit.prix * nbArticle * 1.2).toFixed(2)
+                  (
+                    produit.prix * nbArticle +
+                    produit.prixCarton * nbCarton
+                  ).toFixed(2)
                 }}
-                €
+                € (TTC)
               </p>
 
               <div class="pull-right" style="margin: 10px">
                 <button
-                  (click)="validerPanier(produit, nbArticle)"
+                  [disabled]="nbCarton == 0 && nbArticle == 0"
+                  (click)="validerPanier(produit, nbArticle, nbCarton)"
                   class="btn btn-success pull-right"
                   data-bs-dismiss="modal"
                   aria-label="Close"

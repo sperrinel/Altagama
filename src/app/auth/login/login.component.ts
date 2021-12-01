@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -13,9 +13,12 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   validationFormUser!: FormGroup;
   errorMessage: any;
+  messageInfo: string =
+    ' Un email de réinitialisation vient de vous être envoyer. Pensez à vérifier vos Spams.';
+  infoReset: boolean = false;
 
   validationUserMessage = {
     email: [
@@ -63,7 +66,6 @@ export class LoginComponent implements OnInit {
         },
         (error) => {
           this.errorMessage = error.toString();
-          console.log('console.log -----> ' + this.errorMessage);
           this.onGestionErreur();
 
           reject(error);
@@ -80,5 +82,13 @@ export class LoginComponent implements OnInit {
       return (this.errorMessage =
         "Une erreur s'est produite, vérifiez votre saisie.");
     }
+  }
+
+  getResetStatut(event: boolean) {
+    this.infoReset = event;
+  }
+
+  ngOnDestroy(): void {
+    this.infoReset = false;
   }
 }

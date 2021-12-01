@@ -11,5 +11,11 @@ footer {
 }
 
 .container {
-  display: none;
+}
+
+.mention-conso-alcool {
+  background: #530c18;
+  color: white;
+  margin: 0;
+  border-bottom: solid 2px #f300002b;
 }

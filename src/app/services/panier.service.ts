@@ -37,10 +37,12 @@ export class PanierService {
     }
     if (verifDoublon) {
       verifDoublon.quantite += nbArticle;
+      verifDoublon.carton = Math.floor(verifDoublon.quantite / 6);
     } else {
       const nouveauProduitAajouter = {
         quantite: nbArticle,
         produit: nouveauProduit,
+        carton: Math.floor(nbArticle / 6),
       };
       this.panier.push(nouveauProduitAajouter);
     }
@@ -62,17 +64,31 @@ export class PanierService {
     }
   }
 
-  supprimerProduitPanier(produitAsupprimer: Produits): void {
+  supprimerProduitPanier(
+    produitAsupprimer: Produits,
+    retirerArticle?: boolean
+  ): void {
+    //Connaître l'index du produit passé en paramètre
     const indexProduit = this.panier.findIndex(
       (element) => element.produit == produitAsupprimer
     );
-    if (indexProduit !== -1) {
-      if (this.panier[indexProduit].quantite > 1) {
-        this.panier[indexProduit].quantite--;
-      } else {
-        this.panier.splice(indexProduit, 1);
-      }
+    console.log(retirerArticle);
+    //Si on ne dit pas explicitement qu'on retire tout + si l'index existe dans le tableau + que la
+    //quantite est supérieur à 1, on décrémente de 1 sinon on supprime l'article du tableau
+    if (
+      retirerArticle !== true &&
+      indexProduit !== -1 &&
+      this.panier[indexProduit].quantite > 1
+    ) {
+      this.panier[indexProduit].quantite--;
+      this.panier[indexProduit].carton = Math.floor(
+        this.panier[indexProduit].quantite / 6
+      );
+
+      this.majPanier();
+    } else {
+      this.panier.splice(indexProduit, 1);
+      this.majPanier();
     }
-    this.majPanier();
   }
 }

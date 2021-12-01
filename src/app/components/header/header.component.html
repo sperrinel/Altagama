@@ -46,7 +46,7 @@
             (click)="activeClass(3)"
             >Dégustations en boutique
           </a>
-        </li>
+          <!-- </li>
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -75,7 +75,9 @@
               </a>
             </li>
           </ul>
+        </li> -->
         </li>
+
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -135,7 +137,11 @@
       </ul>
     </div>
     <div>
-      <div class="div-panier" style="cursor: pointer" routerLink="/panier">
+      <div
+        class="div-panier"
+        style="cursor: pointer"
+        [routerLink]="['/panier']"
+      >
         <span>
           <i class="bi bi-bag white"></i>
           <span

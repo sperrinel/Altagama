@@ -53,18 +53,18 @@
         <div class="col-md-4" *ngFor="let produit of produits; let i = index">
           <div>
             <button
+              (click)="sendIdProduit(i)"
               class="btn btn-outline-primary btnDelete"
               data-bs-toggle="modal"
               data-bs-target="#deleteProductModal"
-              (click)="sendIdProduit(i)"
             >
               <i class="bi bi-trash"></i>
             </button>
             <button
+              (click)="editProduct(i)"
               class="btn btn-outline-primary btnEdit"
               data-bs-toggle="modal"
               data-bs-target="#editProductModal"
-              (click)="editProduct(i)"
             >
               <i class="bi bi-pen"></i>
             </button>
@@ -83,10 +83,18 @@
               </p>
               <div class="card-body">
                 <h5 class="card-title">
-                  <a href="#">{{ produit.nom }}</a>
+                  <p
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="true"
+                    class="nomProduit"
+                    data-bs-toggle="modal"
+                    [attr.data-bs-target]="'#quick-view-' + produit.id"
+                  >
+                    {{ produit.nom }}
+                  </p>
                 </h5>
                 <h5 style="width: 80px; border-radius: 25px" class="badge-prix">
-                  {{ produit.prix }} €
+                  {{ produit.prix.toFixed(2) }} €
                 </h5>
                 <a
                   class="button"
@@ -111,6 +119,9 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12" style="height: 50px"></div>
+    </div>
     <div
       class="modal fade"
       id="deleteProductModal"
@@ -134,7 +145,10 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p>Êtes vous sûr(e) de vouloir supprimer cet article ?</p>
+            <p *ngIf="produit">
+              Êtes vous sûr(e) de vouloir supprimer
+              <strong>{{ produit.nom }}</strong> ?
+            </p>
           </div>
           <div class="modal-footer">
             <button
@@ -252,7 +266,7 @@
                       class="input-edit"
                       type="number"
                       name="prix"
-                      placeholder="{{ produit.prix }}"
+                      placeholder="{{ produit.prix.toFixed(2) }}"
                       [(ngModel)]="produit.prix"
                     />
                     <br /><br />
@@ -261,7 +275,7 @@
                       class="input-edit"
                       type="number"
                       name="prixCarton"
-                      placeholder="{{ produit.prixCarton }}"
+                      placeholder="{{ produit.prixCarton.toFixed(2) }}"
                       [(ngModel)]="produit.prixCarton"
                     />
                     <br /><br />

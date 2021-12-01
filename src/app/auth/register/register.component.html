@@ -37,9 +37,33 @@
               aria-labelledby="home-tab"
             >
               <h3 class="register-heading">Mes informations.</h3>
-              <div class="row register-form">
-                <div class="col-md-6">
-                  <div class="form-group">
+              <div class="register-heading"></div>
+
+              <form
+                [formGroup]="registerForm"
+                (ngSubmit)="onSubmit(registerForm.value)"
+              >
+                <div class="row register-form">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Email *"
+                        value=""
+                        formControlName="email"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Mot de passe *"
+                        value=""
+                        formControlName="password"
+                      />
+                    </div>
+                    <!-- <div class="form-group">
                     <input
                       type="text"
                       class="form-control"
@@ -54,34 +78,29 @@
                       placeholder="Nom *"
                       value=""
                     />
+                  </div> -->
                   </div>
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      placeholder="Email *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      placeholder="Confirmation Email *"
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      placeholder="Mot de passe *"
-                      value=""
-                    />
-                  </div>
-                  <div class="form-group">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Confirmation email *"
+                        value=""
+                        formControlName="confirmEmail"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Confirmation mot de passe *"
+                        value=""
+                        formControlName="confirmPassword"
+                      />
+                    </div>
+
+                    <!-- <div class="form-group">
                     <input
                       type="text"
                       minlength="10"
@@ -91,16 +110,57 @@
                       placeholder="Confirmation mot de passe *"
                       value=""
                     />
+                  </div> -->
+
+                    <div class="form-group">
+                      <input
+                        type="submit"
+                        class="btnRegister"
+                        value="Créer mon compte"
+                      />
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <input
-                      type="submit"
-                      class="btnRegister"
-                      value="Créer mon compte"
-                    />
+                  <div class="col-md-12">
+                    <ng-container
+                      *ngFor="let validation of validationUserMessage.email"
+                    >
+                      <div
+                        class="error_message"
+                        *ngIf="
+                          registerForm
+                            .get('email')
+                            ?.hasError(validation.type) &&
+                          (registerForm.get('email')?.dirty ||
+                            registerForm.get('email')?.touched)
+                        "
+                      >
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
+                    <div class="error_message" *ngIf="messageErreur !== ''">
+                      {{ messageErreur }}
+                    </div>
+                  </div>
+                  <div>
+                    <ng-container
+                      *ngFor="let validation of validationUserMessage.password"
+                    >
+                      <div
+                        class="error_message"
+                        *ngIf="
+                          registerForm
+                            .get('password')
+                            ?.hasError(validation.type) &&
+                          (registerForm.get('password')?.dirty ||
+                            registerForm.get('password')?.touched)
+                        "
+                      >
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

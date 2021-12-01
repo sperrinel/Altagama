@@ -94,30 +94,23 @@ export class ProduitsComponent implements OnInit {
       this.fileUrl = this.produit.image;
       this.copieFileUrl = this.produit.image;
       this.idProduit = index;
-      console.log(produit);
     });
   }
 
   sendIdProduit(index) {
     this.idProduit = index;
-    console.log('IdPorduit = ' + index);
+    this.produitsService
+      .getSingleProduit(this.idProduit)
+      .then((produit: Produits) => {
+        this.produit = produit;
+      });
 
     // this.router.navigate(['/deleteProduit']);
   }
 
   //supprime un produit
   onDeleteProduitToServer() {
-    this.produitsService
-      .getSingleProduit(this.idProduit)
-      .then((produit: Produits) => {
-        this.produit = produit;
-        console.log("quel produit j'ai récupéré :", this.produit);
-
-        this.produitsService.deleteProduitToServer(
-          this.produit,
-          this.idProduit
-        );
-      });
+    this.produitsService.deleteProduitToServer(this.produit, this.idProduit);
   }
 
   onSubmit(form: NgForm) {

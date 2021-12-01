@@ -10,6 +10,9 @@
     <!------ Include the above in your HEAD tag ---------->
   </head>
   <body id="LoginForm">
+    <p *ngIf="infoReset" class="message-info-succes">
+      {{ messageInfo }}
+    </p>
     <div class="container">
       <!-- <h1 class="form-heading">Accès à Mon compte Altagama</h1> -->
       <div class="login-form">
@@ -50,13 +53,18 @@
                 data-type="password"
               />
             </div>
-            <div class="forgot">
-              <a href="reset.html">Mot de passe oublié ?</a>
+            <div class="forgot" style="cursor: pointer">
+              <a data-bs-toggle="modal" data-bs-target="#resetPassword"
+                >Mot de passe oublié ?</a
+              >
             </div>
             <button type="submit" class="btn btn-primary">Se connecter</button>
           </form>
         </div>
       </div>
     </div>
+    <app-reset-password
+      (infoReset)="getResetStatut($event)"
+    ></app-reset-password>
   </body>
 </html>

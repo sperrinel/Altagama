@@ -15,7 +15,9 @@ import { ContactService } from 'src/app/services/contact.service';
   styleUrls: ['./a-domicile.component.css'],
 })
 export class ADomicileComponent implements OnInit {
+  messageInfo: string = 'Votre formulaire a bien été envoyé.';
   token: string = '';
+  infoContact: boolean = false;
   formData: FormGroup;
   siteKey = '6LcGVRcdAAAAABot7A1ecGhHWRvKINUhPyjCquG-';
   constructor(
@@ -55,7 +57,6 @@ export class ADomicileComponent implements OnInit {
       'g-recaptcha-response': this.token,
     });
     this.contact.postMessage(formValue.value);
-    this.router.navigate(['/accueil']);
-    alert('Votre message à bien été envoyé');
+    this.infoContact = true;
   }
 }

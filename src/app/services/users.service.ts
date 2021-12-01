@@ -2,30 +2,56 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Users } from '../modeles/users';
 import firebase from 'firebase';
+import DataSnapshot = firebase.database.DataSnapshot;
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
+  users: Users[];
+  // dialog: any;
   // user: Users;
   // userSubject = new Subject<Users>();
   isAuth: boolean = false;
   isAuthSubject = new Subject<boolean>();
-  constructor() {}
+  usersSubject = new Subject<Users[]>();
+  constructor(private router: Router) {}
 
   // emitUser(): void {
   //   this.userSubject.next(this.user);
   // }
 
   //Inscription
+  // async signup(value: { email: string; password: string }) {
+  //   firebase
+  //     .auth()
+  //     .createUserWithEmailAndPassword(value.email, value.password)
+  //     .then((res) => {
+  //       this.isAuth = true;
+  //       this.router.navigate(['/accueil']);
+  //       localStorage.setItem('user', JSON.stringify(res.user));
+  //     },);
+  // }
+
+  //Inscription
   async signup(value: { email: string; password: string }) {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(value.email, value.password)
-      .then((res) => {
-        this.isAuth = true;
-        localStorage.setItem('user', JSON.stringify(res.user));
-      });
+    return new Promise<any>((resolve, reject) => {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(value.email, value.password)
+        .then(
+          (res) => {
+            this.isAuth = true;
+            this.router.navigate(['/accueil']);
+            localStorage.setItem('user', JSON.stringify(res.user));
+            resolve(res);
+          },
+          (error) => {
+            resolve(error);
+          }
+        );
+    });
   }
 
   //Connexion
@@ -37,7 +63,6 @@ export class UsersService {
         .then(
           (data) => {
             resolve(data);
-            console.log(data.user);
           },
           (error) => reject(error)
         );
@@ -54,4 +79,47 @@ export class UsersService {
   emitIsAuthSubject() {
     this.isAuthSubject.next(this.isAuth);
   }
+
+  resetPassword(email: string) {
+    return firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        console.log(
+          'Un email de réinitialisation vient de vous être envoyer. Pensez à vérifier vos Spams.'
+        );
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ..
+      });
+  }
+
+  // Ajouter un user
+  // addUser(nouveauUser: Users) {
+  //   this.users.push(nouveauUser);
+  //   this.saveUsersToServer();
+  //   this.emitUsersSubject();
+  // }
+
+  //Enregistre tous les users en BDD
+  // saveUsersToServer() {
+  //   firebase.database().ref('/users').set(this.users);
+  // }
+
+  //Récupère liste entière des users.
+  // getProduitsFromServer() {
+  //   firebase
+  //     .database()
+  //     .ref('/users')
+  //     .on('value', (data: DataSnapshot) => {
+  //       this.users = data.val() ? data.val() : [];
+  //       this.emitUsersSubject();
+  //     });
+  // }
+
+  // emitUsersSubject() {
+  //   this.usersSubject.next(this.users);
+  // }
 }
