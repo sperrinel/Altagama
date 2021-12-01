@@ -1,4 +1,5 @@
 export interface Users {
+  role?: string;
   email: string;
   mdp?: string;
   idUser?: number;
@@ -6,6 +7,7 @@ export interface Users {
   pseudo?: string;
   prenom?: string;
   nom?: string;
-
   dateDeNaissance?: string;
+  adresseDeLivraison?: string;
+  adresseDeFacturation?: string;
 }

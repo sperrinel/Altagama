@@ -49,12 +49,34 @@ export class PanierService {
     this.majPanier();
   }
 
+  // majPanier() {
+  //   let nbArticle = 0;
+  //   let valeurTotale = 0;
+  //   this.panier.forEach((element) => {
+  //     nbArticle += element.quantite;
+  //     valeurTotale += element.produit.prix * element.quantite;
+  //   });
+  //   this.dataPanier.nbArticle = nbArticle;
+  //   this.dataPanier.valeurTotale = valeurTotale;
+  //   if (typeof localStorage !== 'undefined') {
+  //     localStorage.setItem('panier', JSON.stringify(this.panier));
+  //     localStorage.setItem('dataPanier', JSON.stringify(this.dataPanier));
+  //   }
+  // }
   majPanier() {
     let nbArticle = 0;
     let valeurTotale = 0;
+    let totalPrixArticlesHorsCarton = 0;
+    let prixCarton = 0;
     this.panier.forEach((element) => {
+      //Article total dans le panier
       nbArticle += element.quantite;
-      valeurTotale += element.produit.prix * element.quantite;
+      //Montant total des articles hors carton
+      totalPrixArticlesHorsCarton +=
+        (element.quantite - 6 * element.carton) * element.produit.prix;
+      //Montant total des cartons du panier
+      prixCarton += element.produit.prixCarton * element.carton;
+      valeurTotale = prixCarton + totalPrixArticlesHorsCarton;
     });
     this.dataPanier.nbArticle = nbArticle;
     this.dataPanier.valeurTotale = valeurTotale;

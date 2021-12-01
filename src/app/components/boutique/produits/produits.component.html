@@ -50,9 +50,13 @@
         </nav> -->
     <div class="container">
       <div class="row">
+        <div class="col-12" style="height: 50px"></div>
+      </div>
+      <div class="row">
         <div class="col-md-4" *ngFor="let produit of produits; let i = index">
           <div>
             <button
+              *ngIf="userEmail == 'flatoflash@orange.fr'"
               (click)="sendIdProduit(i)"
               class="btn btn-outline-primary btnDelete"
               data-bs-toggle="modal"
@@ -61,6 +65,7 @@
               <i class="bi bi-trash"></i>
             </button>
             <button
+              *ngIf="userEmail == 'flatoflash@orange.fr'"
               (click)="editProduct(i)"
               class="btn btn-outline-primary btnEdit"
               data-bs-toggle="modal"
@@ -79,7 +84,7 @@
                   alt="Altagama-produit-vin"
               /></a>
               <p class="description">
-                <br /><br /><br /><br /><br />{{ produit.description }}
+                <br /><br /><br />{{ produit.description }}
               </p>
               <div class="card-body">
                 <h5 class="card-title">
@@ -115,6 +120,9 @@
                 ></a>
               </div>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-12" style="height: 50px"></div>
           </div>
         </div>
       </div>

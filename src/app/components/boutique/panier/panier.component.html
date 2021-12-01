@@ -22,7 +22,7 @@
       <div class="row row-header">
         <div class="col-2 header-col"></div>
         <div class="col-3 header-col header-col-qty">Quantité</div>
-        <div class="col-3 header-col">Prix</div>
+        <div class="col-3 header-col">Prix unitaire</div>
         <div class="col-3 header-col">Total</div>
         <div class="col-1 header-col"></div>
       </div>
@@ -66,15 +66,36 @@
             />
           </div>
           <span *ngIf="data.quantite == 6">
-            soit <strong>{{ data.carton }} carton</strong></span
+            (soit
+            <strong>{{ data.carton }} </strong> carton à
+            <strong>{{ data.produit.prixCarton }}</strong> €)</span
           >
-          <span *ngIf="data.quantite > 6">
-            dont <strong>{{ data.carton }} carton(s)</strong></span
+          <span *ngIf="data.quantite > 6 && data.quantite < 12">
+            (dont
+            <strong>{{ data.carton }} </strong> carton à
+            <strong>{{ data.produit.prixCarton }}</strong> €)</span
+          >
+          <span *ngIf="data.quantite >= 12">
+            (dont
+            <strong>{{ data.carton }}</strong> cartons à
+            <strong> {{ data.produit.prixCarton }}</strong> €)</span
           >
         </div>
         <div class="col-3 body-col">{{ data.produit.prix.toFixed(2) }}€</div>
         <div class="col-3 body-col">
-          {{ (data.produit.prix * data.quantite).toFixed(2) }}€
+          <span [ngClass]="{ textBarre: data.quantite >= 6 }"
+            >{{ (data.produit.prix * data.quantite).toFixed(2) }}€
+          </span>
+          <span *ngIf="data.quantite >= 6">
+            <strong style="color: green"
+              >{{
+                (
+                  data.produit.prixCarton * data.carton +
+                  (data.quantite - 6 * data.carton) * data.produit.prix
+                ).toFixed(2)
+              }}€ </strong
+            >(avec remise)</span
+          >
         </div>
         <div class="col-1 body-col">
           <i

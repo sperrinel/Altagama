@@ -27,6 +27,7 @@ export class ProduitsComponent implements OnInit {
   copieFileUrl: String = '';
   fileUploaded = false;
   idProduit: number;
+  userEmail: string;
   // produits = [
   //   {
   //     id: 5,
@@ -46,7 +47,11 @@ export class ProduitsComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let dataUser = localStorage.getItem('user');
+    let parseUser = JSON.parse(dataUser);
+    this.userEmail = parseUser.email;
+  }
 
   ajouterAuPanier(produit: Produits): void {
     this.panierService.ajouterProduitAuPanier(produit);

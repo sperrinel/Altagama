@@ -146,3 +146,13 @@ h4 {
 .col-quantity {
   /* padding-left: 10%; */
 }
+
+span {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.textBarre {
+  text-decoration: line-through;
+  font-size: 13px;
+}

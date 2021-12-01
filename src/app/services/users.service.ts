@@ -62,12 +62,39 @@ export class UsersService {
         .signInWithEmailAndPassword(value.email, value.password)
         .then(
           (data) => {
+            localStorage.setItem('user', JSON.stringify(data.user));
             resolve(data);
+            console.log(data);
           },
           (error) => reject(error)
         );
     });
   }
+
+  //Connexion
+  // async loginFireauth(value: { email: string; password: string }) {
+  //   return new Promise<any>((resolve, reject) => {
+  //     firebase
+  //       .auth()
+  //       .signInWithEmailAndPassword(value.email, value.password)
+  //       .then(
+  //         (data) => {
+  //           const indexUser = this.users.findIndex(
+  //             (element) => element.email == value.email
+  //           );
+  //           //Attribution du rôle de l'user.
+  //           if (data.user.uid == 'ygr74qVO1ghSxGeOfFZJvtN5hFc2') {
+  //             this.users[indexUser].role = 'admin';
+  //           } else {
+  //             this.users[indexUser].role = 'visiteur';
+  //           }
+  //           resolve(data);
+  //           console.log(this.users[indexUser]);
+  //         },
+  //         (error) => reject(error)
+  //       );
+  //   });
+  // }
 
   //Déconnexion
   logout() {
