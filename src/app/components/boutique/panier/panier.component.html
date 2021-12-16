@@ -215,7 +215,9 @@
     </div>
     <div class="row row-paiement" *ngIf="panier.length > 0">
       <div class="col-11 text-end">
-        <button type="button" class="btn btn-success">Paiement</button>
+        <button type="button" class="btn btn-success" (click)="creerCommande()">
+          Continuer
+        </button>
       </div>
     </div>
     <div class="col-1"></div>

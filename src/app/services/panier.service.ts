@@ -113,4 +113,11 @@ export class PanierService {
       this.majPanier();
     }
   }
+
+  //Après le paiement, réinitialise le panier.
+  removeElementOfCart(): void {
+    this.panier = [];
+    console.log('this.panier = ' + this.panier);
+    this.majPanier();
+  }
 }

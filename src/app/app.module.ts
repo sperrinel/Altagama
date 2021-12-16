@@ -33,6 +33,7 @@ import { AddProduitComponent } from './components/boutique/add-produit/add-produ
 import { CategoriesComponent } from './components/boutique/categories/categories.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MentionsLegalesComponent } from './components/mentions-legales/mentions-legales.component';
 const appRoutes: Routes = [
   { path: 'accueil', component: AccueilComponent },
   { path: 'add', component: AddProduitComponent },
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'produits', component: ProduitsComponent },
+  { path: 'mentions-legales', component: MentionsLegalesComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: '', component: AccueilComponent },
   { path: '**', redirectTo: 'notfound', pathMatch: 'full' },
@@ -72,6 +74,7 @@ const appRoutes: Routes = [
     AddProduitComponent,
     CategoriesComponent,
     ResetPasswordComponent,
+    MentionsLegalesComponent,
   ],
   imports: [
     BrowserModule,

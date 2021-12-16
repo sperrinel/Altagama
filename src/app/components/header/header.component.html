@@ -78,16 +78,22 @@
         </li> -->
         </li>
 
-        <li class="nav-item dropdown">
+        <li class="dropdown listeVins">
           <a
             class="nav-link dropdown-toggle"
             style="cursor: pointer"
             data-bs-toggle="dropdown"
-            routerLink="/boutique"
           >
             Les vins
           </a>
           <ul class="dropdown-menu">
+            <a
+              class="dropdown-item white"
+              routerLink="/boutique"
+              (click)="activeClass(6)"
+            >
+              Tous les vins</a
+            >
             <li *ngFor="let categorie of categories">
               <a
                 class="dropdown-item white"
@@ -127,15 +133,26 @@
         <li class="nav-item" *ngIf="isAuth == true">
           <a
             class="nav-link"
-            (click)="logout()"
+            routerLink="/monCompte"
             style="cursor: pointer"
             (click)="activeClass(12)"
+          >
+            Mon compte
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isAuth == true">
+          <a
+            class="nav-link"
+            (click)="logout()"
+            style="cursor: pointer"
+            (click)="activeClass(13)"
           >
             Se déconnecter
           </a>
         </li>
       </ul>
     </div>
+
     <div>
       <div
         class="div-panier"
@@ -151,9 +168,16 @@
           >
         </span>
       </div>
-      <div *ngIf="dataPanier.valeurTotale !== 0" class="panier-total white">
+      <div
+        *ngIf="dataPanier.valeurTotale !== 0"
+        class="panier-total white"
+        style="float: right"
+      >
         {{ dataPanier.valeurTotale.toFixed(2) }}€
       </div>
     </div>
   </div>
 </nav>
+<!-- <p *ngIf="isAuth == true" class="displayUserName">
+  Bonjour {{ userEnCours.nom }}
+</p> -->

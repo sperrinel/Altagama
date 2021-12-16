@@ -264,7 +264,7 @@ a.button {
 }
 
 .card-img-top {
-  width: 90px;
+  width: 75px;
   height: 270px;
   display: block;
   margin: 0 auto;
@@ -357,4 +357,8 @@ textarea::-webkit-scrollbar-thumb:hover {
 .nomProduit:hover {
   cursor: pointer;
   color: #000000;
+}
+
+.detail:hover {
+  color: #651321;
 }

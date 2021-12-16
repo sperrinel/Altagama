@@ -8,6 +8,7 @@ import firebase from 'firebase';
 import { CategorieService } from 'src/app/services/categorie.service';
 import { Categorie } from 'src/app/modeles/categorie';
 import { Subscription } from 'rxjs';
+import { Users } from 'src/app/modeles/users';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,9 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
   isAuth: boolean = false;
+  usersTab: Users[] = []; //Tableau de tous les users
+  userEnCours: Users;
+  userSubscription: Subscription;
   panier: Panier[] = [];
   dataPanier;
   categories: Categorie[];
@@ -44,6 +48,22 @@ export class HeaderComponent implements OnInit {
         this.categories = data;
       });
     this.categorieService.emitCategoriessSubject();
+    if ((this.isAuth = true)) {
+      let dataUser = localStorage.getItem('user');
+      let parseUser = JSON.parse(dataUser);
+      let userEmail = parseUser.email;
+      this.userSubscription = this.users.usersSubject.subscribe(
+        (data: Users[]) => {
+          this.usersTab = data;
+          console.log(this.usersTab);
+          let userIndex = this.usersTab.findIndex(
+            (element) => element.email == userEmail
+          );
+          this.userEnCours = this.usersTab[userIndex];
+          console.log(this.userEnCours);
+        }
+      );
+    }
   }
 
   logout() {

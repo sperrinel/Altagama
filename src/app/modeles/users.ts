@@ -1,13 +1,13 @@
-export interface Users {
-  role?: string;
-  email: string;
-  mdp?: string;
-  idUser?: number;
-  sexe?: number;
-  pseudo?: string;
-  prenom?: string;
-  nom?: string;
-  dateDeNaissance?: string;
-  adresseDeLivraison?: string;
-  adresseDeFacturation?: string;
+export class Users {
+  constructor(
+    public email: string,
+    public role?: string,
+    public idUser?: string,
+    public sexe?: string,
+    public prenom?: string,
+    public nom?: string,
+    public dateDeNaissance?: string,
+    public adresseDeLivraison?: string,
+    public adresseDeFacturation?: string
+  ) {}
 }

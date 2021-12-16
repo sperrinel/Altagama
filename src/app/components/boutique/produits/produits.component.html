@@ -56,7 +56,7 @@
         <div class="col-md-4" *ngFor="let produit of produits; let i = index">
           <div>
             <button
-              *ngIf="userEmail == 'flatoflash@orange.fr'"
+              *ngIf="userEmail == 'adminMail'"
               (click)="sendIdProduit(i)"
               class="btn btn-outline-primary btnDelete"
               data-bs-toggle="modal"
@@ -65,7 +65,7 @@
               <i class="bi bi-trash"></i>
             </button>
             <button
-              *ngIf="userEmail == 'flatoflash@orange.fr'"
+              *ngIf="userEmail == 'adminMail'"
               (click)="editProduct(i)"
               class="btn btn-outline-primary btnEdit"
               data-bs-toggle="modal"
@@ -116,8 +116,10 @@
                   style="cursor: pointer"
                   data-bs-toggle="modal"
                   [attr.data-bs-target]="'#quick-view-' + produit.id"
-                  >Détails <i class="fa fa-fw fa-search"></i
-                ></a>
+                  ><h5 class="detail">
+                    Détails <i class="fa fa-fw fa-search detail"></i>
+                  </h5>
+                </a>
               </div>
             </div>
           </div>

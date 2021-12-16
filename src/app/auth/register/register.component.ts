@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
+import { Users } from 'src/app/modeles/users';
 
 @Component({
   selector: 'app-register',
@@ -61,6 +62,8 @@ export class RegisterComponent implements OnInit {
         '',
         Validators.compose([Validators.required, Validators.minLength(8)])
       ),
+      prenom: new FormControl('', Validators.compose([Validators.required])),
+      nom: new FormControl('', Validators.compose([Validators.required])),
     });
   }
 
@@ -76,7 +79,29 @@ export class RegisterComponent implements OnInit {
       return;
     } else {
       try {
-        this.usersService.signup(value).then((resp) => {
+        const role = 'visiteur';
+        const email = value.email;
+        const idUser = this.generateUniqueID();
+        const sexe = '';
+        const prenom = value.prenom;
+        const nom = value.nom;
+        const dateDeNaissance = '';
+        const adresseDeLivraison = '';
+        const adresseDeFacturation = '';
+
+        const nouveauUser = new Users(
+          email,
+          role,
+          idUser,
+          sexe,
+          prenom,
+          nom,
+          dateDeNaissance,
+          adresseDeLivraison,
+          adresseDeFacturation
+        );
+
+        this.usersService.signup(value, nouveauUser).then((resp) => {
           if (
             (resp = 'The email address is already in use by another account.')
           ) {
@@ -85,7 +110,19 @@ export class RegisterComponent implements OnInit {
         });
       } catch (err) {
         console.log(err);
+        this.messageErreur = "Une erreur s'est produite, veuillez réessayer";
       }
     }
+  }
+
+  generateUniqueID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      function (c) {
+        var r = (Math.random() * 16) | 0,
+          v = c == 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
   }
 }

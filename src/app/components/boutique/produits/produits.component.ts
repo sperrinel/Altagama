@@ -20,6 +20,7 @@ import { ProduitsService } from 'src/app/services/produits.service';
 })
 export class ProduitsComponent implements OnInit {
   @Input() produits: Produits[] = [];
+  adminMail: string = 'flatoflash@orange.fr';
   produit: Produits;
   copieProduit: Produits;
   fileIsUploading = false;

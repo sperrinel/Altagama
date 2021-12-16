@@ -9,14 +9,27 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class UsersService {
-  users: Users[];
+  users: Users[] = [];
   // dialog: any;
   // user: Users;
   // userSubject = new Subject<Users>();
   isAuth: boolean = false;
   isAuthSubject = new Subject<boolean>();
   usersSubject = new Subject<Users[]>();
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.getUsersFromServer();
+  }
+
+  //Récupère liste entière des users.
+  getUsersFromServer() {
+    firebase
+      .database()
+      .ref('/users')
+      .on('value', (data: DataSnapshot) => {
+        this.users = data.val() ? data.val() : [];
+        this.emitUsersSubject();
+      });
+  }
 
   // emitUser(): void {
   //   this.userSubject.next(this.user);
@@ -35,7 +48,7 @@ export class UsersService {
   // }
 
   //Inscription
-  async signup(value: { email: string; password: string }) {
+  async signup(value: { email: string; password: string }, nouveauUser) {
     return new Promise<any>((resolve, reject) => {
       firebase
         .auth()
@@ -44,6 +57,7 @@ export class UsersService {
           (res) => {
             this.isAuth = true;
             this.router.navigate(['/accueil']);
+            this.addUser(nouveauUser);
             localStorage.setItem('user', JSON.stringify(res.user));
             resolve(res);
           },
@@ -149,4 +163,20 @@ export class UsersService {
   // emitUsersSubject() {
   //   this.usersSubject.next(this.users);
   // }
+
+  // Ajouter un nouveau utilisateur
+  addUser(nouveauUser: Users) {
+    this.users.push(nouveauUser);
+    this.saveUsersToServer();
+    this.emitUsersSubject();
+  }
+
+  emitUsersSubject() {
+    this.usersSubject.next(this.users);
+  }
+
+  //Enregistre tous les users en BDD
+  saveUsersToServer() {
+    firebase.database().ref('/users').set(this.users);
+  }
 }
