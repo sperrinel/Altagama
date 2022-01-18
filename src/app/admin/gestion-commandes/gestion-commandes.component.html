@@ -1,0 +1,5 @@
+<div *ngIf="commandes">
+  <div class="col-md-4" *ngFor="let commande of commandes; let i = index">
+    <p>{{ commande.client.nom }}</p>
+  </div>
+</div>

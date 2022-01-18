@@ -55,37 +55,43 @@
       <div class="row">
         <div class="col-md-4" *ngFor="let produit of produits; let i = index">
           <div>
-            <button
-              *ngIf="userEmail == 'adminMail'"
-              (click)="sendIdProduit(i)"
-              class="btn btn-outline-primary btnDelete"
-              data-bs-toggle="modal"
-              data-bs-target="#deleteProductModal"
-            >
-              <i class="bi bi-trash"></i>
-            </button>
-            <button
-              *ngIf="userEmail == 'adminMail'"
-              (click)="editProduct(i)"
-              class="btn btn-outline-primary btnEdit"
-              data-bs-toggle="modal"
-              data-bs-target="#editProductModal"
-            >
-              <i class="bi bi-pen"></i>
-            </button>
-            <div class="card h-100">
-              <a href="#"
-                ><img
+            <div *ngIf="userEmail == adminMail" style="text-align: right">
+              <button
+                (click)="sendIdProduit(i)"
+                class="btn btn-outline-primary btnDelete"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteProductModal"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+              <button
+                style="margin: 0 10px 0 10px"
+                (click)="editProduct(i)"
+                class="btn btn-outline-primary btnEdit"
+                data-bs-toggle="modal"
+                data-bs-target="#editProductModal"
+              >
+                <i class="bi bi-pen"></i>
+              </button>
+            </div>
+            <div class="card h-100" style="margin: 5px 10px 5px 10px">
+              <div class="box-image" style="position: relative">
+                <img
                   [ngClass]="{
                     sanFelipe: produit.nom == 'SAN FELIPE 12 UVAS – LA RURAL'
                   }"
                   class="card-img-top"
                   src="{{ produit.image }}"
                   alt="Altagama-produit-vin"
-              /></a>
-              <p class="description">
-                <br /><br /><br />{{ produit.description }}
-              </p>
+                />
+              </div>
+              <div
+                class="box-description"
+                style="position: absolute; z-index: 9"
+              >
+                {{ produit.description }}
+              </div>
+
               <div class="card-body">
                 <h5 class="card-title">
                   <p
@@ -123,267 +129,267 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-12" style="height: 50px"></div>
+          </div> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12" style="height: 50px"></div>
+      </div>
+      <div
+        class="modal fade"
+        id="deleteProductModal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header modal-header-edit">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Supprimer un artice
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p *ngIf="produit">
+                Êtes vous sûr(e) de vouloir supprimer
+                <strong>{{ produit.nom }}</strong> ?
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="onDeleteProduitToServer()"
+                data-bs-dismiss="modal"
+              >
+                Valider la suppression
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12" style="height: 50px"></div>
-    </div>
-    <div
-      class="modal fade"
-      id="deleteProductModal"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header modal-header-edit">
-            <h5 class="modal-title" id="staticBackdropLabel">
-              Supprimer un artice
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p *ngIf="produit">
-              Êtes vous sûr(e) de vouloir supprimer
-              <strong>{{ produit.nom }}</strong> ?
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Annuler
-            </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              (click)="onDeleteProduitToServer()"
-              data-bs-dismiss="modal"
-            >
-              Valider la suppression
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div
-      class="modal fade"
-      id="editProductModal"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header modal-header-edit">
-            <h5 class="modal-title" id="staticBackdropLabel">
-              Modifier les informations du produit
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body modal-body-edit">
-            <form *ngIf="produit" (ngSubmit)="onSubmit(f)" #f="ngForm">
-              <img
-                *ngIf="produit.image"
-                src="{{ produit.image }}"
-                alt="image du produit"
-                class="img-edit"
-              />
-              <div class="mt-3">
-                <label class="label-edit">Modifier la photo</label>
-                <input
-                  type="file"
-                  style="margin-top: 20px"
-                  (change)="detectFiles($event)"
-                  class="form-control"
-                  accept="image/*"
-                  name="image"
-                  class="input-edit"
+      <div
+        class="modal fade"
+        id="editProductModal"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header modal-header-edit">
+              <h5 class="modal-title" id="staticBackdropLabel">
+                Modifier les informations du produit
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body modal-body-edit">
+              <form *ngIf="produit" (ngSubmit)="onSubmit(f)" #f="ngForm">
+                <img
+                  *ngIf="produit.image"
+                  src="{{ produit.image }}"
+                  alt="image du produit"
+                  class="img-edit"
                 />
-                <p class="text-success" *ngIf="fileUploaded">
-                  Fichier chargé !
-                </p>
-              </div>
-              <br />
-              <div class="container">
-                <div class="row">
-                  <div class="col-sm-6 col-sm-6-edit">
-                    <br />
-                    <label class="label-edit">Nom:</label><br />
-                    <input
-                      class="input-edit"
-                      type="text"
-                      name="nom"
-                      placeholder="{{ produit.nom }}"
-                      [(ngModel)]="produit.nom"
-                    /><br /><br />
-                    <label class="label-edit">Description:</label><br />
-                    <textarea
-                      type="text"
-                      name="description"
-                      placeholder="{{ produit.description }}"
-                      [(ngModel)]="produit.description"
-                      class="textarea-edit"
-                    ></textarea>
-                    <br /><br />
-                    <label class="label-edit">Catégorie:</label><br />
-                    <select
-                      *ngIf="produit.categorie == 1"
-                      name="categorie"
-                      class="input-edit"
-                      placeholder="vin rouge"
-                      [(ngModel)]="produit.categorie"
-                    >
-                      <option value="1">vin rouge</option>
-                      <option value="2">vin blanc</option>
-                    </select>
-                    <select
-                      *ngIf="produit.categorie == 2"
-                      name="categorie"
-                      class="input-edit"
-                      placeholder="vin blanc"
-                      [(ngModel)]="produit.categorie"
-                    >
-                      <option value="1">vin rouge</option>
-                      <option value="2">vin blanc</option>
-                    </select>
+                <div class="mt-3">
+                  <label class="label-edit">Modifier la photo</label>
+                  <input
+                    type="file"
+                    style="margin-top: 20px"
+                    (change)="detectFiles($event)"
+                    class="form-control"
+                    accept="image/*"
+                    name="image"
+                    class="input-edit"
+                  />
+                  <p class="text-success" *ngIf="fileUploaded">
+                    Fichier chargé !
+                  </p>
+                </div>
+                <br />
+                <div class="container">
+                  <div class="row">
+                    <div class="col-sm-6 col-sm-6-edit">
+                      <br />
+                      <label class="label-edit">Nom:</label><br />
+                      <input
+                        class="input-edit"
+                        type="text"
+                        name="nom"
+                        placeholder="{{ produit.nom }}"
+                        [(ngModel)]="produit.nom"
+                      /><br /><br />
+                      <label class="label-edit">Description:</label><br />
+                      <textarea
+                        type="text"
+                        name="description"
+                        placeholder="{{ produit.description }}"
+                        [(ngModel)]="produit.description"
+                        class="textarea-edit"
+                      ></textarea>
+                      <br /><br />
+                      <label class="label-edit">Catégorie:</label><br />
+                      <select
+                        *ngIf="produit.categorie == 1"
+                        name="categorie"
+                        class="input-edit"
+                        placeholder="vin rouge"
+                        [(ngModel)]="produit.categorie"
+                      >
+                        <option value="1">vin rouge</option>
+                        <option value="2">vin blanc</option>
+                      </select>
+                      <select
+                        *ngIf="produit.categorie == 2"
+                        name="categorie"
+                        class="input-edit"
+                        placeholder="vin blanc"
+                        [(ngModel)]="produit.categorie"
+                      >
+                        <option value="1">vin rouge</option>
+                        <option value="2">vin blanc</option>
+                      </select>
 
-                    <br /><br />
-                    <label class="label-edit">Prix:</label><br />
-                    <input
-                      class="input-edit"
-                      type="number"
-                      name="prix"
-                      placeholder="{{ produit.prix.toFixed(2) }}"
-                      [(ngModel)]="produit.prix"
-                    />
-                    <br /><br />
-                    <label class="label-edit">Prix d'un carton:</label><br />
-                    <input
-                      class="input-edit"
-                      type="number"
-                      name="prixCarton"
-                      placeholder="{{ produit.prixCarton.toFixed(2) }}"
-                      [(ngModel)]="produit.prixCarton"
-                    />
-                    <br /><br />
-                  </div>
-                  <div class="col-sm-6 col-sm-6-edit">
-                    <br />
-                    <label class="label-edit">Bodega:</label><br />
-                    <input
-                      class="input-edit"
-                      type="text"
-                      name="bodega"
-                      placeholder="{{ produit.bodega }}"
-                      [(ngModel)]="produit.bodega"
-                    />
-                    <br /><br />
-                    <label class="label-edit">degrés d'alcool:</label><br />
-                    <input
-                      class="input-edit"
-                      type="number"
-                      name="alcool"
-                      placeholder="{{ produit.alcool }}"
-                      [(ngModel)]="produit.alcool"
-                    />
-                    <br /><br />
-                    <label class="label-edit">Service:</label><br />
-                    <input
-                      class="input-edit"
-                      type="text"
-                      name="service"
-                      placeholder="{{ produit.service }}"
-                      [(ngModel)]="produit.service"
-                    />
-                    <br /><br />
-                    <label class="label-edit">Stock:</label><br />
-                    <input
-                      class="input-edit"
-                      type="number"
-                      name="stock"
-                      placeholder="{{ produit.stock }}"
-                      [(ngModel)]="produit.stock"
-                    />
-                    <br /><br />
-                    <label class="label-edit">Cepage:</label><br />
-                    <input
-                      class="input-edit"
-                      type="text"
-                      name="cepage"
-                      placeholder="{{ produit.cepage }}"
-                      [(ngModel)]="produit.cepage"
-                    />
-                    <br /><br />
-                    <label class="label-edit">Vignification:</label><br />
-                    <input
-                      class="input-edit"
-                      type="text"
-                      name="vignification"
-                      placeholder="{{ produit.vignification }}"
-                      [(ngModel)]="produit.vignification"
-                    />
-                    <br /><br />
-                    <label class="label-edit">Vieillissement:</label><br />
-                    <input
-                      class="input-edit"
-                      type="text"
-                      name="vieillissement"
-                      placeholder="{{ produit.vieillissement }}"
-                      [(ngModel)]="produit.vieillissement"
-                    />
-                    <br /><br />
-                    <label class="label-edit">Accompagnement:</label><br />
-                    <input
-                      class="input-edit"
-                      type="text"
-                      name="accompagnement"
-                      placeholder="{{ produit.accompagnement }}"
-                      [(ngModel)]="produit.accompagnement"
-                    />
-                    <br /><br />
+                      <br /><br />
+                      <label class="label-edit">Prix:</label><br />
+                      <input
+                        class="input-edit"
+                        type="number"
+                        name="prix"
+                        placeholder="{{ produit.prix.toFixed(2) }}"
+                        [(ngModel)]="produit.prix"
+                      />
+                      <br /><br />
+                      <label class="label-edit">Prix d'un carton:</label><br />
+                      <input
+                        class="input-edit"
+                        type="number"
+                        name="prixCarton"
+                        placeholder="{{ produit.prixCarton.toFixed(2) }}"
+                        [(ngModel)]="produit.prixCarton"
+                      />
+                      <br /><br />
+                    </div>
+                    <div class="col-sm-6 col-sm-6-edit">
+                      <br />
+                      <label class="label-edit">Bodega:</label><br />
+                      <input
+                        class="input-edit"
+                        type="text"
+                        name="bodega"
+                        placeholder="{{ produit.bodega }}"
+                        [(ngModel)]="produit.bodega"
+                      />
+                      <br /><br />
+                      <label class="label-edit">degrés d'alcool:</label><br />
+                      <input
+                        class="input-edit"
+                        type="number"
+                        name="alcool"
+                        placeholder="{{ produit.alcool }}"
+                        [(ngModel)]="produit.alcool"
+                      />
+                      <br /><br />
+                      <label class="label-edit">Service:</label><br />
+                      <input
+                        class="input-edit"
+                        type="text"
+                        name="service"
+                        placeholder="{{ produit.service }}"
+                        [(ngModel)]="produit.service"
+                      />
+                      <br /><br />
+                      <label class="label-edit">Stock:</label><br />
+                      <input
+                        class="input-edit"
+                        type="number"
+                        name="stock"
+                        placeholder="{{ produit.stock }}"
+                        [(ngModel)]="produit.stock"
+                      />
+                      <br /><br />
+                      <label class="label-edit">Cepage:</label><br />
+                      <input
+                        class="input-edit"
+                        type="text"
+                        name="cepage"
+                        placeholder="{{ produit.cepage }}"
+                        [(ngModel)]="produit.cepage"
+                      />
+                      <br /><br />
+                      <label class="label-edit">Vignification:</label><br />
+                      <input
+                        class="input-edit"
+                        type="text"
+                        name="vignification"
+                        placeholder="{{ produit.vignification }}"
+                        [(ngModel)]="produit.vignification"
+                      />
+                      <br /><br />
+                      <label class="label-edit">Vieillissement:</label><br />
+                      <input
+                        class="input-edit"
+                        type="text"
+                        name="vieillissement"
+                        placeholder="{{ produit.vieillissement }}"
+                        [(ngModel)]="produit.vieillissement"
+                      />
+                      <br /><br />
+                      <label class="label-edit">Accompagnement:</label><br />
+                      <input
+                        class="input-edit"
+                        type="text"
+                        name="accompagnement"
+                        placeholder="{{ produit.accompagnement }}"
+                        [(ngModel)]="produit.accompagnement"
+                      />
+                      <br /><br />
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Fermer
-                </button>
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  [disabled]="fileIsUploading"
-                >
-                  Valider
-                </button>
-              </div>
-            </form>
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Fermer
+                  </button>
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="fileIsUploading"
+                  >
+                    Valider
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>

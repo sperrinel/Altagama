@@ -179,4 +179,14 @@ export class UsersService {
   saveUsersToServer() {
     firebase.database().ref('/users').set(this.users);
   }
+
+  //Mettre à jour utilisateur sur le serveur.
+  updateUser(user: Users) {
+    let usersTab = this.users;
+    let userEmail = user.email;
+    let userIndex = usersTab.findIndex((element) => element.email == userEmail);
+    this.users[userIndex] = user;
+    this.saveUsersToServer();
+    this.emitUsersSubject();
+  }
 }

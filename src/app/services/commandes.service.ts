@@ -11,12 +11,12 @@ import DataSnapshot = firebase.database.DataSnapshot;
   providedIn: 'root',
 })
 export class CommandesService {
+  commandesSubject = new Subject<Commandes[]>();
+  commandes: Commandes[] = [];
+
   constructor(private panierService: PanierService) {
     this.getcommandesFromServer();
   }
-
-  commandesSubject = new Subject<Commandes[]>();
-  commandes: Commandes[] = [];
 
   // Ajouter une nouvelle commande
   addcommande(nouvelleCommande: Commandes) {

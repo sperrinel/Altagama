@@ -150,6 +150,23 @@
             Se déconnecter
           </a>
         </li>
+        <li
+          class="nav-item"
+          *ngIf="
+            isAuth == true &&
+            userEnCours &&
+            userEnCours.email == 'onvavoir@test.fr'
+          "
+        >
+          <a
+            [routerLink]="['/admin']"
+            class="nav-link"
+            style="cursor: pointer"
+            (click)="activeClass(14)"
+          >
+            admin
+          </a>
+        </li>
       </ul>
     </div>
 

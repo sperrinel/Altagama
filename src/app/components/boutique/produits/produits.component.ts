@@ -20,7 +20,7 @@ import { ProduitsService } from 'src/app/services/produits.service';
 })
 export class ProduitsComponent implements OnInit {
   @Input() produits: Produits[] = [];
-  adminMail: string = 'flatoflash@orange.fr';
+  adminMail: string = 'fafane@orange.fr';
   produit: Produits;
   copieProduit: Produits;
   fileIsUploading = false;
@@ -52,6 +52,7 @@ export class ProduitsComponent implements OnInit {
     let dataUser = localStorage.getItem('user');
     let parseUser = JSON.parse(dataUser);
     this.userEmail = parseUser.email;
+    console.log('email : ' + this.userEmail);
   }
 
   ajouterAuPanier(produit: Produits): void {

@@ -7,6 +7,9 @@ export const environment = {
   recaptcha: {
     siteKey: '6LcGVRcdAAAAABot7A1ecGhHWRvKINUhPyjCquG-',
   },
+  ID_CLIENT_PAYPAL:
+    'AePaZHS9iEOECHMQGZBeA6HkHI7PsQblRSPM0cK_vASumNyl3XtcRIbTlNAW4gCXRMJbcGrvvI9bGyEU',
+  CURRENCY: 'EUR',
 };
 
 /*

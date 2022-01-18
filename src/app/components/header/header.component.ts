@@ -36,7 +36,23 @@ export class HeaderComponent implements OnInit {
     this.dataPanier = this.panierService.dataPanier;
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
+        console.log('modif');
+
         this.isAuth = true;
+        let dataUser = localStorage.getItem('user');
+        let parseUser = JSON.parse(dataUser);
+        let userEmail = parseUser.email;
+        this.userSubscription = this.users.usersSubject.subscribe(
+          (data: Users[]) => {
+            this.usersTab = data;
+            console.log(this.usersTab);
+            let userIndex = this.usersTab.findIndex(
+              (element) => (element.email = userEmail)
+            );
+            this.userEnCours = this.usersTab[userIndex];
+            console.log('header : ', this.userEnCours);
+          }
+        );
       } else {
         this.isAuth = false;
       }
@@ -48,22 +64,6 @@ export class HeaderComponent implements OnInit {
         this.categories = data;
       });
     this.categorieService.emitCategoriessSubject();
-    if ((this.isAuth = true)) {
-      let dataUser = localStorage.getItem('user');
-      let parseUser = JSON.parse(dataUser);
-      let userEmail = parseUser.email;
-      this.userSubscription = this.users.usersSubject.subscribe(
-        (data: Users[]) => {
-          this.usersTab = data;
-          console.log(this.usersTab);
-          let userIndex = this.usersTab.findIndex(
-            (element) => element.email == userEmail
-          );
-          this.userEnCours = this.usersTab[userIndex];
-          console.log(this.userEnCours);
-        }
-      );
-    }
   }
 
   logout() {

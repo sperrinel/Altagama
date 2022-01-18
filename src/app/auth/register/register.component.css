@@ -120,3 +120,7 @@ body {
   width: 100%;
   text-align: left;
 }
+
+optgroup {
+  width: 50% !important;
+}

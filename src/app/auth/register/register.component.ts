@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import { Users } from 'src/app/modeles/users';
+import { Adresse } from 'src/app/modeles/adresse';
 
 @Component({
   selector: 'app-register',
@@ -64,6 +65,12 @@ export class RegisterComponent implements OnInit {
       ),
       prenom: new FormControl('', Validators.compose([Validators.required])),
       nom: new FormControl('', Validators.compose([Validators.required])),
+      dateNaissance: new FormControl('', [Validators.required]),
+      rue: new FormControl('', [Validators.required]),
+      codePostal: new FormControl('', [Validators.required]),
+      telephone: new FormControl('', [Validators.required]),
+      ville: new FormControl('', [Validators.required]),
+      pays: new FormControl('', [Validators.required]),
     });
   }
 
@@ -79,24 +86,31 @@ export class RegisterComponent implements OnInit {
       return;
     } else {
       try {
+        const adresse = new Adresse( // récupération des données dans une variable adresse
+          value.rue,
+          value.codePostal,
+          value.ville,
+          value.pays
+        );
+
         const role = 'visiteur';
         const email = value.email;
         const idUser = this.generateUniqueID();
-        const sexe = '';
         const prenom = value.prenom;
         const nom = value.nom;
-        const dateDeNaissance = '';
-        const adresseDeLivraison = '';
-        const adresseDeFacturation = '';
+        const dateDeNaissance = value.dateNaissance;
+        const telephone = value.telephone;
+        const adresseDeLivraison = adresse;
+        const adresseDeFacturation = adresse;
 
         const nouveauUser = new Users(
           email,
           role,
           idUser,
-          sexe,
           prenom,
           nom,
           dateDeNaissance,
+          telephone,
           adresseDeLivraison,
           adresseDeFacturation
         );

@@ -203,6 +203,196 @@
           value="Utiliser mon code"
         />
       </div>
+      <div class="row">
+        <div
+          class="container"
+          style="text-align: center; background: #651321; color: white"
+        >
+          <div class="col-12">
+            <form
+              *ngIf="modePaiement == true"
+              style="margin: 5% 0 5% 0"
+              [formGroup]="livraisonForm"
+              (ngSubmit)="onSubmitLivraisonForm()"
+            >
+              <h2>Concernant la livraison de la commande je souhaite...</h2>
+              <div>
+                <input
+                  type="radio"
+                  id="livraisonBoutique"
+                  name="choixLivraison"
+                  value="boutique"
+                  formControlName="choixLivraison"
+                  (click)="boutiqueSelected()"
+                />
+                <label for="scales" style="margin-left: 8px">
+                  <h4>venir la chercher en boutique.</h4></label
+                >
+              </div>
+
+              <div>
+                <input
+                  type="radio"
+                  id="livraisonAdresse"
+                  name="choixLivraison"
+                  value="livraison"
+                  formControlName="choixLivraison"
+                  (click)="livraisonSelected()"
+                />
+                <label for="livraisonAdresse" style="margin-left: 8px">
+                  <h4>qu'elle me soit expédiée.</h4></label
+                >
+              </div>
+
+              <div *ngIf="toggleLivraison == true">
+                <h2 style="margin-top: 5%">
+                  Vérifiez votre adresse de livraison et vos coordonnées.
+                </h2>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label style="float: left" class="control-label"
+                          >Prénom :</label
+                        >
+                        <input
+                          id="prenom"
+                          name="prenom"
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="userEnCours.prenom"
+                          formControlName="prenom"
+                        />
+                        <p class="help-block"></p>
+                      </div>
+
+                      <div class="form-group">
+                        <label style="float: left" class="control-label"
+                          >Nom :</label
+                        >
+                        <input
+                          id="nom"
+                          name="nom"
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="userEnCours.nom"
+                          formControlName="nom"
+                        />
+                        <p class="help-block"></p>
+                      </div>
+
+                      <div class="form-group">
+                        <label style="float: left" class="control-label"
+                          >Téléphone :</label
+                        >
+                        <input
+                          id="telephone"
+                          name="telephone"
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="userEnCours.telephone"
+                          formControlName="telephone"
+                        />
+                        <p class="help-block"></p>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label style="float: left" class="control-label"
+                          >Numéro et nom de la voie</label
+                        >
+                        <div>
+                          <input
+                            class="form-control"
+                            id="rue"
+                            name="rue"
+                            type="text"
+                            [(ngModel)]="userEnCours.adresseDeLivraison.rue"
+                            class="form-control"
+                            formControlName="rue"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label style="float: left" class="control-label"
+                          >Code postal :</label
+                        >
+                        <input
+                          id="code-postal"
+                          name="code-postal"
+                          type="text"
+                          pattern="[0-9]{5}"
+                          max="99999"
+                          [(ngModel)]="
+                            userEnCours.adresseDeLivraison.codePostal
+                          "
+                          class="form-control"
+                          formControlName="codePostal"
+                        />
+                        <p class="help-block"></p>
+                      </div>
+
+                      <div class="form-group">
+                        <label style="float: left" class="control-label"
+                          >Ville :</label
+                        >
+                        <input
+                          id="ville"
+                          name="ville"
+                          type="text"
+                          class="form-control"
+                          formControlName="ville"
+                          [(ngModel)]="userEnCours.adresseDeLivraison.ville"
+                        />
+                        <p class="help-block"></p>
+                      </div>
+
+                      <div class="form-group">
+                        <label style="float: left" class="control-label"
+                          >Pays :</label
+                        >
+                        <div>
+                          <input
+                            type="text"
+                            id="pays"
+                            name="pays"
+                            [(ngModel)]="userEnCours.adresseDeLivraison.pays"
+                            formControlName="pays"
+                            class="form-control"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <label for="adresseDeLivraisonClient">
+                  Adresse de livraison</label
+                >
+                <input
+                  style="margin-left: 8px"
+                  type="text"
+                  [placeholder]="userEnCours.adresseDeLivraison.pays"
+                  id="adresseDeLivraisonClient"
+                  name="adresseDeLivraisonClient"
+                  value=""
+                  formControlName="adresseDeLivraisonClient"
+                />
+              </div> -->
+
+              <button
+                class="btn btn-primary"
+                style="float: right"
+                type="submit"
+              >
+                Enregistrer
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row row-prix-total" *ngIf="panier.length > 0">
       <div class="col-11 text-end">
@@ -215,7 +405,12 @@
     </div>
     <div class="row row-paiement" *ngIf="panier.length > 0">
       <div class="col-11 text-end">
-        <button type="button" class="btn btn-success" (click)="creerCommande()">
+        <button
+          *ngIf="modePaiement == false"
+          type="button"
+          class="btn btn-success"
+          (click)="creerCommande()"
+        >
           Continuer
         </button>
       </div>
@@ -271,5 +466,6 @@
     </div> -->
     <app-single-produit [produits]="produits"></app-single-produit>
     <app-modal-add-panier [produits]="produits"></app-modal-add-panier>
+    <app-button-paypal [userEnCours]="userEnCours"></app-button-paypal>
   </body>
 </html>
