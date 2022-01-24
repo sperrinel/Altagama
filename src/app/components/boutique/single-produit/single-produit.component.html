@@ -54,8 +54,12 @@
               <p class="p-edit">{{ produit.cepage }}</p>
             </div>
             <div class="col-sm-12">
-              <label class="label-edit">Accompagnement:</label>
-              <p class="p-edit">{{ produit.accompagnement }}</p>
+              <label *ngIf="produit.accompagnement !== ''" class="label-edit"
+                >Accompagnement:</label
+              >
+              <p *ngIf="produit.accompagnement !== ''" class="p-edit">
+                {{ produit.accompagnement }}
+              </p>
             </div>
             <div class="col-sm-6">
               <label class="label-edit">Catégorie:</label>

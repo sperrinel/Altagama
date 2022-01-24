@@ -80,6 +80,9 @@ export class CommandesService {
       });
   }
 
+  //En fonction du mode de livraison des frais supplémentaire peuvent s'appliquer.
+  majorationFraisLivraison() {}
+
   // Supprimer une commande
   deleteCommandeToServer(commande: Commandes, idCommande: number) {
     firebase

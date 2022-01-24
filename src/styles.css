@@ -24,6 +24,10 @@
   font-family: AutumnSunrise;
   src: url(/assets/font/AutumnSunrise.ttf) format("opentype");
 }
+@font-face {
+  font-family: BAHNSCHRIFT1;
+  src: url(/assets/font/BAHNSCHRIFT1.ttf) format("opentype");
+}
 
 /* html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */

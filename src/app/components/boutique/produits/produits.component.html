@@ -88,8 +88,10 @@
               <div
                 class="box-description"
                 style="position: absolute; z-index: 9"
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="'#quick-view-' + produit.id"
               >
-                {{ produit.description }}
+                <p class="description-paragraph">{{ produit.description }}</p>
               </div>
 
               <div class="card-body">

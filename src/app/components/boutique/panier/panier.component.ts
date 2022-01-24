@@ -58,20 +58,20 @@ export class PanierComponent implements OnInit {
         console.log('modif');
 
         this.isAuth = true;
-        let dataUser = localStorage.getItem('user');
-        let parseUser = JSON.parse(dataUser);
-        let userEmail = parseUser.email;
-        this.userSubscription = this.userService.usersSubject.subscribe(
-          (data: Users[]) => {
-            this.usersTab = data;
-            console.log(this.usersTab);
-            let userIndex = this.usersTab.findIndex(
-              (element) => (element.email = userEmail)
-            );
-            this.userEnCours = this.usersTab[userIndex];
-            console.log('panier : ' + this.userEnCours);
-          }
-        );
+        // let dataUser = localStorage.getItem('user');
+        // let parseUser = JSON.parse(dataUser);
+        // let userEmail = parseUser.email;
+        // this.userSubscription = this.userService.usersSubject.subscribe(
+        //   (data: Users[]) => {
+        //     this.usersTab = data;
+        //     console.log(this.usersTab);
+        //     let userIndex = this.usersTab.findIndex(
+        //       (element) => (element.email = userEmail)
+        //     );
+        //     this.userEnCours = this.usersTab[userIndex];
+        //     console.log('panier : ' + this.userEnCours);
+        //   }
+        // );
       } else {
         this.isAuth = false;
       }
@@ -130,6 +130,13 @@ export class PanierComponent implements OnInit {
   }
 
   livraisonSelected() {
+    let users = this.userService.users;
+    let dataUser = localStorage.getItem('user');
+    let parseUser = JSON.parse(dataUser);
+    let userEmail = parseUser.email;
+    let userIndex = users.findIndex((element) => (element.email = userEmail));
+    this.userEnCours = users[userIndex];
+
     this.toggleLivraison = true;
   }
   boutiqueSelected() {
@@ -138,30 +145,204 @@ export class PanierComponent implements OnInit {
 
   onSubmitLivraisonForm() {
     const formValue = this.livraisonForm.value;
+    const choixLivraison = formValue['choixLivraison'];
+    if (choixLivraison == 'livraison') {
+      const adresseLivraisonClient = new Adresse(
+        formValue['rue'],
+        formValue['codePostal'],
+        formValue['ville'],
+        formValue['pays']
+      );
+      const telephone = formValue['telephone'];
+      const prenom = formValue['prenom'];
+      const nom = formValue['nom'];
+      const updateUserAdresseDeLivraison = new Users(
+        this.userEnCours.email,
+        this.userEnCours.role,
+        this.userEnCours.idUser,
+        prenom,
+        nom,
+        this.userEnCours.dateDeNaissance,
+        telephone,
+        adresseLivraisonClient,
+        this.userEnCours.adresseDeFacturation
+      );
 
-    const adresseLivraisonClient = new Adresse(
-      formValue['rue'],
-      formValue['codePostal'],
-      formValue['ville'],
-      formValue['pays']
+      this.userService.updateUser(updateUserAdresseDeLivraison);
+    }
+    let fraisDeLivraison = this.majorationFraisLivraison(
+      choixLivraison,
+      this.userEnCours,
+      this.dataPanier
     );
-    const telephone = formValue['telephone'];
-    const prenom = formValue['prenom'];
-    const nom = formValue['nom'];
-    const updateUserAdresseDeLivraison = new Users(
-      this.userEnCours.email,
-      this.userEnCours.role,
-      this.userEnCours.idUser,
-      prenom,
-      nom,
-      this.userEnCours.dateDeNaissance,
-      telephone,
-      adresseLivraisonClient,
-      this.userEnCours.adresseDeFacturation
-    );
+    console.log('fraisDeLivraison = ' + fraisDeLivraison);
+  }
 
-    this.userService.updateUser(updateUserAdresseDeLivraison);
-    console.log('terminé');
+  majorationFraisLivraison(
+    choixLivraison: string,
+    userEnCours: Users,
+    dataPanier: any
+  ) {
+    let valeurPanier: number = dataPanier.valeurTotale;
+    let fraisDeLivraison: number = 0;
+    if (choixLivraison == 'boutique') {
+      console.log(
+        '0€ de frais de livraison car vous avec choisi un livraison en ' +
+          choixLivraison +
+          '.'
+      );
+      return fraisDeLivraison;
+    } else if (choixLivraison == 'livraison') {
+      if (valeurPanier >= 300) {
+        return fraisDeLivraison;
+      } else {
+        this.checkCodePostal(userEnCours.adresseDeLivraison.codePostal);
+        console.log(
+          "Vous avez choisi '" +
+            choixLivraison +
+            "' des frais supplémentaires peuvent être engendrés."
+        );
+      }
+    } else {
+      console.log('Oops, bug :-(');
+    }
+  }
+  // 40 bouteilles = gratuit
+  // Nantes = 9 euros
+  // Presqu'île = 4 euros
+  // 300 euors = frais offert
+  // 1 à 6 bouteilles = 10 euros
+  // 7 à 12 bouteilles = 15 euros
+  // 13 à 18 bouteilles = 20 euros
+  // montant de la commande, si 300 ou sup = offert
+  // code postal, si local = 4 ou 9 euros
+  // sinon calcul nb de bouteille(s)
+  // Autre adresse: zone avec commentaire /!\ /!\
+  checkCodePostal(CP: number): number {
+    let frais = 0;
+    let codesPostauxTab: [
+      {
+        code: 44000;
+        frais: 9;
+      },
+      {
+        code: 44024;
+        frais: 9;
+      },
+      {
+        code: 44035;
+        frais: 9;
+      },
+      {
+        code: 44074;
+        frais: 9;
+      },
+      {
+        code: 44101;
+        frais: 9;
+      },
+      {
+        code: 44162;
+        frais: 9;
+      },
+      {
+        code: 44166;
+        frais: 9;
+      },
+      {
+        code: 44009;
+        frais: 9;
+      },
+      {
+        code: 44020;
+        frais: 9;
+      },
+      {
+        code: 44150;
+        frais: 9;
+      },
+      {
+        code: 44171;
+        frais: 9;
+      },
+      {
+        code: 44020;
+        frais: 9;
+      },
+      {
+        code: 44047;
+        frais: 9;
+      },
+      {
+        code: 44120;
+        frais: 9;
+      },
+      {
+        code: 4498;
+        frais: 9;
+      },
+      {
+        code: 44204;
+        frais: 9;
+      },
+      {
+        code: 44094;
+        frais: 9;
+      },
+      {
+        code: 44109;
+        frais: 9;
+      },
+      {
+        code: 44018;
+        frais: 9;
+      },
+      {
+        code: 44047;
+        frais: 9;
+      },
+      {
+        code: 44109;
+        frais: 9;
+      },
+      {
+        code: 44172;
+        frais: 9;
+      },
+      {
+        code: 4490;
+        frais: 9;
+      },
+      {
+        code: 44114;
+        frais: 9;
+      },
+      {
+        code: 44143;
+        frais: 9;
+      },
+      {
+        code: 4494;
+        frais: 9;
+      },
+      {
+        code: 44109;
+        frais: 9;
+      },
+      {
+        code: 44074;
+        frais: 9;
+      },
+      {
+        code: 44026;
+        frais: 9;
+      },
+      {
+        code: 44215;
+        frais: 9;
+      }
+    ];
+    return frais;
   }
 }
 

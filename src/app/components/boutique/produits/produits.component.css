@@ -3,13 +3,13 @@
   -moz-box-sizing: border-box;
 }
 body {
-  background: url("/assets/images/boutique/Altagama-boutique-bg.jpg") no-repeat
+  background: url("/assets/images/boutique/bg-boutique-vins.png") no-repeat
+    /* background: url("/assets/images/boutique/Altagama-boutique-bg.jpg") no-repeat */
     center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
   font-size: 1.4rem; /* 1.4 rem vaut 14px */
   height: 100%;
   width: 100%;
@@ -133,6 +133,11 @@ a.button:hover {
 .box-description:hover {
   background: rgba(0, 0, 0, 0.555);
   color: white;
+}
+
+.description-paragraph:hover {
+  cursor: pointer;
+  color: rgb(199, 199, 199);
 }
 
 .box-description {
