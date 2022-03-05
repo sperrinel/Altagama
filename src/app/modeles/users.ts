@@ -9,6 +9,7 @@ export class Users {
     public dateDeNaissance: string,
     public telephone: string,
     public adresseDeLivraison: Adresse,
-    public adresseDeFacturation?: Adresse
+    public adresseDeFacturation?: Adresse,
+    public autreAdresse?: Adresse
   ) {}
 }

@@ -1,0 +1,20 @@
+.mdpInterface {
+  margin: 20% 5% 30% 5%;
+}
+
+.input-mdp {
+  width: 60%;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+form {
+  margin: 0 25% 0 25%;
+  width: 40%;
+}
+
+.btn-mdp {
+  width: 30%;
+  display: inline-block;
+  margin-left: 15px;
+}

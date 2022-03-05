@@ -1,1 +1,84 @@
-<app-gestion-commandes></app-gestion-commandes>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container mdpInterface" *ngIf="templateAcces == false">
+      <h3 *ngIf="message !== ''">{{ message }}</h3>
+      <form
+        id="templateAcces"
+        [formGroup]="codeAccesForm"
+        (ngSubmit)="validerAcces(codeAccesForm.value)"
+      >
+        <span class="form-group">
+          <input
+            type="password"
+            class="form-control input-mdp"
+            id="inputPassword"
+            placeholder="Votre mot de passe"
+            name="password"
+            formControlName="password"
+            data-type="password"
+          />
+        </span>
+        <span class="col-sm-5">
+          <button
+            type="submit"
+            style="background-color: #651321; border-radius: 25px"
+            class="btn btn-primary btn-mdp"
+          >
+            Valider
+          </button>
+        </span>
+      </form>
+    </div>
+
+    <div *ngIf="codeAcces == true" class="container" style="margin: 5% 0 5% 0">
+      <div class="row">
+        <div class="col-sm-3" style="border-right-style: ridge">
+          <div style="margin: 10% 0 10% 0">
+            <button
+              class="btn btn-primary"
+              style="background-color: #651321; border-color: #651321"
+              (click)="voirCommandes()"
+            >
+              Les commandes
+            </button>
+          </div>
+          <div style="margin: 10% 0 10% 0">
+            <button
+              class="btn btn-primary"
+              style="background-color: #651321; border-color: #651321"
+            >
+              Modifier le texte
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div *ngIf="toggleCommande == true">
+            <h2 style="margin: 0 0 5% 0">
+              Les informations concernant les commandes.
+            </h2>
+            <app-gestion-commandes></app-gestion-commandes>
+          </div>
+
+          <div
+            style="
+              background-color: rgb(88, 255, 110);
+              color: white;
+              text-align: center;
+              width: 100%;
+            "
+            *ngIf="messageMAJuser == true"
+          >
+            {{ message }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

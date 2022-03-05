@@ -52,7 +52,7 @@ export class CommandesService {
     return new Promise<Commandes>((resolve, reject) => {
       firebase
         .database()
-        .ref('/commandes' + id)
+        .ref('/commandes/' + id)
         .once('value')
         .then(
           (data: DataSnapshot) => {
@@ -107,14 +107,18 @@ export class CommandesService {
     this.emitCommandesSubject();
   }
 
-  creerCommandes(panier: Panier[], user: Users) {
+  creerCommandes(panier: Panier[], price, user: Users, frais) {
     const id = this.generateUniqueID();
     const date = new Date().toLocaleString();
     const client = user;
     const contenuCommande = panier;
-    const prixCommande = this.panierService.dataPanier.valeurTotale;
-    const livraison = 'Guérande';
+    const prixCommande = price;
+    const fraisDeLivraison = frais;
+    const livraison = user.adresseDeLivraison;
     const codePromo = 'CODE2021';
+    const dateDeTraitement = '';
+    const traite = 'Non';
+    const commentaire = '';
 
     const commande = new Commandes(
       id,
@@ -122,8 +126,12 @@ export class CommandesService {
       client,
       contenuCommande,
       prixCommande,
+      fraisDeLivraison,
       livraison,
-      codePromo
+      codePromo,
+      dateDeTraitement,
+      traite,
+      commentaire
     );
 
     return commande;

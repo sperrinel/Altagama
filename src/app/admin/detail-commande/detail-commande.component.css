@@ -1,0 +1,24 @@
+label,
+p {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.container {
+  /* margin: 20px 0 20px 0; */
+}
+
+h3 {
+  margin: 40px 0 20px 0;
+  color: #651321;
+}
+
+h2 {
+  margin-bottom: 40px;
+  color: #651321;
+}
+.goBack:hover {
+  cursor: pointer;
+  font-weight: bold;
+  color: #651321;
+}

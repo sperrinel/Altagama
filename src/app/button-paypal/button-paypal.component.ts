@@ -15,6 +15,7 @@ import { UsersService } from '../services/users.service';
 export class ButtonPaypalComponent implements OnInit {
   @Input() price;
   @Input() userEnCours;
+  @Input() frais;
   payPalConfig: IPayPalConfig;
   currency = `${environment.CURRENCY}`;
   clientId = `${environment.ID_CLIENT_PAYPAL}`;
@@ -27,7 +28,9 @@ export class ButtonPaypalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initConfig();
-    console.log('userEnCours depuis paypal : ' + this.userEnCours);
+    console.log('userEnCours depuis paypal : ', this.userEnCours);
+    console.log('panier depuis paypal : ', this.panierService.panier);
+    console.log('price depuis paypal : ', this.price);
   }
   initConfig(): void {
     const price = this.price;
@@ -80,6 +83,16 @@ export class ButtonPaypalComponent implements OnInit {
           data,
           actions
         );
+
+        const commande = this.commandesService.creerCommandes(
+          this.panierService.panier,
+          this.price,
+          this.userEnCours,
+          this.frais
+        );
+
+        this.commandesService.addcommande(commande);
+
         actions.order.get().then((details) => {
           console.log(
             'onApprove - you can get full order details inside onApprove: ',

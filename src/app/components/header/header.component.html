@@ -121,11 +121,11 @@
             Créer un compte
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/register" (click)="activeClass(10)">
             Cadeaux
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link" routerLink="/contact" (click)="activeClass(11)">
             Contact
@@ -134,7 +134,7 @@
         <li class="nav-item" *ngIf="isAuth == true">
           <a
             class="nav-link"
-            routerLink="/monCompte"
+            routerLink="/mon-compte"
             style="cursor: pointer"
             (click)="activeClass(12)"
           >
@@ -153,11 +153,7 @@
         </li>
         <li
           class="nav-item"
-          *ngIf="
-            isAuth == true &&
-            userEnCours &&
-            userEnCours.email == 'onvavoir@test.fr'
-          "
+          *ngIf="isAuth == true && userEnCours && userEnCours.role == 'admin'"
         >
           <a
             [routerLink]="['/admin']"

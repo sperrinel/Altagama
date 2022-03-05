@@ -162,7 +162,8 @@ a.button:hover {
 }
 
 .modal-body-edit {
-  background: url("/assets/images/update-produit/Altagama-formulaire-update-produit.png")
+  background: url("/assets/images/update-produit/proposition1.png")
+    /* background: url("/assets/images/update-produit/Altagama-formulaire-update-produit.png") */
     no-repeat;
 }
 

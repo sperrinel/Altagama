@@ -1,0 +1,34 @@
+<!-- <button class="btn btn-default goBack" (click)="onBack()">Retour</button> -->
+<div class="container" style="background: #eee6e675; padding: 2% 5% 2% 5%">
+  <div class="col-12">
+    <h2>Infos commande</h2>
+    <label>Date: </label> {{ commande.date }} <br />
+    <label> Montant total:</label>
+    {{ commande.prixCommande.toFixed(2) }} €<br />
+    <label> Frais de livraison:</label>
+    {{ commande.fraisDeLivraison.toFixed(2) }} € <br />
+    <label> Traité:</label> {{ commande.traite }} <br />
+    <label *ngIf="commande.traite == 'Oui'"> Date de traitement:</label>
+    {{ commande.dateDeTraitement }} <br />
+    <label *ngIf="commande.commentaire != ''"> Commentaire:</label>
+    {{ commande.commentaire }}
+    <h3>Infos client</h3>
+    <label>NOM Prénom:</label> {{ commande.client.nom }}
+    {{ commande.client.prenom }} <br />
+    <label>Tel:</label> {{ commande.client.telephone }} <br />
+    <label>Email:</label> {{ commande.client.email }}
+    <h3>Adresse de livraison</h3>
+
+    {{ commande.livraison.rue }}
+    {{ commande.livraison.codePostal }}
+    {{ commande.livraison.ville }}
+    - {{ commande.livraison.pays }} <br /><br />
+    <h3>Article(s):</h3>
+    <br />
+
+    <div *ngFor="let article of commande.commande; let i = index">
+      <strong style="margin-left: 15px"> {{ article.quantite }} </strong> x
+      {{ article.produit.nom }}
+    </div>
+  </div>
+</div>

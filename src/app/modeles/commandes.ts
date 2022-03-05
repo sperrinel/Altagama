@@ -5,7 +5,11 @@ export class Commandes {
     public client,
     public commande,
     public prixCommande,
+    public fraisDeLivraison,
     public livraison,
-    public codePromo
+    public codePromo,
+    public dateDeTraitement,
+    public traite,
+    public commentaire
   ) {}
 }

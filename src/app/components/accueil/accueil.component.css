@@ -26,6 +26,7 @@ body {
 }
 
 p {
+  margin-top: 20px;
   font-size: 25px;
   padding: 10px;
   margin-bottom: 0px !important;
@@ -42,7 +43,7 @@ p {
 h1 {
   /* color: white; */
   color: #651321;
-  font-family: "AutumnSunrise", "arial", "sans-serif";
+  font-family: "BAHNSCHRIFT1", "AutumnSunrise", "arial", "sans-serif";
   font-size: 75px;
   /* text-shadow: -1px 4px 0 #000; */
 }
@@ -62,9 +63,8 @@ h3 {
   width: 100%;
 }
 
-p,
 h3 {
-  font-family: "LettersForLearners", "arial", "sans-serif";
+  font-family: "BAHNSCHRIFT1", "LettersForLearners", "arial", "sans-serif";
   font-size: 30px;
 }
 

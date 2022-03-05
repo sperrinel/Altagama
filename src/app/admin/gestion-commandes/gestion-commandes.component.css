@@ -1,0 +1,15 @@
+.accesCommandeDetail:hover {
+  cursor: pointer;
+  font-weight: bold;
+  color: #651321;
+}
+
+.col-md-3,
+.col-md-2,
+.col-md-1 {
+  align-self: center;
+}
+
+.commande-done {
+  background: rgb(216 245 157 / 83%);
+}

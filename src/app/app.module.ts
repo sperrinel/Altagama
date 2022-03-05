@@ -39,12 +39,15 @@ import { MessageModalComponent } from './message-modal/message-modal.component';
 import { AdminComponent } from './admin/admin.component';
 import { GestionCommandesComponent } from './admin/gestion-commandes/gestion-commandes.component';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { MonCompteComponent } from './auth/mon-compte/mon-compte.component';
+import { DetailCommandeComponent } from './admin/detail-commande/detail-commande.component';
 const appRoutes: Routes = [
   { path: 'accueil', component: AccueilComponent },
   { path: 'add', component: AddProduitComponent },
   { path: 'boutique', component: BoutiqueComponent },
   { path: 'panier', component: PanierComponent },
   { path: 'single-produit/:id', component: SingleProduitComponent },
+  { path: 'detail-commande/:id', component: DetailCommandeComponent },
   { path: 'categorie/:id', component: CategoriesComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'degustations', component: DegustationsComponent },
@@ -53,6 +56,7 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'produits', component: ProduitsComponent },
   { path: 'mentions-legales', component: MentionsLegalesComponent },
+  { path: 'mon-compte', component: MonCompteComponent },
   { path: 'admin', component: AdminComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: '', component: AccueilComponent },
@@ -85,6 +89,8 @@ const appRoutes: Routes = [
     MessageModalComponent,
     AdminComponent,
     GestionCommandesComponent,
+    MonCompteComponent,
+    DetailCommandeComponent,
   ],
   imports: [
     BrowserModule,

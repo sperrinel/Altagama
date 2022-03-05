@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container" style="margin: 5% 0 5% 0">
+      <div class="row">
+        <div class="col-sm-3" style="border-right-style: ridge">
+          <div style="margin: 15% 0 15% 0">
+            <button
+              class="btn btn-primary"
+              style="background-color: #651321; border-color: #651321"
+              (click)="updateProfile()"
+            >
+              Modifier mon profil
+            </button>
+            <button
+              class="btn btn-primary"
+              style="background-color: #651321; border-color: #651321"
+              (click)="deleteProfile()"
+            >
+              Supprimer mon profil
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="container" *ngIf="userEnCours && deleteUser == true">
+            <h5 style="text-align: justify; margin-bottom: 50px">
+              Afin de clôturer votre compte, veuillez confirmer vos identifiants
+              (adresse mail et mot de passe) et cliquer sur "je souhaite
+              supprimer mon compte". Attention, cette opération est
+              irréversible.
+            </h5>
+            <form
+              id="Login"
+              [formGroup]="validationFormUser"
+              (ngSubmit)="loginUser(validationFormUser.value)"
+            >
+              <p
+                style="color: darkred; text-align: center"
+                *ngIf="errorMessage !== null"
+              >
+                {{ errorMessage }}
+              </p>
+              <div class="form-group">
+                <label style="text-align: center">Adresse mail: </label>
+                <input
+                  type="email"
+                  class="form-control input-delete-account"
+                  id="inputEmail"
+                  placeholder="Votre adresse Email "
+                  formControlName="email"
+                />
+              </div>
+
+              <div class="form-group">
+                <label style="text-align: center">Mot de passe: </label>
+                <input
+                  type="password"
+                  class="form-control input-delete-account"
+                  id="inputPassword"
+                  placeholder="Votre mot de passe"
+                  name="password"
+                  formControlName="password"
+                  data-type="password"
+                />
+              </div>
+              <div class="col-sm-12">
+                <button
+                  type="submit"
+                  style="
+                    background-color: #651321;
+                    border-radius: 25px;
+                    float: right;
+                    width: 35%;
+                    margin-top: 40px;
+                  "
+                  class="btn btn-primary"
+                >
+                  je souhaite supprimer mon compte
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="container" *ngIf="userEnCours && updateUser == true">
+            <h2 style="margin: 0 0 5% 0">
+              Les informations concernant votre compte
+            </h2>
+
+            <div class="container">
+              <form
+                [formGroup]="updateUserForm"
+                (ngSubmit)="onSubmitUpdateUserForm()"
+              >
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="control-label">Prénom :</label>
+                      <input
+                        id="prenom"
+                        name="prenom"
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="userEnCours.prenom"
+                        formControlName="prenom"
+                      />
+                      <p class="help-block"></p>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label">Nom :</label>
+                      <input
+                        id="nom"
+                        name="nom"
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="userEnCours.nom"
+                        formControlName="nom"
+                      />
+                      <p class="help-block"></p>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label">Téléphone :</label>
+                      <input
+                        id="telephone"
+                        name="telephone"
+                        type="text"
+                        class="form-control"
+                        [(ngModel)]="userEnCours.telephone"
+                        formControlName="telephone"
+                      />
+                      <p class="help-block"></p>
+                    </div>
+                    <h4 style="margin: 5% 0 5% -3%">Votre adresse</h4>
+                    <div class="form-group">
+                      <label class="control-label"
+                        >Numéro et nom de la voie</label
+                      >
+
+                      <input
+                        class="form-control"
+                        id="rue"
+                        name="rue"
+                        type="text"
+                        [(ngModel)]="userEnCours.adresseDeLivraison.rue"
+                        class="form-control"
+                        formControlName="rue"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label">Code postal :</label>
+                      <input
+                        id="code-postal"
+                        name="code-postal"
+                        type="text"
+                        pattern="[0-9]{5}"
+                        max="99999"
+                        [(ngModel)]="userEnCours.adresseDeLivraison.codePostal"
+                        class="form-control"
+                        formControlName="codePostal"
+                      />
+                      <p class="help-block"></p>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label">Ville :</label>
+                      <input
+                        id="ville"
+                        name="ville"
+                        type="text"
+                        class="form-control"
+                        formControlName="ville"
+                        [(ngModel)]="userEnCours.adresseDeLivraison.ville"
+                      />
+                      <p class="help-block"></p>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="control-label">Pays :</label>
+
+                      <input
+                        type="text"
+                        id="pays"
+                        name="pays"
+                        [(ngModel)]="userEnCours.adresseDeLivraison.pays"
+                        formControlName="pays"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <br />
+
+                <br />
+                <button
+                  class="btn btn-primary"
+                  style="
+                    background-color: #651321;
+                    border-color: #651321;
+                    float: right;
+                  "
+                  type="submit"
+                >
+                  Modifier
+                </button>
+              </form>
+            </div>
+          </div>
+          <div
+            style="
+              background-color: rgb(88, 255, 110);
+              color: white;
+              text-align: center;
+              width: 100%;
+            "
+            *ngIf="messageMAJuser == true"
+          >
+            {{ message }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

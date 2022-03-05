@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit {
         const adresse = new Adresse( // récupération des données dans une variable adresse
           value.rue,
           value.codePostal,
-          value.ville,
+          value.ville.toUpperCase(),
           value.pays
         );
 
@@ -97,11 +97,12 @@ export class RegisterComponent implements OnInit {
         const email = value.email;
         const idUser = this.generateUniqueID();
         const prenom = value.prenom;
-        const nom = value.nom;
+        const nom = value.nom.toUpperCase();
         const dateDeNaissance = value.dateNaissance;
         const telephone = value.telephone;
         const adresseDeLivraison = adresse;
         const adresseDeFacturation = adresse;
+        const autreAdresse = adresse;
 
         const nouveauUser = new Users(
           email,
@@ -112,7 +113,8 @@ export class RegisterComponent implements OnInit {
           dateDeNaissance,
           telephone,
           adresseDeLivraison,
-          adresseDeFacturation
+          adresseDeFacturation,
+          autreAdresse
         );
 
         this.usersService.signup(value, nouveauUser).then((resp) => {

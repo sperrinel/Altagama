@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
             this.usersTab = data;
             console.log(this.usersTab);
             let userIndex = this.usersTab.findIndex(
-              (element) => (element.email = userEmail)
+              (element) => userEmail == element.email
             );
             this.userEnCours = this.usersTab[userIndex];
             console.log('header : ', this.userEnCours);

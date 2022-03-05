@@ -1,5 +1,59 @@
 <div *ngIf="commandes">
-  <div class="col-md-4" *ngFor="let commande of commandes; let i = index">
-    <p>{{ commande.client.nom }}</p>
+  <div class="row">
+    <div class="col-md-8" style="overflow-y: scroll; height: 800px">
+      <div class="container" style="border-bottom-style: groove">
+        <div class="row">
+          <div class="col-md-3"><strong>Date</strong></div>
+          <div class="col-md-3"><strong>Client</strong></div>
+          <div class="col-md-3"><strong>Montant</strong></div>
+          <div class="col-md-3"><strong>Traitée</strong></div>
+          <!-- <div class="col-md-2">Date de traitement</div>
+      <div class="col-md-2">Commentaire</div> -->
+        </div>
+      </div>
+      <div class="col-md-12" *ngFor="let commande of commandes; let i = index">
+        <div class="container" style="border-bottom-style: inset">
+          <div
+            class="row"
+            [ngClass]="{ 'commande-done': commande.traite == 'Oui' }"
+          >
+            <div class="col-md-3">
+              <p>{{ commande.date }}</p>
+            </div>
+            <div class="col-md-3 accesCommandeDetail">
+              <p (click)="voirCommande(commande.id)">
+                {{ commande.client.nom }}
+              </p>
+            </div>
+            <div class="col-md-3">
+              <p>{{ commande.prixCommande.toFixed(2) }} €</p>
+            </div>
+            <div class="col-md-2">
+              {{ commande.traite }}
+              <i *ngIf="commande.traite == 'Oui'" class="bi bi-check-lg"></i>
+            </div>
+            <div class="col-md-1" *ngIf="commande.traite == 'Non'">
+              <i
+                class="bi bi-clipboard-check"
+                style="cursor: pointer"
+                (click)="traiterCommande(commande.id)"
+              ></i>
+            </div>
+            <div class="col-md-1" *ngIf="commande.traite == 'Oui'">
+              <i
+                class="bi bi-x-lg"
+                style="cursor: pointer"
+                (click)="traiterCommande(commande.id)"
+              ></i>
+            </div>
+            <!-- <div class="col-md-2">{{ commande.dateDeTraitement }}</div>
+            <div class="col-md-2">{{ commande.commentaire }}</div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="detailCommande" class="col-md-4">
+      <app-detail-commande [commande]="detailCommande"></app-detail-commande>
+    </div>
   </div>
 </div>

@@ -17,111 +17,118 @@
         <a [routerLink]="['/boutique']">Accès à la boutique</a>
       </h1>
     </div>
-
-    <div class="container" *ngIf="panier.length > 0">
-      <div class="row row-header">
-        <div class="col-2 header-col"></div>
-        <div class="col-3 header-col header-col-qty">Quantité</div>
-        <div class="col-3 header-col">Prix unitaire</div>
-        <div class="col-3 header-col">Total</div>
-        <div class="col-1 header-col"></div>
-      </div>
-    </div>
-
-    <div class="container" *ngFor="let data of panier">
-      <div class="row row-produit">
-        <div class="col-2">
-          <img class="media-object image-vin" src="{{ data.produit.image }}" />
+    <div class="contenu-panier" *ngIf="validationFraisLivraison == false">
+      <div class="container" *ngIf="panier.length > 0">
+        <h1 class="panierTitle">Mon panier</h1>
+        <div class="row row-header">
+          <div class="col-2 header-col"></div>
+          <div class="col-3 header-col header-col-qty">Quantité</div>
+          <div class="col-3 header-col">Prix unitaire</div>
+          <div class="col-3 header-col">Total</div>
+          <div class="col-1 header-col"></div>
         </div>
-        <!-- <div class="col-3">
+      </div>
+
+      <div class="container" *ngFor="let data of panier">
+        <div class="row row-produit">
+          <div class="col-2">
+            <img
+              [ngClass]="{
+                sanFelipe: data.produit.nom == 'SAN FELIPE 12 UVAS – LA RURAL'
+              }"
+              class="media-object image-vin"
+              src="{{ data.produit.image }}"
+            />
+          </div>
+          <!-- <div class="col-3">
           <p class="media-heading">
             <strong>Description: </strong> {{ data.produit.description }}
           </p>
         </div> -->
-        <div class="col-3 body-col col-quantity">
-          <div class="quantity">
-            <input
-              title="Ajouter un article"
-              type="button"
-              value="+"
-              class="plus"
-              (click)="ajouterProduit(data.produit)"
-            />
-            <input
-              type="text"
-              step="1"
-              min="1"
-              [value]="data.quantite"
-              title="Quantité"
-              class="qty"
-              size="4"
-              disabled="true"
-            />
-            <input
-              title="Enlever un article"
-              type="button"
-              value="-"
-              class="minus"
-              (click)="supprimerProduit(data.produit)"
-            />
+          <div class="col-3 body-col col-quantity">
+            <div class="quantity">
+              <input
+                title="Ajouter un article"
+                type="button"
+                value="+"
+                class="plus"
+                (click)="ajouterProduit(data.produit)"
+              />
+              <input
+                type="text"
+                step="1"
+                min="1"
+                [value]="data.quantite"
+                title="Quantité"
+                class="qty"
+                size="4"
+                disabled="true"
+              />
+              <input
+                title="Enlever un article"
+                type="button"
+                value="-"
+                class="minus"
+                (click)="supprimerProduit(data.produit)"
+              />
+            </div>
+            <span *ngIf="data.quantite == 6">
+              (soit
+              <strong>{{ data.carton }} </strong> carton à
+              <strong>{{ data.produit.prixCarton }}</strong> €)</span
+            >
+            <span *ngIf="data.quantite > 6 && data.quantite < 12">
+              (dont
+              <strong>{{ data.carton }} </strong> carton à
+              <strong>{{ data.produit.prixCarton }}</strong> €)</span
+            >
+            <span *ngIf="data.quantite >= 12">
+              (dont
+              <strong>{{ data.carton }}</strong> cartons à
+              <strong> {{ data.produit.prixCarton }}</strong> €)</span
+            >
           </div>
-          <span *ngIf="data.quantite == 6">
-            (soit
-            <strong>{{ data.carton }} </strong> carton à
-            <strong>{{ data.produit.prixCarton }}</strong> €)</span
-          >
-          <span *ngIf="data.quantite > 6 && data.quantite < 12">
-            (dont
-            <strong>{{ data.carton }} </strong> carton à
-            <strong>{{ data.produit.prixCarton }}</strong> €)</span
-          >
-          <span *ngIf="data.quantite >= 12">
-            (dont
-            <strong>{{ data.carton }}</strong> cartons à
-            <strong> {{ data.produit.prixCarton }}</strong> €)</span
-          >
+          <div class="col-3 body-col">{{ data.produit.prix.toFixed(2) }}€</div>
+          <div class="col-3 body-col">
+            <span [ngClass]="{ textBarre: data.quantite >= 6 }"
+              >{{ (data.produit.prix * data.quantite).toFixed(2) }}€
+            </span>
+            <span *ngIf="data.quantite >= 6">
+              <strong style="color: green"
+                >{{
+                  (
+                    data.produit.prixCarton * data.carton +
+                    (data.quantite - 6 * data.carton) * data.produit.prix
+                  ).toFixed(2)
+                }}€ </strong
+              >(avec remise)</span
+            >
+          </div>
+          <div class="col-1 body-col">
+            <i
+              (click)="supprimerProduit(data.produit, true)"
+              style="cursor: pointer"
+              class="bi bi-trash"
+              title="Supprimer cet article"
+            ></i>
+          </div>
         </div>
-        <div class="col-3 body-col">{{ data.produit.prix.toFixed(2) }}€</div>
-        <div class="col-3 body-col">
-          <span [ngClass]="{ textBarre: data.quantite >= 6 }"
-            >{{ (data.produit.prix * data.quantite).toFixed(2) }}€
-          </span>
-          <span *ngIf="data.quantite >= 6">
-            <strong style="color: green"
-              >{{
-                (
-                  data.produit.prixCarton * data.carton +
-                  (data.quantite - 6 * data.carton) * data.produit.prix
-                ).toFixed(2)
-              }}€ </strong
-            >(avec remise)</span
-          >
-        </div>
-        <div class="col-1 body-col">
-          <i
-            (click)="supprimerProduit(data.produit, true)"
-            style="cursor: pointer"
-            class="bi bi-trash"
-            title="Supprimer cet article"
-          ></i>
+        <div class="row">
+          <div class="col-12 product-name-col">
+            <h4
+              class="media-heading product-name"
+              data-bs-backdrop="static"
+              data-bs-keyboard="true"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#quick-view-' + data.produit.id"
+            >
+              <strong>{{ data.produit.nom }} </strong>
+            </h4>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 product-name-col">
-          <h4
-            class="media-heading product-name"
-            data-bs-backdrop="static"
-            data-bs-keyboard="true"
-            data-bs-toggle="modal"
-            [attr.data-bs-target]="'#quick-view-' + data.produit.id"
-          >
-            <strong>{{ data.produit.nom }} </strong>
-          </h4>
-        </div>
-      </div>
-    </div>
 
-    <!-- <div class="container" *ngIf="panier.length > 0">
+      <!-- <div class="container" *ngIf="panier.length > 0">
       <div class="row">
         <div class="col-sm-12 col-md-10 col-md-offset-1">
           <table class="table table-hover">
@@ -191,189 +198,293 @@
                   <i style="cursor: pointer" class="bi bi-trash"></i>
                 </td>
               </tr> -->
-    <div class="row row-code-promo" *ngIf="panier.length > 0">
-      <div class="col-1"></div>
-      <div class="col-3">
-        <input type="text" class="form-control" placeholder="Code promo" />
-      </div>
-      <div class="col-3">
-        <input
-          type="submit"
-          class="btn btn-default"
-          value="Utiliser mon code"
-        />
-      </div>
-      <div class="row">
-        <div
-          class="container"
-          style="
-            text-align: center;
-            background: #651321;
-            color: white;
-            border-radius: 15px;
-          "
-        >
-          <div class="col-12">
-            <form
-              *ngIf="modePaiement == true"
-              style="margin: 5% 0 5% 0"
-              [formGroup]="livraisonForm"
-              (ngSubmit)="onSubmitLivraisonForm()"
-            >
-              <h2>Concernant la livraison de la commande je souhaite...</h2>
-              <div>
-                <input
-                  type="radio"
-                  id="livraisonBoutique"
-                  name="choixLivraison"
-                  value="boutique"
-                  formControlName="choixLivraison"
-                  (click)="boutiqueSelected()"
-                />
-                <label for="scales" style="margin-left: 8px">
-                  <h4>venir la chercher en boutique.</h4></label
-                >
-              </div>
+      <div class="row row-code-promo" *ngIf="panier.length > 0">
+        <div class="col-1"></div>
+        <div class="col-3">
+          <input type="text" class="form-control" placeholder="Code promo" />
+        </div>
+        <div class="col-3">
+          <input
+            type="submit"
+            class="btn btn-default"
+            value="Utiliser mon code"
+          />
+        </div>
+        <div class="row">
+          <div
+            class="container"
+            style="
+              text-align: center;
+              background: #651321;
+              color: white;
+              border-radius: 15px;
+            "
+          >
+            <div class="col-12">
+              <form
+                *ngIf="modePaiement == true"
+                style="margin: 5% 0 5% 0"
+                [formGroup]="livraisonForm"
+                (ngSubmit)="onSubmitLivraisonForm()"
+              >
+                <h2>Concernant la livraison de la commande je souhaite...</h2>
+                <div>
+                  <input
+                    type="radio"
+                    id="livraisonBoutique"
+                    name="choixLivraison"
+                    value="boutique"
+                    formControlName="choixLivraison"
+                    (click)="boutiqueSelected()"
+                  />
+                  <label for="scales" style="margin-left: 8px">
+                    <h4>venir la chercher en boutique.</h4></label
+                  >
+                </div>
 
-              <div>
-                <input
-                  type="radio"
-                  id="livraisonAdresse"
-                  name="choixLivraison"
-                  value="livraison"
-                  formControlName="choixLivraison"
-                  (click)="livraisonSelected()"
-                />
-                <label for="livraisonAdresse" style="margin-left: 8px">
-                  <h4>qu'elle me soit expédiée.</h4></label
-                >
-              </div>
-
-              <div *ngIf="toggleLivraison == true">
-                <h2 style="margin-top: 5%">
-                  Vérifiez votre adresse de livraison et vos coordonnées.
-                </h2>
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-6">
+                <div>
+                  <input
+                    type="radio"
+                    id="livraisonAdresse"
+                    name="choixLivraison"
+                    value="livraison"
+                    formControlName="choixLivraison"
+                    (click)="livraisonSelected()"
+                  />
+                  <label for="livraisonAdresse" style="margin-left: 8px">
+                    <h4>qu'elle me soit expédiée à mon domicile.</h4></label
+                  >
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="autreAdresse"
+                    name="choixLivraison"
+                    value="autreAdresse"
+                    formControlName="choixLivraison"
+                    (click)="autreAdresseSelected()"
+                  />
+                  <label for="livraisonAdresse" style="margin-left: 8px">
+                    <h4>
+                      qu'elle me soit expédiée à une adresse différente de mon
+                      domicile
+                    </h4></label
+                  >
+                </div>
+                <div *ngIf="autreAdresseCommentaire == true">
+                  <h2 style="margin-top: 5%">
+                    Veuillez renseigner l'adresse de livraison souhaitée.
+                  </h2>
+                  <div class="container">
+                    <div class="row">
+                      <!-- <div class="col-md-6">
                       <div class="form-group">
                         <label style="float: left" class="control-label"
-                          >Prénom :</label
+                          >Adresse :</label
                         >
                         <input
-                          id="prenom"
-                          name="prenom"
+                          id="autreAdresseRenseignee"
+                          name="autreAdresseRenseignee"
                           type="text"
                           class="form-control"
-                          [(ngModel)]="userEnCours.prenom"
-                          formControlName="prenom"
+                          formControlName="autreAdresseRenseignee"
                         />
                         <p class="help-block"></p>
                       </div>
+                    </div> -->
+                      <div class="col-md-3"></div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Numéro et nom de la voie</label
+                          >
+                          <div>
+                            <input
+                              class="form-control"
+                              id="rueAutreAdresse"
+                              name="rueAutreAdresse"
+                              type="text"
+                              class="form-control"
+                              formControlName="rueAutreAdresse"
+                            />
+                          </div>
+                        </div>
 
-                      <div class="form-group">
-                        <label style="float: left" class="control-label"
-                          >Nom :</label
-                        >
-                        <input
-                          id="nom"
-                          name="nom"
-                          type="text"
-                          class="form-control"
-                          [(ngModel)]="userEnCours.nom"
-                          formControlName="nom"
-                        />
-                        <p class="help-block"></p>
-                      </div>
-
-                      <div class="form-group">
-                        <label style="float: left" class="control-label"
-                          >Téléphone :</label
-                        >
-                        <input
-                          id="telephone"
-                          name="telephone"
-                          type="text"
-                          class="form-control"
-                          [(ngModel)]="userEnCours.telephone"
-                          formControlName="telephone"
-                        />
-                        <p class="help-block"></p>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label style="float: left" class="control-label"
-                          >Numéro et nom de la voie</label
-                        >
-                        <div>
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Code postal :</label
+                          >
                           <input
-                            class="form-control"
-                            id="rue"
-                            name="rue"
+                            id="code-postalAutreAdresse"
+                            name="code-postalAutreAdresse"
                             type="text"
-                            [(ngModel)]="userEnCours.adresseDeLivraison.rue"
+                            pattern="[0-9]{5}"
+                            max="99999"
                             class="form-control"
-                            formControlName="rue"
+                            formControlName="codePostalAutreAdresse"
                           />
+                          <p class="help-block"></p>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Ville :</label
+                          >
+                          <input
+                            id="villeAutreAdresse"
+                            name="villeAutreAdresse"
+                            type="text"
+                            class="form-control"
+                            formControlName="villeAutreAdresse"
+                          />
+                          <p class="help-block"></p>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Pays :</label
+                          >
+                          <div>
+                            <input
+                              type="text"
+                              id="paysAutreAdresse"
+                              name="paysAutreAdresse"
+                              formControlName="paysAutreAdresse"
+                              class="form-control"
+                            />
+                          </div>
                         </div>
                       </div>
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                </div>
 
-                      <div class="form-group">
-                        <label style="float: left" class="control-label"
-                          >Code postal :</label
-                        >
-                        <input
-                          id="code-postal"
-                          name="code-postal"
-                          type="text"
-                          pattern="[0-9]{5}"
-                          max="99999"
-                          [(ngModel)]="
-                            userEnCours.adresseDeLivraison.codePostal
-                          "
-                          class="form-control"
-                          formControlName="codePostal"
-                        />
-                        <p class="help-block"></p>
-                      </div>
-
-                      <div class="form-group">
-                        <label style="float: left" class="control-label"
-                          >Ville :</label
-                        >
-                        <input
-                          id="ville"
-                          name="ville"
-                          type="text"
-                          class="form-control"
-                          formControlName="ville"
-                          [(ngModel)]="userEnCours.adresseDeLivraison.ville"
-                        />
-                        <p class="help-block"></p>
-                      </div>
-
-                      <div class="form-group">
-                        <label style="float: left" class="control-label"
-                          >Pays :</label
-                        >
-                        <div>
+                <div *ngIf="toggleLivraison == true">
+                  <h2 style="margin-top: 5%">
+                    Vérifiez votre adresse de livraison et vos coordonnées.
+                  </h2>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Prénom :</label
+                          >
                           <input
+                            id="prenom"
+                            name="prenom"
                             type="text"
-                            id="pays"
-                            name="pays"
-                            [(ngModel)]="userEnCours.adresseDeLivraison.pays"
-                            formControlName="pays"
                             class="form-control"
+                            [(ngModel)]="userEnCours.prenom"
+                            formControlName="prenom"
                           />
+                          <p class="help-block"></p>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Nom :</label
+                          >
+                          <input
+                            id="nom"
+                            name="nom"
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="userEnCours.nom"
+                            formControlName="nom"
+                          />
+                          <p class="help-block"></p>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Téléphone :</label
+                          >
+                          <input
+                            id="telephone"
+                            name="telephone"
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="userEnCours.telephone"
+                            formControlName="telephone"
+                          />
+                          <p class="help-block"></p>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Numéro et nom de la voie</label
+                          >
+                          <div>
+                            <input
+                              class="form-control"
+                              id="rue"
+                              name="rue"
+                              type="text"
+                              [(ngModel)]="userEnCours.adresseDeLivraison.rue"
+                              class="form-control"
+                              formControlName="rue"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Code postal :</label
+                          >
+                          <input
+                            id="code-postal"
+                            name="code-postal"
+                            type="text"
+                            pattern="[0-9]{5}"
+                            max="99999"
+                            [(ngModel)]="
+                              userEnCours.adresseDeLivraison.codePostal
+                            "
+                            class="form-control"
+                            formControlName="codePostal"
+                          />
+                          <p class="help-block"></p>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Ville :</label
+                          >
+                          <input
+                            id="ville"
+                            name="ville"
+                            type="text"
+                            class="form-control"
+                            formControlName="ville"
+                            [(ngModel)]="userEnCours.adresseDeLivraison.ville"
+                          />
+                          <p class="help-block"></p>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Pays :</label
+                          >
+                          <div>
+                            <input
+                              type="text"
+                              id="pays"
+                              name="pays"
+                              [(ngModel)]="userEnCours.adresseDeLivraison.pays"
+                              formControlName="pays"
+                              class="form-control"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- <label for="adresseDeLivraisonClient">
+                <!-- <label for="adresseDeLivraisonClient">
                   Adresse de livraison</label
                 >
                 <input
@@ -387,26 +498,29 @@
                 />
               </div> -->
 
-              <button
-                class="btn btn-primary"
-                style="float: right"
-                type="submit"
-              >
-                Valider
-              </button>
-            </form>
+                <button
+                  *ngIf="toggleLivraison != undefined"
+                  class="btn btn-primary"
+                  style="float: right"
+                  type="submit"
+                >
+                  Valider
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row row-prix-total" *ngIf="panier.length > 0">
-      <div class="col-11 text-end">
-        <h3>
-          <strong>TOTAL (TTC): </strong>
-          &nbsp; {{ dataPanier.valeurTotale.toFixed(2) }}€
-        </h3>
+
+      <div class="row row-prix-total" *ngIf="panier.length > 0">
+        <div class="col-11 text-end">
+          <h3>
+            <strong>TOTAL (TTC): </strong>
+            &nbsp; {{ dataPanier.valeurTotale.toFixed(2) }}€
+          </h3>
+        </div>
+        <div class="col-1"></div>
       </div>
-      <div class="col-1"></div>
     </div>
     <div class="row row-paiement" *ngIf="panier.length > 0">
       <div class="col-11 text-end">
@@ -421,6 +535,19 @@
       </div>
     </div>
     <div class="col-1"></div>
+
+    <div class="container" *ngIf="validationFraisLivraison == true">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <h3>
+            <strong>TOTAL (TTC): </strong>
+            &nbsp; {{ dataPanier.valeurTotale.toFixed(2) }}€
+          </h3>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
 
     <!--  <tr>
       <td> </td>
@@ -471,6 +598,10 @@
     </div> -->
     <app-single-produit [produits]="produits"></app-single-produit>
     <app-modal-add-panier [produits]="produits"></app-modal-add-panier>
-    <app-button-paypal [userEnCours]="userEnCours"></app-button-paypal>
+    <app-button-paypal
+      *ngIf="pretPourPaiement == true"
+      [userEnCours]="userEnCours"
+      [price]="price"
+    ></app-button-paypal>
   </body>
 </html>

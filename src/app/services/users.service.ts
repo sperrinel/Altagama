@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class UsersService {
   users: Users[] = [];
   // dialog: any;
-  // user: Users;
+  userEnCours: Users;
   // userSubject = new Subject<Users>();
   isAuth: boolean = false;
   isAuthSubject = new Subject<boolean>();
@@ -28,6 +28,7 @@ export class UsersService {
       .on('value', (data: DataSnapshot) => {
         this.users = data.val() ? data.val() : [];
         this.emitUsersSubject();
+        console.log('getUsersFromServer = ', this.users);
       });
   }
 
@@ -188,5 +189,48 @@ export class UsersService {
     this.users[userIndex] = user;
     this.saveUsersToServer();
     this.emitUsersSubject();
+  }
+
+  // getUser(): Users {
+  //   let users = this.users;
+  //   let dataUser = localStorage.getItem('user');
+  //   let parseUser = JSON.parse(dataUser);
+  //   console.log('parseUser = ', parseUser);
+  //   let userEmail = parseUser.email;
+  //   console.log('userEmail = ' + userEmail);
+  //   console.log('tabUsers = ', users);
+  //   let userIndex = users.findIndex((element) => element.email === userEmail);
+  //   console.log('userIndex = ' + userIndex);
+
+  //   console.log('user = ', users[userIndex]);
+  //   let userEnCours = users[userIndex];
+
+  //   console.log(userEnCours);
+
+  //   return userEnCours;
+  // }
+
+  getUser(): Users {
+    let users = this.users;
+    let dataUser = localStorage.getItem('user');
+    let parseUser = JSON.parse(dataUser);
+    console.log('parseUser = ', parseUser);
+    let userEmail = parseUser.email;
+    console.log('userEmail = ' + userEmail);
+    console.log('tabUsers = ', users);
+    let userIndex = users.findIndex(
+      (element) => element.email.toLowerCase() === userEmail
+    );
+    console.log('userIndex = ' + userIndex);
+
+    console.log('user = ', users[userIndex]);
+
+    this.userEnCours = users[userIndex];
+    console.log(this.userEnCours);
+    if (this.userEnCours) {
+      return this.userEnCours;
+    } else {
+      console.log('Une erreur est survenue.');
+    }
   }
 }
