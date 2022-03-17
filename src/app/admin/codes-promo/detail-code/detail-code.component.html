@@ -1,0 +1,35 @@
+<div class="container classUn" [ngClass]="{ classDeux: code.actif == true }">
+  <button class="btn btn-primary" (click)="delete()">Supprimer</button
+  ><br /><br />
+
+  <div class="col-12">
+    <h2>Infos code promo</h2>
+    <label>Nom: </label> {{ code.nom }} <br />
+    <label>Date de début: </label> {{ code.dateDeLancement }} <br />
+    <label>Date de fin: </label> {{ code.dateDeFin }} <br />
+    <label>Code: </label> <strong>{{ code.code }}</strong> <br />
+    <label> Actif:</label>
+    {{ code.actif }}
+    <label>
+      Activer ou Désactiver le code
+      <i class="bi bi-check2-circle" (click)="statutCode(true)">Activer</i>
+      <i class="bi bi-x-circle-fill" (click)="statutCode(false)"
+        >Désactiver</i
+      ></label
+    ><br />
+
+    <br />
+    <label> Type de remise:</label>
+    {{ code.typeDeRemise }} <br />
+    <label *ngIf="code.typeDeRemise !== 'autreRemise'">
+      Montant de la remise:</label
+    >
+    <span *ngIf="code.typeDeRemise !== 'autreRemise'">{{
+      code.montant.toFixed(2)
+    }}</span>
+    <span *ngIf="code.typeDeRemise == 'pourcentage'"> %</span
+    ><span *ngIf="code.typeDeRemise == 'montantEuros'"> €</span> <br />
+    <label *ngIf="code.typeDeRemise == 'autreRemise'"> Commentaire</label>
+    {{ code.commentaire }}
+  </div>
+</div>

@@ -28,14 +28,15 @@ export class ButtonPaypalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initConfig();
-    console.log('userEnCours depuis paypal : ', this.userEnCours);
-    console.log('panier depuis paypal : ', this.panierService.panier);
-    console.log('price depuis paypal : ', this.price);
   }
   initConfig(): void {
     const price = this.price;
     const currency = this.currency;
     const clientId = this.clientId;
+
+    console.log('price = ' + price + ' €');
+    console.log('userEnCours = ', this.userEnCours);
+    console.log('frais = ' + this.frais + ' €');
 
     this.payPalConfig = {
       currency: currency,

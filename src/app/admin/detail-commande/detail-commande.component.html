@@ -1,5 +1,8 @@
 <!-- <button class="btn btn-default goBack" (click)="onBack()">Retour</button> -->
-<div class="container" style="background: #eee6e675; padding: 2% 5% 2% 5%">
+<div
+  class="container classUn"
+  [ngClass]="{ classDeux: commande.traite == 'Oui' }"
+>
   <div class="col-12">
     <h2>Infos commande</h2>
     <label>Date: </label> {{ commande.date }} <br />
@@ -18,11 +21,27 @@
     <label>Tel:</label> {{ commande.client.telephone }} <br />
     <label>Email:</label> {{ commande.client.email }}
     <h3>Adresse de livraison</h3>
+    <div
+      *ngIf="
+        commande.livraison.rue !== '35 rue du Petit Savine' &&
+        commande.livraison.codePostal !== 44570
+      "
+    >
+      {{ commande.livraison.rue }}
+      {{ commande.livraison.codePostal }}
+      {{ commande.livraison.ville }}
+      - {{ commande.livraison.pays }} <br /><br />
+    </div>
 
-    {{ commande.livraison.rue }}
-    {{ commande.livraison.codePostal }}
-    {{ commande.livraison.ville }}
-    - {{ commande.livraison.pays }} <br /><br />
+    <div
+      *ngIf="
+        commande.livraison.rue == '35 rue du Petit Savine' &&
+        commande.livraison.codePostal == 44570
+      "
+    >
+      <h5>Boutique du Passeport Gourmand</h5>
+    </div>
+
     <h3>Article(s):</h3>
     <br />
 

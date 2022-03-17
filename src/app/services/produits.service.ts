@@ -77,8 +77,6 @@ export class ProduitsService {
         .once('value')
         .then(
           (data: DataSnapshot) => {
-            console.log(data.val);
-
             resolve(data.val());
           },
           (error) => {
@@ -94,7 +92,7 @@ export class ProduitsService {
       .ref('/produits/vins/' + idProduit)
       .set({
         id: produit.id,
-        nom: produit.nom,
+        nom: produit.nom.toUpperCase(),
         categorie: produit.categorie,
         description: produit.description,
         image: produit.image,

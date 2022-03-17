@@ -126,11 +126,11 @@
             Cadeaux
           </a>
         </li> -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" routerLink="/contact" (click)="activeClass(11)">
             Contact
           </a>
-        </li>
+        </li> -->
         <li class="nav-item" *ngIf="isAuth == true">
           <a
             class="nav-link"
@@ -156,7 +156,7 @@
           *ngIf="isAuth == true && userEnCours && userEnCours.role == 'admin'"
         >
           <a
-            [routerLink]="['/admin']"
+            [routerLink]="['/admin-systeme-Altagama']"
             class="nav-link"
             style="cursor: pointer"
             (click)="activeClass(14)"

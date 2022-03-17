@@ -22,3 +22,12 @@ h2 {
   font-weight: bold;
   color: #651321;
 }
+
+.classDeux {
+  padding: 2% 5% 2% 5%;
+  background: rgb(216 245 157 / 83%) !important;
+}
+.classUn {
+  padding: 2% 5% 2% 5%;
+  background: #b1aeae79;
+}

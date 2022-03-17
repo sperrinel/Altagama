@@ -19,7 +19,7 @@ import { UsersService } from 'src/app/services/users.service';
 export class MonCompteComponent implements OnInit {
   userEnCours: Users;
   messageMAJuser: boolean = false;
-  updateUser: boolean = false;
+  updateUser: boolean = true;
   deleteUser: boolean = false;
   message: string = 'Les modifications ont été prises en compte. Merci';
   updateUserForm;
@@ -51,19 +51,20 @@ export class MonCompteComponent implements OnInit {
     fb: FormBuilder
   ) {
     this.updateUserForm = fb.group({
-      rue: [''],
-      codePostal: [''],
-      ville: [''],
-      pays: [''],
-      telephone: [''],
-      nom: [''],
-      prenom: [''],
+      rue: ['', Validators.required],
+      codePostal: ['', Validators.required],
+      ville: ['', Validators.required],
+      pays: ['', Validators.required],
+      telephone: ['', Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
+    this.userEnCours = this.usersService.getUser();
     this.messageMAJuser = false;
-    this.updateUser = false;
+    this.updateUser = true;
     this.deleteUser = false;
 
     this.validationFormUser = this.formBuilder.group({
@@ -102,8 +103,8 @@ export class MonCompteComponent implements OnInit {
     const adresseLivraisonClient = new Adresse(
       formValue['rue'],
       formValue['codePostal'],
-      formValue['ville'],
-      formValue['pays']
+      formValue['ville'].toUpperCase(),
+      formValue['pays'].toUpperCase()
     );
     const adresseDeFacturation: Adresse = adresseLivraisonClient;
     const telephone = formValue['telephone'];
@@ -137,7 +138,6 @@ export class MonCompteComponent implements OnInit {
           resolve();
           this.usersService.isAuth == true;
           this.usersService.emitUsersSubject();
-          console.log('connexion réussie');
           firebase.auth().currentUser.delete();
           this.router.navigate(['/accueil']);
         },

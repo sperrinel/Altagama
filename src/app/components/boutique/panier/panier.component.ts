@@ -33,7 +33,7 @@ export class PanierComponent implements OnInit {
   validationFraisLivraison: boolean = false;
   pretPourPaiement: boolean = false;
   price: number; // montant du panier + frais de livraison
-  frais: number;
+  frais: number; // Permet d'indiquer à l'admin les frais de livraison de la commande.
 
   constructor(
     private produitsService: ProduitsService,
@@ -94,7 +94,6 @@ export class PanierComponent implements OnInit {
     this.prodSub = this.produitsService.produitsSubject.subscribe(
       (produits: Produits[]) => {
         this.produits = produits;
-        console.log(this.produits);
       },
       (error: any) => {
         console.log('Erreur : ' + error);
@@ -106,7 +105,6 @@ export class PanierComponent implements OnInit {
 
     this.panier = this.panierService.panier;
     this.dataPanier = this.panierService.dataPanier;
-    console.log(this.panier);
   }
 
   ajouterProduit(produit: Produits, quantite): void {
@@ -149,7 +147,6 @@ export class PanierComponent implements OnInit {
 
   getUser() {
     this.userEnCours = this.userService.getUser();
-    console.log(this.userEnCours);
   }
   // getUser() {
   //   let users = this.userService.users;
@@ -183,65 +180,87 @@ export class PanierComponent implements OnInit {
   }
 
   onSubmitLivraisonForm() {
-    this.validationFraisLivraison = true;
-    this.pretPourPaiement = true;
+    this.validationFraisLivraison = true; //Ferme le contenu du panier et affiche le total TTC
+    this.pretPourPaiement = true; //Affiche les boutons Paypal
+
+    //1) ON RECUPERE LA SAISIE DE L'UTILISATEUR
     const formValue = this.livraisonForm.value;
     const autreAdresse = formValue['autreAdresse'];
     let adresseLivraisonClient = this.userEnCours.adresseDeLivraison;
     let autreAdresseClient = this.userEnCours.adresseDeLivraison;
-    console.log(autreAdresse);
-
     const choixLivraison = formValue['choixLivraison'];
+
+    //2) SI L'UTILISATEUR CHOISI UNE LIVRAISON A DOMICILE, L'ADRESSE DE LIVRAISON SERA CELLE QU'IL A INDIQUÉ
     if (choixLivraison == 'livraison') {
       adresseLivraisonClient = new Adresse(
         formValue['rue'],
         formValue['codePostal'],
-        formValue['ville'],
-        formValue['pays']
+        formValue['ville'].toUpperCase(),
+        formValue['pays'].toUpperCase()
       );
+      //3) SI L'UTILISATEUR CHOISI UNE AUTRE ADRESSE, LA VARIABLE autreAdresseClient NE CONTIENDRA PLUS L'ADRESSE PAR DEFAUT MAIS BIEN CELLE INDIQUÉ
+      // ---> Pour la commande il faudra faire en sorte que si l'adresseDeLivraison et autreAdresse sont différent, alors l'adresse de livraison sera égale à l'autreAdresse
+      // ---> A la fin de l'achat, autreAdresse redeviendra adresseDeLivraison (l'adresse par défaut du client).
+    } else if (choixLivraison == 'boutique') {
+      autreAdresseClient = new Adresse(
+        '35 rue du Petit Savine',
+        44570,
+        'TRIGNAC',
+        'FRANCE'
+      );
+
+      this.userEnCours.autreAdresse = autreAdresseClient;
     } else if (choixLivraison == 'autreAdresse') {
-      const autreAdresseClient = new Adresse(
+      autreAdresseClient = new Adresse(
         formValue['rueAutreAdresse'],
         formValue['codePostalAutreAdresse'],
-        formValue['villeAutreAdresse'],
-        formValue['paysAutreAdresse']
+        formValue['villeAutreAdresse'].toUpperCase(),
+        formValue['paysAutreAdresse'].toUpperCase()
       );
 
-      const telephone = formValue['telephone'];
-      const prenom = formValue['prenom'];
-      const nom = formValue['nom'];
-      const updateUserAdresseDeLivraison = new Users(
-        this.userEnCours.email,
-        this.userEnCours.role,
-        this.userEnCours.idUser,
-        prenom,
-        nom,
-        this.userEnCours.dateDeNaissance,
-        telephone,
-        adresseLivraisonClient,
-        this.userEnCours.adresseDeFacturation,
-        autreAdresseClient
-      );
-
-      this.userService.updateUser(updateUserAdresseDeLivraison);
+      // const telephone = formValue['telephone'];
+      // const prenom = formValue['prenom'];
+      // const nom = formValue['nom'];
     }
+
+    //4) ON MET A JOUR L'UTILISATEUR AVEC L'autreAdresseClient en BDD ainsi que les autres informations ayant été potentiellement modifiées pendant le remplissage du formulaire.
+    const updateUserAdresseDeLivraison = new Users(
+      this.userEnCours.email,
+      this.userEnCours.role,
+      this.userEnCours.idUser,
+      this.userEnCours.prenom,
+      this.userEnCours.nom.toUpperCase(),
+      this.userEnCours.dateDeNaissance,
+      this.userEnCours.telephone,
+      this.userEnCours.adresseDeLivraison,
+      this.userEnCours.adresseDeFacturation,
+      autreAdresseClient
+    );
+
+    this.userService.updateUser(updateUserAdresseDeLivraison);
+
+    //5) ON CALCUL LES FRAIS DE LIVRAISON, POUR CELA ON A BESOIN DE CONNAITRE LE CHOIX DE LIVRAISON + L'ADRESSE DE L'UTILISATEUR + LE CONTENU DU PANIER (ex: + de 300€ d'achat = frais offert)
     let fraisDeLivraison = this.majorationFraisLivraison(
       choixLivraison,
       this.userEnCours,
       this.dataPanier
     );
-    console.log('fraisDeLivraison = ' + fraisDeLivraison + ' euros.');
 
+    //6) ON RENSEIGNE PRICE AVEC LE MONTANT TOTAL POUR EFFECTUER LE PAIEMENT PLUS TARD AVEC PAYPAL
     this.price = this.dataPanier.valeurTotale + fraisDeLivraison;
     this.frais = fraisDeLivraison;
-    console.log('Price est égale à : ' + this.price);
-    const commande = this.commandesService.creerCommandes(
-      this.panierService.panier,
-      this.price,
-      this.userEnCours,
-      this.frais
-    );
-    this.commandesService.addcommande(commande);
+
+    //7) ON CREER LA COMMANDE
+    // const commande = this.commandesService.creerCommandes(
+    //   this.panierService.panier,
+    //   this.price,
+    //   this.userEnCours,
+    //   this.frais
+    // );
+
+    //8) ON L'AJOUTE A LA LISTE DES COMMANDES
+    // this.commandesService.addcommande(commande);
+    this.userEnCours.autreAdresse = this.userEnCours.adresseDeLivraison; //Permettra de distinguer sur autreAdresse != d'adresseDeLivraison pour indiquer sur la commande où il faut livrer.
   }
 
   majorationFraisLivraison(

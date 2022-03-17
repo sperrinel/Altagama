@@ -1,59 +1,195 @@
-<div *ngIf="commandes">
-  <div class="row">
-    <div class="col-md-8" style="overflow-y: scroll; height: 800px">
-      <div class="container" style="border-bottom-style: groove">
-        <div class="row">
-          <div class="col-md-3"><strong>Date</strong></div>
-          <div class="col-md-3"><strong>Client</strong></div>
-          <div class="col-md-3"><strong>Montant</strong></div>
-          <div class="col-md-3"><strong>Traitée</strong></div>
-          <!-- <div class="col-md-2">Date de traitement</div>
+<!DOCTYPE html>
+<html lang="fr_FR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div *ngIf="commandes">
+      <div class="row">
+        <div class="col-md-8" style="overflow-y: scroll; height: 800px">
+          <div class="container" style="border-bottom-style: groove">
+            <button
+              *ngIf="toggleFiltrer == false"
+              class="btn btn-primary"
+              style="
+                background-color: #651321;
+                border-color: #651321;
+                margin: 10px 10px 25px 10px;
+              "
+              (click)="toggleFiltrerMethod()"
+            >
+              Filtrer
+            </button>
+            <button
+              *ngIf="toggleFiltrer == true"
+              class="btn btn-primary"
+              style="
+                background-color: #651321;
+                border-color: #651321;
+                margin: 10px 10px 25px 10px;
+              "
+              (click)="toggleFiltrerMethod()"
+            >
+              Fermer
+            </button>
+            <br />
+            <div class="container">
+              <form
+                *ngIf="toggleFiltrer == true"
+                style="margin: 5% 0 5% 0"
+                [formGroup]="filtreForm"
+                (ngSubmit)="onSubmitFiltrerForm()"
+              >
+                <div class="form-group">
+                  <label style="float: left" class="control-label"
+                    >Date :
+                  </label>
+                  <div>
+                    <input
+                      class="form-control"
+                      name="date"
+                      type="date"
+                      class="form-control"
+                      formControlName="date"
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="form-group">
+                  <label style="float: left" class="control-label"
+                    >Nom Client :
+                  </label>
+                  <div>
+                    <input
+                      class="form-control"
+                      name="nomClient"
+                      type="text"
+                      class="form-control"
+                      formControlName="nomClient"
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="form-group">
+                  <p>Commande traitée ?</p>
+
+                  <div>
+                    <input
+                      checked
+                      type="radio"
+                      name="traitee"
+                      value="Oui"
+                      formControlName="traitee"
+                    />
+                    <label>Oui</label>
+                  </div>
+
+                  <div>
+                    <input
+                      type="radio"
+                      name="traitee"
+                      value="Non"
+                      formControlName="traitee"
+                    />
+                    <label>Non</label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      name="traitee"
+                      value="Toutes"
+                      formControlName="traitee"
+                    />
+                    <label>Toutes les commandes</label>
+                  </div>
+                </div>
+
+                <button
+                  class="btn btn-primary"
+                  style="float: right"
+                  type="submit"
+                >
+                  Rechercher
+                </button>
+                <br /><br /><b></b>
+              </form>
+            </div>
+            <div class="row">
+              <div class="col-md-3"><strong>Date</strong></div>
+              <div class="col-md-3"><strong>Client</strong></div>
+              <div class="col-md-3"><strong>Montant</strong></div>
+              <div class="col-md-3"><strong>Traitée</strong></div>
+              <!-- <div class="col-md-2">Date de traitement</div>
       <div class="col-md-2">Commentaire</div> -->
-        </div>
-      </div>
-      <div class="col-md-12" *ngFor="let commande of commandes; let i = index">
-        <div class="container" style="border-bottom-style: inset">
+            </div>
+          </div>
           <div
-            class="row"
-            [ngClass]="{ 'commande-done': commande.traite == 'Oui' }"
+            class="col-md-12"
+            *ngFor="let commande of commandesAffichees; let i = index"
           >
-            <div class="col-md-3">
-              <p>{{ commande.date }}</p>
-            </div>
-            <div class="col-md-3 accesCommandeDetail">
-              <p (click)="voirCommande(commande.id)">
-                {{ commande.client.nom }}
-              </p>
-            </div>
-            <div class="col-md-3">
-              <p>{{ commande.prixCommande.toFixed(2) }} €</p>
-            </div>
-            <div class="col-md-2">
-              {{ commande.traite }}
-              <i *ngIf="commande.traite == 'Oui'" class="bi bi-check-lg"></i>
-            </div>
-            <div class="col-md-1" *ngIf="commande.traite == 'Non'">
-              <i
-                class="bi bi-clipboard-check"
-                style="cursor: pointer"
-                (click)="traiterCommande(commande.id)"
-              ></i>
-            </div>
-            <div class="col-md-1" *ngIf="commande.traite == 'Oui'">
-              <i
-                class="bi bi-x-lg"
-                style="cursor: pointer"
-                (click)="traiterCommande(commande.id)"
-              ></i>
-            </div>
-            <!-- <div class="col-md-2">{{ commande.dateDeTraitement }}</div>
+            <div class="container" style="border-bottom-style: inset">
+              <div
+                class="row"
+                [ngClass]="{ 'commande-done': commande.traite == 'Oui' }"
+              >
+                <div class="col-md-3 accesCommandeDetail">
+                  <p
+                    (click)="voirCommande(commande.id)"
+                    title="Voir le contenu de la commande"
+                  >
+                    {{ commande.date }}
+                  </p>
+                </div>
+                <div class="col-md-3">
+                  <p>
+                    {{ commande.client.nom }}
+                  </p>
+                </div>
+                <div class="col-md-3">
+                  <p>{{ commande.prixCommande.toFixed(2) }} €</p>
+                </div>
+                <div class="col-md-2">
+                  <p>
+                    {{ commande.traite }}
+                    <i
+                      *ngIf="commande.traite == 'Oui'"
+                      title="Commande préparée"
+                      class="bi bi-check-lg"
+                    ></i>
+                  </p>
+                </div>
+                <div class="col-md-1" *ngIf="commande.traite == 'Non'">
+                  <p>
+                    <i
+                      class="bi bi-clipboard-check"
+                      title="cliquez pour signifier que la commande est terminée"
+                      style="cursor: pointer"
+                      (click)="traiterCommande(commande.id)"
+                    ></i>
+                  </p>
+                </div>
+                <div class="col-md-1" *ngIf="commande.traite == 'Oui'">
+                  <i
+                    class="bi bi-x-lg"
+                    style="cursor: pointer"
+                    (click)="traiterCommande(commande.id)"
+                  ></i>
+                </div>
+                <!-- <div class="col-md-2">{{ commande.dateDeTraitement }}</div>
             <div class="col-md-2">{{ commande.commentaire }}</div> -->
+              </div>
+            </div>
           </div>
         </div>
+        <div *ngIf="detailCommande" class="col-md-4">
+          <app-detail-commande
+            [commande]="detailCommande"
+          ></app-detail-commande>
+        </div>
       </div>
     </div>
-    <div *ngIf="detailCommande" class="col-md-4">
-      <app-detail-commande [commande]="detailCommande"></app-detail-commande>
-    </div>
-  </div>
-</div>
+  </body>
+</html>

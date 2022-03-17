@@ -28,7 +28,6 @@ export class UsersService {
       .on('value', (data: DataSnapshot) => {
         this.users = data.val() ? data.val() : [];
         this.emitUsersSubject();
-        console.log('getUsersFromServer = ', this.users);
       });
   }
 
@@ -79,7 +78,6 @@ export class UsersService {
           (data) => {
             localStorage.setItem('user', JSON.stringify(data.user));
             resolve(data);
-            console.log(data);
           },
           (error) => reject(error)
         );
@@ -211,26 +209,24 @@ export class UsersService {
   // }
 
   getUser(): Users {
-    let users = this.users;
-    let dataUser = localStorage.getItem('user');
-    let parseUser = JSON.parse(dataUser);
-    console.log('parseUser = ', parseUser);
-    let userEmail = parseUser.email;
-    console.log('userEmail = ' + userEmail);
-    console.log('tabUsers = ', users);
-    let userIndex = users.findIndex(
-      (element) => element.email.toLowerCase() === userEmail
-    );
-    console.log('userIndex = ' + userIndex);
+    if (this.isAuth == true) {
+      let users = this.users;
+      let dataUser = localStorage.getItem('user');
+      let parseUser = JSON.parse(dataUser);
+      let userEmail = parseUser.email;
+      let userIndex = users.findIndex(
+        (element) => element.email.toLowerCase() === userEmail
+      );
 
-    console.log('user = ', users[userIndex]);
+      this.userEnCours = users[userIndex];
 
-    this.userEnCours = users[userIndex];
-    console.log(this.userEnCours);
-    if (this.userEnCours) {
-      return this.userEnCours;
+      if (this.userEnCours) {
+        return this.userEnCours;
+      } else {
+        console.log('Une erreur est survenue.');
+      }
     } else {
-      console.log('Une erreur est survenue.');
+      this.router.navigate(['/login']);
     }
   }
 }

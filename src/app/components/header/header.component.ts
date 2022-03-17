@@ -36,8 +36,6 @@ export class HeaderComponent implements OnInit {
     this.dataPanier = this.panierService.dataPanier;
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log('modif');
-
         this.isAuth = true;
         let dataUser = localStorage.getItem('user');
         let parseUser = JSON.parse(dataUser);
@@ -45,12 +43,10 @@ export class HeaderComponent implements OnInit {
         this.userSubscription = this.users.usersSubject.subscribe(
           (data: Users[]) => {
             this.usersTab = data;
-            console.log(this.usersTab);
             let userIndex = this.usersTab.findIndex(
               (element) => userEmail == element.email
             );
             this.userEnCours = this.usersTab[userIndex];
-            console.log('header : ', this.userEnCours);
           }
         );
       } else {

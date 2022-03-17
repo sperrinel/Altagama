@@ -20,6 +20,18 @@ export class ADomicileComponent implements OnInit {
   infoContact: boolean = false;
   formData: FormGroup;
   siteKey = '6LcGVRcdAAAAABot7A1ecGhHWRvKINUhPyjCquG-';
+  messageErreur: string = '';
+
+  validationFormMessage = {
+    participant: [
+      {
+        type: 'min',
+        message:
+          'il faut un minimum de 7 participants pour une dégustation à domicile.',
+      },
+    ],
+  };
+
   constructor(
     private fb: FormBuilder,
     private contact: ContactService,
@@ -29,6 +41,7 @@ export class ADomicileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.infoContact = false;
     this.formData = this.fb.group({
       nom: new FormControl('', [Validators.required]),
       email: new FormControl('', [
@@ -36,6 +49,10 @@ export class ADomicileComponent implements OnInit {
       ]),
       telephone: new FormControl(''),
       objet: new FormControl(''),
+      participant: new FormControl('', [
+        Validators.required,
+        Validators.min(7),
+      ]),
       message: new FormControl('', [Validators.required]),
       'g-recaptcha-response': new FormControl(''),
     });
@@ -53,10 +70,15 @@ export class ADomicileComponent implements OnInit {
       email: this.formData.value.email,
       telephone: '0' + this.formData.value.telephone,
       objet: this.formData.value.objet,
+      participant: this.formData.value.participant,
       message: this.formData.value.message,
       'g-recaptcha-response': this.token,
     });
     this.contact.postMessage(formValue.value);
     this.infoContact = true;
+    setTimeout(() => {
+      this.infoContact = false;
+      this.router.navigate(['/accueil']);
+    }, 5000);
   }
 }

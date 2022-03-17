@@ -10,6 +10,8 @@ export const environment = {
   ID_CLIENT_PAYPAL:
     'AePaZHS9iEOECHMQGZBeA6HkHI7PsQblRSPM0cK_vASumNyl3XtcRIbTlNAW4gCXRMJbcGrvvI9bGyEU',
   CURRENCY: 'EUR',
+  gestionCommandes: 'test',
+  editDeleteProduct: 's.perrinel@orange.fr',
 };
 
 /*

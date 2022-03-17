@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div *ngIf="codesPromo">
+      <div class="row">
+        <div class="col-md-8" style="overflow-y: scroll; height: 800px">
+          <div class="container" style="border-bottom-style: groove">
+            <button
+              *ngIf="toggleAjouterCodePromo == false"
+              class="btn btn-primary"
+              style="
+                background-color: #651321;
+                border-color: #651321;
+                margin: 10px 10px 25px 10px;
+              "
+              (click)="toggleAjouterCodePromoMethod()"
+            >
+              Créer un code promo
+            </button>
+            <button
+              *ngIf="toggleAjouterCodePromo == true"
+              class="btn btn-primary"
+              style="
+                background-color: #651321;
+                border-color: #651321;
+                margin: 10px 10px 25px 10px;
+              "
+              (click)="toggleAjouterCodePromoMethod()"
+            >
+              Fermer
+            </button>
+            <br />
+            <div class="container">
+              <form
+                *ngIf="toggleAjouterCodePromo == true"
+                style="margin: 5% 0 5% 0"
+                [formGroup]="codePromoForm"
+                (ngSubmit)="onSubmitCodePromoForm()"
+              >
+                <div class="form-group">
+                  <label>Nom du code </label>
+                  <p>ex: 'Noël 2022'</p>
+
+                  <div>
+                    <input type="text" name="nom" formControlName="nom" />
+                  </div>
+                </div>
+                <br />
+                <div class="form-group">
+                  <label style="float: left" class="control-label"
+                    >Date de lancement: </label
+                  ><br />
+                  <div>
+                    <input
+                      class="form-control"
+                      name="dateDeLancement"
+                      type="date"
+                      class="form-control"
+                      formControlName="dateDeLancement"
+                    />
+                  </div>
+                </div>
+                <br />
+                <div class="form-group">
+                  <label style="float: left" class="control-label"
+                    >Date de fin: </label
+                  ><br />
+                  <div>
+                    <input
+                      class="form-control"
+                      name="dateDeFin"
+                      type="date"
+                      class="form-control"
+                      formControlName="dateDeFin"
+                    />
+                  </div>
+                </div>
+                <br />
+                <label>Types de remise:</label>
+                <br />
+                <div>
+                  <input
+                    checked
+                    type="radio"
+                    id="pourcentage"
+                    name="typeRemise"
+                    value="pourcentage"
+                    formControlName="typeRemise"
+                    (click)="toggleCommentaireFalse()"
+                  />
+                  <label for="pourcentage" style="margin-left: 8px">
+                    <h6>Pourcentage</h6></label
+                  >
+                </div>
+
+                <div>
+                  <input
+                    type="radio"
+                    id="montantEuros"
+                    name="typeRemise"
+                    value="montantEuros"
+                    formControlName="typeRemise"
+                    (click)="toggleCommentaireFalse()"
+                  />
+                  <label for="montantEuros" style="margin-left: 8px">
+                    <h6>Montant en euros</h6></label
+                  >
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    id="autreRemise"
+                    name="typeRemise"
+                    value="autreRemise"
+                    formControlName="typeRemise"
+                    (click)="toggleCommentaire()"
+                  />
+                  <label for="autreRemise" style="margin-left: 8px">
+                    <h6>Autre remise</h6></label
+                  >
+                </div>
+
+                <div class="form-group" *ngIf="commentaire == true">
+                  <label>Commentaire:</label>
+                  <p>
+                    Préciser, exemple: '1 bouteille de Sauvignon offerte pour
+                    toute commande avant le 10 juin 2022.'
+                  </p>
+
+                  <div>
+                    <input
+                      type="text"
+                      name="commentaire"
+                      formControlName="commentaire"
+                    />
+                  </div>
+                </div>
+
+                <br />
+                <div class="form-group" *ngIf="commentaire == false">
+                  <label>% ou montant en euros souhaité</label>
+
+                  <div>
+                    <input
+                      type="number"
+                      name="montantRemise"
+                      formControlName="montantRemise"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <br />
+                  <label>Code Promo:</label>
+
+                  <div>
+                    <input
+                      type="text"
+                      name="codePromo"
+                      formControlName="codePromo"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  [disabled]="codePromoForm.invalid"
+                  class="btn btn-primary"
+                  style="float: right"
+                  type="submit"
+                >
+                  Enregistrer ce code promo
+                </button>
+                <br /><br /><b></b>
+              </form>
+            </div>
+            <div class="row">
+              <div class="col-md-3"><strong>Nom</strong></div>
+              <div class="col-md-2"><strong>Code</strong></div>
+              <div class="col-md-2"><strong>Remise</strong></div>
+              <div class="col-md-3"><strong>Date de début</strong></div>
+              <div class="col-md-2"><strong>Date de fin</strong></div>
+              <!-- <div class="col-md-2">Date de traitement</div>
+    <div class="col-md-2">Commentaire</div> -->
+            </div>
+          </div>
+          <div class="col-md-12" *ngFor="let code of codesPromo; let i = index">
+            <div class="container" style="border-bottom-style: inset">
+              <div class="row">
+                <div class="col-md-3">
+                  <p id="accesDetailCode" (click)="voirCode(code.id, i)">
+                    {{ code.nom }}
+                  </p>
+                </div>
+                <div class="col-md-2">
+                  <p>
+                    {{ code.code }}
+                  </p>
+                </div>
+                <div class="col-md-2">
+                  <p>{{ code.montant.toFixed(2) }}</p>
+                </div>
+                <div class="col-md-3">
+                  <p>
+                    {{ code.dateDeLancement }}
+                  </p>
+                </div>
+                <div class="col-md-2">
+                  <p>
+                    {{ code.dateDeFin }}
+                  </p>
+                </div>
+
+                <!-- <div class="col-md-2">{{ commande.dateDeTraitement }}</div>
+          <div class="col-md-2">{{ commande.commentaire }}</div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="detailCode && indexCode !== null" class="col-md-4">
+          <app-detail-code
+            [code]="detailCode"
+            [codeIndex]="indexCode"
+          ></app-detail-code>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

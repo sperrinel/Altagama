@@ -1,0 +1,19 @@
+label {
+  margin-right: 15px;
+  font-weight: bold;
+  color: #651321;
+}
+
+h2 {
+  margin-bottom: 40px;
+}
+
+.bi {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.bi:hover {
+  cursor: pointer;
+  font-weight: bold;
+}

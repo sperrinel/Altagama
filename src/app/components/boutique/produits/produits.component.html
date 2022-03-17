@@ -55,7 +55,10 @@
       <div class="row">
         <div class="col-md-4" *ngFor="let produit of produits; let i = index">
           <div>
-            <div *ngIf="userEmail == adminMail" style="text-align: right">
+            <div
+              *ngIf="userEmail && userEmail == adminMail"
+              style="text-align: right"
+            >
               <button
                 (click)="sendIdProduit(i)"
                 class="btn btn-outline-primary btnDelete"
@@ -106,9 +109,41 @@
                     {{ produit.nom }}
                   </p>
                 </h5>
-                <h5 style="width: 80px; border-radius: 25px" class="badge-prix">
-                  {{ produit.prix.toFixed(2) }} €
+
+                <h5>
+                  <span
+                    style="border-radius: 25px; padding: 0 10px 0 10px"
+                    class="badge-prix"
+                  >
+                    {{ produit.prix.toFixed(2) }} €
+                  </span>
+                  <label style="margin-left: 2%">/ unité</label>
                 </h5>
+                <h5>
+                  <span
+                    style="border-radius: 25px; padding: 0 10px 0 10px"
+                    class="badge-prix"
+                  >
+                    {{ produit.prixCarton.toFixed(2) }} €
+                  </span>
+                  <label style="margin-left: 2%"
+                    >/ carton de 6 bouteilles</label
+                  >
+                </h5>
+
+                <!-- <h5 style="width: 80px; border-radius: 25px" class="badge-prix">
+                  {{ produit.prixCarton.toFixed(2) }} €
+                </h5>
+                <label>/ carton (6 bouteilles)</label> -->
+
+                <!-- <h5 style="width: 45%; border-radius: 25px" class="badge-prix">
+                  {{ produit.prix.toFixed(2) }} € <label>/ unité</label>
+                </h5>
+
+                <h5 style="width: 80%; border-radius: 25px" class="badge-prix">
+                  {{ produit.prixCarton.toFixed(2) }} €
+                  <label>/ carton (6 bouteilles)</label>
+                </h5> -->
                 <a
                   class="button"
                   href="#"

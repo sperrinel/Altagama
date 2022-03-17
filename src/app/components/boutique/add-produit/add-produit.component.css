@@ -33,21 +33,24 @@ body {
   margin-bottom: 10%;
   padding: 20px;
   border-radius: 25px;
-  border-top: 6px solid #3599dc;
-  border-bottom: 6px solid #28a745;
+  border-top: 6px solid #651321;
+  border-bottom: 6px solid #651321;
+  border-left-style: groove;
+  border-right-style: groove;
 }
 
 body {
-  background: url("/assets/images/contact/Altagama-contact-bg-2.png") no-repeat
+  /* background: url("/assets/images/contact/Altagama-contact-bg-2.png") no-repeat
     center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
+  background-size: cover; */
   height: 100vh;
 }
 
 h4 {
+  font-family: "BAHNSCHRIFT1", "LouisGeorgeCafeLight", "arial", "sans-serif";
   text-align: center;
   margin-bottom: 30px;
 }
@@ -58,4 +61,9 @@ footer {
 
 option {
   color: black;
+}
+
+label {
+  font-weight: bold;
+  font-family: "BAHNSCHRIFT1", "LouisGeorgeCafeLight", "arial", "sans-serif";
 }

@@ -4,12 +4,16 @@
   color: #651321;
 }
 
-.col-md-3,
-.col-md-2,
-.col-md-1 {
-  align-self: center;
-}
-
 .commande-done {
   background: rgb(216 245 157 / 83%);
+}
+
+label {
+  font-family: "BAHNSCHRIFT1", "LouisGeorgeCafeLight", "arial", "sans-serif";
+  margin-left: 5px;
+}
+
+p {
+  font-family: "BAHNSCHRIFT1", "LouisGeorgeCafeLight", "arial", "sans-serif";
+  margin-top: 5px;
 }

@@ -11,6 +11,10 @@
     <title>Document</title>
   </head>
   <body>
+    <p class="message-info">
+      Pour toute commande <strong>hors Loire Atlantique (44)</strong> merci
+      d'effectuer votre demande par <strong>e-mail</strong>.
+    </p>
     <div *ngIf="panier.length == 0">
       <h1 style="text-align: center; margin-top: 20%; margin-bottom: 20%">
         Votre panier est vide
@@ -200,7 +204,7 @@
               </tr> -->
       <div class="row row-code-promo" *ngIf="panier.length > 0">
         <div class="col-1"></div>
-        <div class="col-3">
+        <!-- <div class="col-3">
           <input type="text" class="form-control" placeholder="Code promo" />
         </div>
         <div class="col-3">
@@ -209,7 +213,7 @@
             class="btn btn-default"
             value="Utiliser mon code"
           />
-        </div>
+        </div> -->
         <div class="row">
           <div
             class="container"
@@ -602,6 +606,7 @@
       *ngIf="pretPourPaiement == true"
       [userEnCours]="userEnCours"
       [price]="price"
+      [frais]="frais"
     ></app-button-paypal>
   </body>
 </html>

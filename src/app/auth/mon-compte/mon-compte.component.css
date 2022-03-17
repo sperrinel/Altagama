@@ -27,3 +27,17 @@ input {
   text-align: left;
   width: 50%;
 }
+
+.vigne {
+  background-image: url("/assets/mon-compte-vigne.png");
+  background-repeat: no-repeat;
+  width: 500px;
+  height: 500px;
+  float: right;
+}
+
+@media screen and (max-width: 1114px) {
+  .vigne {
+    display: none;
+  }
+}

@@ -94,7 +94,6 @@ export class PanierService {
     const indexProduit = this.panier.findIndex(
       (element) => element.produit == produitAsupprimer
     );
-    console.log(retirerArticle);
     //Si on ne dit pas explicitement qu'on retire tout + si l'index existe dans le tableau + que la
     //quantite est supérieur à 1, on décrémente de 1 sinon on supprime l'article du tableau
     if (
@@ -117,7 +116,6 @@ export class PanierService {
   //Après le paiement, réinitialise le panier.
   removeElementOfCart(): void {
     this.panier = [];
-    console.log('this.panier = ' + this.panier);
     this.majPanier();
   }
 }

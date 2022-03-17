@@ -1,5 +1,21 @@
+.bodyBg {
+  background-image: url("/assets/barrel-gfbfb0a049_1280.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .mdpInterface {
-  margin: 20% 5% 30% 5%;
+  /* height: 600px;
+  width: 1000px;
+  border-radius: 50%;
+  margin-left: -25%;
+  background: #651321; */
+
+  padding-top: 5%;
+  padding-bottom: 5%;
+  padding-left: 5%;
+  width: 100%;
 }
 
 .input-mdp {
@@ -9,12 +25,23 @@
 }
 
 form {
-  margin: 0 25% 0 25%;
+  padding-top: 20%;
+  /* margin: 0 5% 0 50%; */
   width: 40%;
 }
 
 .btn-mdp {
-  width: 30%;
+  font-family: "BAHNSCHRIFT1", "LouisGeorgeCafeLight", "arial", "sans-serif";
   display: inline-block;
   margin-left: 15px;
+}
+
+.btn,
+h2,
+h4 {
+  font-family: "BAHNSCHRIFT1", "LouisGeorgeCafeLight", "arial", "sans-serif";
+}
+
+.btn {
+  width: 160px;
 }

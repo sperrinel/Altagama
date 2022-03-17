@@ -35,7 +35,7 @@ export class AddProduitComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     const id = this.uniqueID;
-    const nom = form.value['nom'];
+    const nom = form.value['nom'].toUpperCase();
     const categorie = form.value['categorie'];
     const description = form.value['description'];
     const image = this.fileUrl;
@@ -70,7 +70,7 @@ export class AddProduitComponent implements OnInit {
 
     this.produitsService.addProduit(nouveauProduit);
 
-    this.router.navigate(['/accueil']);
+    this.router.navigate(['/add']);
   }
 
   onUploadFile(file: File) {

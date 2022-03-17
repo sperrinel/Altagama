@@ -6,6 +6,8 @@ import { Panier } from '../modeles/panier';
 import { Subject } from 'rxjs';
 import firebase from 'firebase';
 import DataSnapshot = firebase.database.DataSnapshot;
+import { Adresse } from '../modeles/adresse';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +16,10 @@ export class CommandesService {
   commandesSubject = new Subject<Commandes[]>();
   commandes: Commandes[] = [];
 
-  constructor(private panierService: PanierService) {
+  constructor(
+    private panierService: PanierService,
+    private datepipe: DatePipe
+  ) {
     this.getcommandesFromServer();
   }
 
@@ -56,8 +61,6 @@ export class CommandesService {
         .once('value')
         .then(
           (data: DataSnapshot) => {
-            console.log(data.val);
-
             resolve(data.val());
           },
           (error) => {
@@ -108,17 +111,29 @@ export class CommandesService {
   }
 
   creerCommandes(panier: Panier[], price, user: Users, frais) {
+    let livraison: Adresse;
+
+    if (
+      user.adresseDeLivraison.rue == user.autreAdresse.rue &&
+      user.adresseDeLivraison.codePostal == user.autreAdresse.codePostal
+    ) {
+      livraison = user.adresseDeLivraison;
+    } else {
+      livraison = user.autreAdresse;
+    }
+
     const id = this.generateUniqueID();
-    const date = new Date().toLocaleString();
+    const date = this.datepipe.transform(Date.now(), 'dd/MM/yyyy hh:mm:ss');
     const client = user;
     const contenuCommande = panier;
     const prixCommande = price;
     const fraisDeLivraison = frais;
-    const livraison = user.adresseDeLivraison;
-    const codePromo = 'CODE2021';
+
+    const codePromo = '';
     const dateDeTraitement = '';
     const traite = 'Non';
     const commentaire = '';
+    const archivage = false;
 
     const commande = new Commandes(
       id,
@@ -131,7 +146,8 @@ export class CommandesService {
       codePromo,
       dateDeTraitement,
       traite,
-      commentaire
+      commentaire,
+      archivage
     );
 
     return commande;

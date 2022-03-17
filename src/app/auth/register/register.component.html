@@ -185,6 +185,18 @@
                   </div>
 
                   <div class="form-group">
+                    <input
+                      id="pays"
+                      name="pays"
+                      type="text"
+                      placeholder="Pays *"
+                      class="form-control"
+                      formControlName="pays"
+                    />
+                    <p class="help-block"></p>
+                  </div>
+
+                  <!-- <div class="form-group">
                     <label class="control-label">Choisissez un pays :</label>
                     <div>
                       <select
@@ -192,9 +204,9 @@
                         name="pays"
                         formControlName="pays"
                         class="form-control"
-                      >
-                        <!-- <option value="" selected="selected">Pays</option> -->
-                        <optgroup>
+                      > -->
+                  <!-- <option value="" selected="selected">Pays</option> -->
+                  <!-- <optgroup>
                           <option value="AF">Afghanistan</option>
                           <option value="AL">Albania</option>
                           <option value="DZ">Algeria</option>
@@ -467,16 +479,18 @@
                         </optgroup>
                       </select>
                     </div>
-                  </div>
+                  </div> -->
 
                   <div class="form-group">
-                    <input
+                    <button
                       *ngIf="registerForm.valid"
                       type="submit"
                       class="btnRegister"
-                      value="Créer mon compte"
-                    />
-                    <input
+                    >
+                      Créer mon compte
+                    </button>
+                    <button
+                      disabled="registerForm.invalid"
                       *ngIf="registerForm.invalid"
                       class="btnRegister"
                       style="
@@ -484,8 +498,9 @@
                         text-align: center;
                         width: 100%;
                       "
-                      value="Merci de remplir tous les champs"
-                    />
+                    >
+                      Merci de remplir tous les champs
+                    </button>
                   </div>
                   <div class="col-md-12">
                     <ng-container

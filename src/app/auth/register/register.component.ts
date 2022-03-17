@@ -90,7 +90,7 @@ export class RegisterComponent implements OnInit {
           value.rue,
           value.codePostal,
           value.ville.toUpperCase(),
-          value.pays
+          value.pays.toUpperCase()
         );
 
         const role = 'visiteur';

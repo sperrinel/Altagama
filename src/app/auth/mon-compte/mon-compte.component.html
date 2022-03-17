@@ -7,10 +7,11 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="container" style="margin: 5% 0 5% 0">
+    <div class="vigne"></div>
+    <div class="container" style="margin: 5% 0 15% 0">
       <div class="row">
         <div class="col-sm-3" style="border-right-style: ridge">
-          <div style="margin: 15% 0 15% 0">
+          <div class="container" style="margin: 15% 0 15% 0">
             <button
               class="btn btn-primary"
               style="background-color: #651321; border-color: #651321"
@@ -23,7 +24,7 @@
               style="background-color: #651321; border-color: #651321"
               (click)="deleteProfile()"
             >
-              Supprimer mon profil
+              Supprimer mon compte
             </button>
           </div>
         </div>
@@ -200,15 +201,17 @@
 
                 <br />
                 <button
+                  [disabled]="updateUserForm.invalid"
                   class="btn btn-primary"
                   style="
                     background-color: #651321;
                     border-color: #651321;
-                    float: right;
+                    margin-left: 15%;
+                    width: 45%;
                   "
                   type="submit"
                 >
-                  Modifier
+                  Mettre à jour
                 </button>
               </form>
             </div>

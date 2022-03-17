@@ -10,6 +10,7 @@ export class Commandes {
     public codePromo,
     public dateDeTraitement,
     public traite,
-    public commentaire
+    public commentaire,
+    public archivage: boolean
   ) {}
 }

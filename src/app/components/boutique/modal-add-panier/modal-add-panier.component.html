@@ -10,7 +10,7 @@
 <script src="https://use.fontawesome.com/c560c025cf.js"></script>
 
 <div
-  *ngFor="let produit of produits"
+  *ngFor="let produit of produits; let i = index"
   class="modal fade"
   [id]="'add-panier-' + produit.id"
   tabindex="-1"
@@ -45,11 +45,16 @@
               <div class="row align-items-center">
                 <div class="col-sm-2">
                   <img
+                    *ngIf="produit.nom !== 'SAN FELIPE 12 UVAS – LA RURAL'"
                     class="img-responsive"
                     src="{{ produit.image }}"
                     alt="prewiew"
-                    width="50"
-                    height="130"
+                  />
+                  <img
+                    *ngIf="produit.nom == 'SAN FELIPE 12 UVAS – LA RURAL'"
+                    class="sanFelipe"
+                    src="{{ produit.image }}"
+                    alt="prewiew"
                   />
                 </div>
                 <div class="col-sm-4">

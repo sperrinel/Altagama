@@ -1,0 +1,16 @@
+.col-md-2,
+.col-md-3,
+.col-md-1 {
+  text-align: center;
+}
+
+label {
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+#accesDetailCode:hover {
+  font-weight: bold;
+  color: #651321;
+  cursor: pointer;
+}

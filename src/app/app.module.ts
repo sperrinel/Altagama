@@ -15,7 +15,7 @@ import { ProduitsComponent } from './components/boutique/produits/produits.compo
 import { SingleProduitComponent } from './components/boutique/single-produit/single-produit.component';
 import { PanierComponent } from './components/boutique/panier/panier.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ComingSoonComponent } from './coming-soon/coming-soon.component';
 import { ModalAddPanierComponent } from './components/boutique/modal-add-panier/modal-add-panier.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -41,13 +41,25 @@ import { GestionCommandesComponent } from './admin/gestion-commandes/gestion-com
 import { NgxPayPalModule } from 'ngx-paypal';
 import { MonCompteComponent } from './auth/mon-compte/mon-compte.component';
 import { DetailCommandeComponent } from './admin/detail-commande/detail-commande.component';
+import { AuthGuard } from './services/auth.guard';
+import { CodesPromoComponent } from './admin/codes-promo/codes-promo.component';
+import { DetailCodeComponent } from './admin/codes-promo/detail-code/detail-code.component';
 const appRoutes: Routes = [
   { path: 'accueil', component: AccueilComponent },
-  { path: 'add', component: AddProduitComponent },
+  { path: 'add', canActivate: [AuthGuard], component: AddProduitComponent },
   { path: 'boutique', component: BoutiqueComponent },
   { path: 'panier', component: PanierComponent },
   { path: 'single-produit/:id', component: SingleProduitComponent },
-  { path: 'detail-commande/:id', component: DetailCommandeComponent },
+  {
+    path: 'detail-commande/:id',
+    canActivate: [AuthGuard],
+    component: DetailCommandeComponent,
+  },
+  {
+    path: 'detail-code/:id',
+    canActivate: [AuthGuard],
+    component: DetailCodeComponent,
+  },
   { path: 'categorie/:id', component: CategoriesComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'degustations', component: DegustationsComponent },
@@ -57,7 +69,11 @@ const appRoutes: Routes = [
   { path: 'produits', component: ProduitsComponent },
   { path: 'mentions-legales', component: MentionsLegalesComponent },
   { path: 'mon-compte', component: MonCompteComponent },
-  { path: 'admin', component: AdminComponent },
+  {
+    path: 'admin-systeme-Altagama',
+    canActivate: [AuthGuard],
+    component: AdminComponent,
+  },
   { path: 'notfound', component: NotfoundComponent },
   { path: '', component: AccueilComponent },
   { path: '**', redirectTo: 'notfound', pathMatch: 'full' },
@@ -91,6 +107,8 @@ const appRoutes: Routes = [
     GestionCommandesComponent,
     MonCompteComponent,
     DetailCommandeComponent,
+    CodesPromoComponent,
+    DetailCodeComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,6 +130,7 @@ const appRoutes: Routes = [
         siteKey: environment.recaptcha.siteKey,
       } as RecaptchaSettings,
     },
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

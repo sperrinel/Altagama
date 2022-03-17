@@ -24,9 +24,6 @@
 
     <br />
     <div class="container">
-      <p *ngIf="infoContact" class="message-info-succes">
-        {{ messageInfo }}
-      </p>
       <!-- <div class="row">
         <div class="col-md-12">
           <img
@@ -45,10 +42,10 @@
         </h3>
         <div class="col-md-5 align-self-center">
           <div class="contact">
-            <h3 class="contact-coordonnee-header">Téléphone:</h3>
-            06 75 46 66 27
-            <h3 class="contact-coordonnee-header">Email:</h3>
-            contact.altagama@gmail.com
+            <h4 class="contact-coordonnee-header">Téléphone:</h4>
+            <p class="contact-coordonnees">06 75 46 66 27</p>
+            <h4 class="contact-coordonnee-header">Email:</h4>
+            <p class="contact-coordonnees">contact.altagama@gmail.com</p>
           </div>
         </div>
         <div class="col-md-7" style="text-align: -webkit-center">
@@ -93,7 +90,7 @@
                         class="form-control"
                         name="email"
                         id="email"
-                        placeholder="Votre email - exemple@gmail.com *"
+                        placeholder="Votre email - email@exemple.com *"
                         formControlName="email"
                       />
                     </div>
@@ -132,6 +129,43 @@
                       />
                     </div>
                   </div>
+                  <div class="form-group">
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-user text-info"></i>
+                        </div>
+                      </div>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="participant"
+                        name="participant"
+                        placeholder="Nombre de participants (minimum 7 personnes)"
+                        formControlName="participant"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <ng-container
+                      *ngFor="
+                        let validation of validationFormMessage.participant
+                      "
+                    >
+                      <div
+                        class="error_message"
+                        *ngIf="
+                          formData
+                            .get('participant')
+                            ?.hasError(validation.type) &&
+                          (formData.get('participant')?.dirty ||
+                            formData.get('participant')?.touched)
+                        "
+                      >
+                        {{ validation.message }}
+                      </div>
+                    </ng-container>
+                  </div>
 
                   <div class="form-group">
                     <div class="input-group mb-2">
@@ -142,7 +176,7 @@
                       </div>
                       <textarea
                         class="form-control"
-                        placeholder="Votre message *"
+                        placeholder="Votre message * (Veuillez indiquer la date et l'horaire souhaité)"
                         name="message"
                         formControlName="message"
                       ></textarea>
@@ -207,6 +241,9 @@
           </div>
         </div>
       </div>
+      <p *ngIf="infoContact" class="message-info-succes">
+        {{ messageInfo }}
+      </p>
     </div>
 
     <script>

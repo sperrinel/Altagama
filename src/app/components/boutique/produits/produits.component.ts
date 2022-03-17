@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { Produits } from 'src/app/modeles/produits';
 import { PanierService } from 'src/app/services/panier.service';
 import { ProduitsService } from 'src/app/services/produits.service';
+import { UsersService } from 'src/app/services/users.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-produits',
@@ -20,7 +22,7 @@ import { ProduitsService } from 'src/app/services/produits.service';
 })
 export class ProduitsComponent implements OnInit {
   @Input() produits: Produits[] = [];
-  adminMail: string = 'fafane@orange.fr';
+  adminMail: string = `${environment.editDeleteProduct}`;
   produit: Produits;
   copieProduit: Produits;
   fileIsUploading = false;
@@ -45,14 +47,16 @@ export class ProduitsComponent implements OnInit {
   constructor(
     private produitsService: ProduitsService,
     private panierService: PanierService,
-    private router: Router
+    private router: Router,
+    private usersService: UsersService
   ) {}
 
   ngOnInit(): void {
-    let dataUser = localStorage.getItem('user');
-    let parseUser = JSON.parse(dataUser);
-    this.userEmail = parseUser.email;
-    console.log('email : ' + this.userEmail);
+    if (this.usersService.isAuth == true) {
+      let dataUser = localStorage.getItem('user');
+      let parseUser = JSON.parse(dataUser);
+      this.userEmail = parseUser.email;
+    }
   }
 
   ajouterAuPanier(produit: Produits): void {

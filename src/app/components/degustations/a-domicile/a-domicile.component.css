@@ -1,5 +1,7 @@
 body {
-  background: url("/assets/images/contact/Altagama-contact-bg-2.png") no-repeat;
+  background: url("https://firebasestorage.googleapis.com/v0/b/altagama-9d227.appspot.com/o/images%2Fdegustation-domicile-altagama.jpg?alt=media&token=2b7abca1-ff56-4a6a-aa1a-6b1031643649")
+    no-repeat;
+  /* background: url("/assets/images/contact/Altagama-contact-bg-2.png") no-repeat; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -48,12 +50,13 @@ re-captcha.is-invalid > div {
 }
 
 .contact {
-  background: #ffffff4a;
+  background: #ffffffad;
   text-align: center;
   height: 170px;
   padding: 15px;
   margin: 20px;
-  color: rgb(255, 255, 255);
+  color: white;
+  /* color: rgb(255, 255, 255); */
   text-shadow: -1px 1px 0 #000;
 }
 
@@ -67,13 +70,23 @@ re-captcha.is-invalid > div {
 }
 
 h1,
-h3 {
+h2,
+h3,
+h4 {
+  font-family: "BAHNSCHRIFT1", "LouisGeorgeCafeLight", "arial", "sans-serif";
   color: white;
   text-align: center;
 }
 
+.contact-coordonnees {
+  font-family: "BAHNSCHRIFT1", "LouisGeorgeCafeLight", "arial", "sans-serif";
+  font-size: 18px;
+  color: #0000004a;
+}
+
 .header-title {
-  background-color: rgba(255, 255, 255, 0.082);
+  background-color: rgb(101 19 33 / 87%);
+  /* background-color: rgba(255, 255, 255, 0.082); */
 }
 
 #recaptcha {
@@ -82,9 +95,17 @@ h3 {
 }
 
 .message-info-succes {
+  margin-bottom: 0;
+  text-align: center;
   padding: 10px;
   background: rgb(20, 151, 20);
   color: white;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 18px;
+}
+
+.error_message {
+  color: red;
+  width: 100%;
+  text-align: left;
 }

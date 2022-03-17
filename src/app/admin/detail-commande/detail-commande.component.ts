@@ -41,6 +41,6 @@ export class DetailCommandeComponent implements OnInit {
   }
 
   // onBack() {
-  //   this.router.navigate(['/admin']);
+  //   this.router.navigate(['/admin-systeme-Altagama']);
   // }
 }

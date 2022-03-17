@@ -6,15 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body>
-    <div class="container mdpInterface" *ngIf="templateAcces == false">
+  <body [ngClass]="{ bodyBg: templateAcces == false }">
+    <div class="mdpInterface" *ngIf="templateAcces == false">
       <h3 *ngIf="message !== ''">{{ message }}</h3>
+
       <form
         id="templateAcces"
         [formGroup]="codeAccesForm"
         (ngSubmit)="validerAcces(codeAccesForm.value)"
       >
+        <h4 style="margin-bottom: 50px; color: white">Accès Admin</h4>
+
         <span class="form-group">
+          <i
+            class="bi bi-person-fill"
+            style="margin-right: 25px; font-size: 20px; color: white"
+          ></i>
           <input
             type="password"
             class="form-control input-mdp"
@@ -28,7 +35,11 @@
         <span class="col-sm-5">
           <button
             type="submit"
-            style="background-color: #651321; border-radius: 25px"
+            style="
+              background-color: #651321;
+              border-radius: 25px;
+              border-block-style: none;
+            "
             class="btn btn-primary btn-mdp"
           >
             Valider
@@ -37,10 +48,17 @@
       </form>
     </div>
 
-    <div *ngIf="codeAcces == true" class="container" style="margin: 5% 0 5% 0">
+    <div *ngIf="codeAcces == true" class="container" style="margin: 0">
       <div class="row">
-        <div class="col-sm-3" style="border-right-style: ridge">
-          <div style="margin: 10% 0 10% 0">
+        <div
+          class="col-sm-3"
+          style="
+            background: #f0e68cba;
+            border-top-right-radius: 15%;
+            border-right: none;
+          "
+        >
+          <div style="margin: 10% 0 10% 0; padding-left: 20%">
             <button
               class="btn btn-primary"
               style="background-color: #651321; border-color: #651321"
@@ -49,21 +67,42 @@
               Les commandes
             </button>
           </div>
-          <div style="margin: 10% 0 10% 0">
+          <div style="margin: 10% 0 10% 0; padding-left: 20%">
             <button
               class="btn btn-primary"
               style="background-color: #651321; border-color: #651321"
+              (click)="accesAjoutProduit()"
             >
-              Modifier le texte
+              Ajouter un produit
+            </button>
+          </div>
+          <div style="margin: 10% 0 10% 0; padding-left: 20%">
+            <button
+              disabled
+              class="btn btn-primary"
+              style="background-color: #651321; border-color: #651321"
+              (click)="accesAjoutCodePromo()"
+            >
+              Codes promo
             </button>
           </div>
         </div>
         <div class="col-sm-9">
           <div *ngIf="toggleCommande == true">
-            <h2 style="margin: 0 0 5% 0">
+            <h2 style="margin: 5% 0 5% 0">
               Les informations concernant les commandes.
             </h2>
             <app-gestion-commandes></app-gestion-commandes>
+          </div>
+          <div *ngIf="toggleAddProduit == true">
+            <h2 style="margin: 5% 0 5% 0">
+              Ajouter un nouveau vin en boutique.
+            </h2>
+            <app-add-produit></app-add-produit>
+          </div>
+          <div *ngIf="toggleCodePromo == true">
+            <h2 style="margin: 5% 0 5% 0">Ajouter un nouveau Code Promo.</h2>
+            <app-codes-promo></app-codes-promo>
           </div>
 
           <div
