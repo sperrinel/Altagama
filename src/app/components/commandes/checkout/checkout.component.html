@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container" style="text-align: center">
+      <div class="row">
+        <h1>Commande terminée !</h1>
+        <h3>
+          Votre commande nous a été transmise avec succès, nous vous en
+          remercions.
+        </h3>
+        <h4>
+          Vous allez recevoir un e-mail de confirmation ainsi qu'un
+          récapitulatif de l'ensemble de vos achats.
+        </h4>
+        <h6>
+          Pour toutes questions concernant votre commande nous vous invitons à
+          vous rendre sur l'onglet "FAQ" ou bien à cliquer
+          <a [routerLink]="['/accueil']">ici</a>.
+        </h6>
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" [routerLink]="['/accueil']">
+              Retourner à l'accueil
+            </button>
+            <button
+              class="btn btn-primary"
+              style="margin-bottom: 80px"
+              [routerLink]="['/boutique']"
+            >
+              Retourner à la boutique
+            </button>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

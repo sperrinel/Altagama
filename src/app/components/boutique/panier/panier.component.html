@@ -12,8 +12,9 @@
   </head>
   <body>
     <p class="message-info">
-      Pour toute commande <strong>hors Loire Atlantique (44)</strong> merci
-      d'effectuer votre demande par <strong>e-mail</strong>.
+      Pour toute commande
+      <strong class="strongInfo">hors Loire Atlantique (44)</strong> merci
+      d'effectuer votre demande par <strong class="strongInfo">e-mail</strong>.
     </p>
     <div *ngIf="panier.length == 0">
       <h1 style="text-align: center; margin-top: 20%; margin-bottom: 20%">
@@ -21,7 +22,10 @@
         <a [routerLink]="['/boutique']">Accès à la boutique</a>
       </h1>
     </div>
-    <div class="contenu-panier" *ngIf="validationFraisLivraison == false">
+    <div
+      class="container contenu-panier"
+      *ngIf="validationFraisLivraison == false"
+    >
       <div class="container" *ngIf="panier.length > 0">
         <h1 class="panierTitle">Mon panier</h1>
         <div class="row row-header">
@@ -231,143 +235,8 @@
                 [formGroup]="livraisonForm"
                 (ngSubmit)="onSubmitLivraisonForm()"
               >
-                <h2>Concernant la livraison de la commande je souhaite...</h2>
                 <div>
-                  <input
-                    type="radio"
-                    id="livraisonBoutique"
-                    name="choixLivraison"
-                    value="boutique"
-                    formControlName="choixLivraison"
-                    (click)="boutiqueSelected()"
-                  />
-                  <label for="scales" style="margin-left: 8px">
-                    <h4>venir la chercher en boutique.</h4></label
-                  >
-                </div>
-
-                <div>
-                  <input
-                    type="radio"
-                    id="livraisonAdresse"
-                    name="choixLivraison"
-                    value="livraison"
-                    formControlName="choixLivraison"
-                    (click)="livraisonSelected()"
-                  />
-                  <label for="livraisonAdresse" style="margin-left: 8px">
-                    <h4>qu'elle me soit expédiée à mon domicile.</h4></label
-                  >
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    id="autreAdresse"
-                    name="choixLivraison"
-                    value="autreAdresse"
-                    formControlName="choixLivraison"
-                    (click)="autreAdresseSelected()"
-                  />
-                  <label for="livraisonAdresse" style="margin-left: 8px">
-                    <h4>
-                      qu'elle me soit expédiée à une adresse différente de mon
-                      domicile
-                    </h4></label
-                  >
-                </div>
-                <div *ngIf="autreAdresseCommentaire == true">
-                  <h2 style="margin-top: 5%">
-                    Veuillez renseigner l'adresse de livraison souhaitée.
-                  </h2>
-                  <div class="container">
-                    <div class="row">
-                      <!-- <div class="col-md-6">
-                      <div class="form-group">
-                        <label style="float: left" class="control-label"
-                          >Adresse :</label
-                        >
-                        <input
-                          id="autreAdresseRenseignee"
-                          name="autreAdresseRenseignee"
-                          type="text"
-                          class="form-control"
-                          formControlName="autreAdresseRenseignee"
-                        />
-                        <p class="help-block"></p>
-                      </div>
-                    </div> -->
-                      <div class="col-md-3"></div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label style="float: left" class="control-label"
-                            >Numéro et nom de la voie</label
-                          >
-                          <div>
-                            <input
-                              class="form-control"
-                              id="rueAutreAdresse"
-                              name="rueAutreAdresse"
-                              type="text"
-                              class="form-control"
-                              formControlName="rueAutreAdresse"
-                            />
-                          </div>
-                        </div>
-
-                        <div class="form-group">
-                          <label style="float: left" class="control-label"
-                            >Code postal :</label
-                          >
-                          <input
-                            id="code-postalAutreAdresse"
-                            name="code-postalAutreAdresse"
-                            type="text"
-                            pattern="[0-9]{5}"
-                            max="99999"
-                            class="form-control"
-                            formControlName="codePostalAutreAdresse"
-                          />
-                          <p class="help-block"></p>
-                        </div>
-
-                        <div class="form-group">
-                          <label style="float: left" class="control-label"
-                            >Ville :</label
-                          >
-                          <input
-                            id="villeAutreAdresse"
-                            name="villeAutreAdresse"
-                            type="text"
-                            class="form-control"
-                            formControlName="villeAutreAdresse"
-                          />
-                          <p class="help-block"></p>
-                        </div>
-
-                        <div class="form-group">
-                          <label style="float: left" class="control-label"
-                            >Pays :</label
-                          >
-                          <div>
-                            <input
-                              type="text"
-                              id="paysAutreAdresse"
-                              name="paysAutreAdresse"
-                              formControlName="paysAutreAdresse"
-                              class="form-control"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-3"></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div *ngIf="toggleLivraison == true">
-                  <h2 style="margin-top: 5%">
-                    Vérifiez votre adresse de livraison et vos coordonnées.
-                  </h2>
+                  <h2 style="margin-top: 5%">Vérifiez vos coordonnées.</h2>
                   <div class="container">
                     <div class="row">
                       <div class="col-md-6">
@@ -487,6 +356,122 @@
                     </div>
                   </div>
                 </div>
+                <br />
+                <h2>Concernant la livraison de la commande je souhaite...</h2>
+                <div>
+                  <input
+                    type="radio"
+                    id="livraisonBoutique"
+                    name="choixLivraison"
+                    value="boutique"
+                    formControlName="choixLivraison"
+                  />
+                  <label for="scales" style="margin-left: 8px">
+                    <h4>venir la chercher en boutique.</h4></label
+                  >
+                </div>
+
+                <div>
+                  <input
+                    type="radio"
+                    id="livraisonAdresse"
+                    name="choixLivraison"
+                    value="livraison"
+                    formControlName="choixLivraison"
+                  />
+                  <label for="livraisonAdresse" style="margin-left: 8px">
+                    <h4>qu'elle me soit expédiée à mon domicile.</h4></label
+                  >
+                </div>
+                <!-- <div>
+                  <input
+                    type="radio"
+                    id="autreAdresse"
+                    name="choixLivraison"
+                    value="autreAdresse"
+                    formControlName="choixLivraison"
+                    (click)="autreAdresseSelected()"
+                  />
+                  <label for="livraisonAdresse" style="margin-left: 8px">
+                    <h4>
+                      qu'elle me soit expédiée à une adresse différente de mon
+                      domicile
+                    </h4></label
+                  >
+                </div>
+                <div *ngIf="autreAdresseCommentaire == true">
+                  <h2 style="margin-top: 5%">
+                    Veuillez renseigner l'adresse de livraison souhaitée.
+                  </h2>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-3"></div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Numéro et nom de la voie</label
+                          >
+                          <div>
+                            <input
+                              class="form-control"
+                              id="rueAutreAdresse"
+                              name="rueAutreAdresse"
+                              type="text"
+                              class="form-control"
+                              formControlName="rueAutreAdresse"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Code postal :</label
+                          >
+                          <input
+                            id="code-postalAutreAdresse"
+                            name="code-postalAutreAdresse"
+                            type="text"
+                            pattern="[0-9]{5}"
+                            max="99999"
+                            class="form-control"
+                            formControlName="codePostalAutreAdresse"
+                          />
+                          <p class="help-block"></p>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Ville :</label
+                          >
+                          <input
+                            id="villeAutreAdresse"
+                            name="villeAutreAdresse"
+                            type="text"
+                            class="form-control"
+                            formControlName="villeAutreAdresse"
+                          />
+                          <p class="help-block"></p>
+                        </div>
+
+                        <div class="form-group">
+                          <label style="float: left" class="control-label"
+                            >Pays :</label
+                          >
+                          <div>
+                            <input
+                              type="text"
+                              id="paysAutreAdresse"
+                              name="paysAutreAdresse"
+                              formControlName="paysAutreAdresse"
+                              class="form-control"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3"></div>
+                    </div>
+                  </div>
+                </div> -->
 
                 <!-- <label for="adresseDeLivraisonClient">
                   Adresse de livraison</label
@@ -503,9 +488,9 @@
               </div> -->
 
                 <button
-                  *ngIf="toggleLivraison != undefined"
+                  [disabled]="livraisonForm.invalid"
                   class="btn btn-primary"
-                  style="float: right"
+                  style="float: right; margin-bottom: 2%"
                   type="submit"
                 >
                   Valider
@@ -517,39 +502,59 @@
       </div>
 
       <div class="row row-prix-total" *ngIf="panier.length > 0">
-        <div class="col-11 text-end">
+        <div class="col-12 text-end">
           <h3>
             <strong>TOTAL (TTC): </strong>
             &nbsp; {{ dataPanier.valeurTotale.toFixed(2) }}€
           </h3>
         </div>
-        <div class="col-1"></div>
       </div>
     </div>
-    <div class="row row-paiement" *ngIf="panier.length > 0">
-      <div class="col-11 text-end">
-        <button
-          *ngIf="modePaiement == false"
-          type="button"
-          class="btn btn-success"
-          (click)="creerCommande()"
-        >
-          Continuer
-        </button>
+    <div class="container">
+      <div class="row row-paiement" *ngIf="panier.length > 0">
+        <div class="col-12 text-end">
+          <button
+            *ngIf="modePaiement == false"
+            type="button"
+            class="btn btn-success"
+            (click)="creerCommande()"
+          >
+            Continuer
+          </button>
+        </div>
       </div>
     </div>
-    <div class="col-1"></div>
-
     <div class="container" *ngIf="validationFraisLivraison == true">
+      <div class="row" style="text-align: center; margin-bottom: 8%">
+        <h1 id="titleReglement">Règlement de votre commande.</h1>
+      </div>
       <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-          <h3>
-            <strong>TOTAL (TTC): </strong>
-            &nbsp; {{ dataPanier.valeurTotale.toFixed(2) }}€
-          </h3>
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8" style="text-align: left; margin-bottom: 5%">
+          <div *ngIf="frais > 0">
+            <h5>
+              <strong>Montant de vos achats: </strong>
+              &nbsp; {{ dataPanier.valeurTotale.toFixed(2) }}€
+            </h5>
+            <h5>
+              <strong>Frais de livraison: </strong>
+              &nbsp; {{ frais.toFixed(2) }}€
+            </h5>
+            <h3>
+              <strong>TOTAL (TTC): </strong>
+              &nbsp;
+              {{ price.toFixed(2) }}€
+            </h3>
+          </div>
+          <div *ngIf="frais == 0">
+            <h3>
+              <strong>TOTAL (TTC): </strong>
+              &nbsp; {{ dataPanier.valeurTotale.toFixed(2) }}€
+            </h3>
+          </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-2"></div>
       </div>
     </div>
 

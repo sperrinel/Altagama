@@ -222,8 +222,6 @@ export class UsersService {
 
       if (this.userEnCours) {
         return this.userEnCours;
-      } else {
-        console.log('Une erreur est survenue.');
       }
     } else {
       this.router.navigate(['/login']);

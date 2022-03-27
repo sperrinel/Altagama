@@ -23,7 +23,7 @@ export class ButtonPaypalComponent implements OnInit {
     private commandesService: CommandesService,
     private usersService: UsersService,
     private panierService: PanierService,
-    router: Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,10 +33,6 @@ export class ButtonPaypalComponent implements OnInit {
     const price = this.price;
     const currency = this.currency;
     const clientId = this.clientId;
-
-    console.log('price = ' + price + ' €');
-    console.log('userEnCours = ', this.userEnCours);
-    console.log('frais = ' + this.frais + ' €');
 
     this.payPalConfig = {
       currency: currency,
@@ -85,6 +81,13 @@ export class ButtonPaypalComponent implements OnInit {
           actions
         );
 
+        actions.order.get().then((details) => {
+          console.log(
+            'onApprove - you can get full order details inside onApprove: ',
+            details
+          );
+        });
+
         const commande = this.commandesService.creerCommandes(
           this.panierService.panier,
           this.price,
@@ -94,12 +97,7 @@ export class ButtonPaypalComponent implements OnInit {
 
         this.commandesService.addcommande(commande);
 
-        actions.order.get().then((details) => {
-          console.log(
-            'onApprove - you can get full order details inside onApprove: ',
-            details
-          );
-        });
+        this.router.navigate(['/checkout']);
       },
       onClientAuthorization: (data) => {
         console.log(

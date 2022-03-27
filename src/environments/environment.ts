@@ -8,9 +8,9 @@ export const environment = {
     siteKey: '6LcGVRcdAAAAABot7A1ecGhHWRvKINUhPyjCquG-',
   },
   ID_CLIENT_PAYPAL:
-    'AePaZHS9iEOECHMQGZBeA6HkHI7PsQblRSPM0cK_vASumNyl3XtcRIbTlNAW4gCXRMJbcGrvvI9bGyEU',
+    'AZUTmd4wOCQNvAX94yifVzdjsybN5axpiUSXS7ej8pdzPVLXrXTyOjB_tDNttTXQIVg9coO3JifB4h96',
   CURRENCY: 'EUR',
-  gestionCommandes: 'test',
+  gestionCommandes: 'Summer78@p',
   editDeleteProduct: 's.perrinel@orange.fr',
 };
 

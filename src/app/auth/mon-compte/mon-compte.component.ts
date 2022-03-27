@@ -140,6 +140,7 @@ export class MonCompteComponent implements OnInit {
           this.usersService.emitUsersSubject();
           firebase.auth().currentUser.delete();
           this.router.navigate(['/accueil']);
+          alert('Votre compte a bien été supprimé');
         },
         (error) => {
           this.errorMessage = error.toString();

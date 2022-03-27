@@ -44,6 +44,8 @@ import { DetailCommandeComponent } from './admin/detail-commande/detail-commande
 import { AuthGuard } from './services/auth.guard';
 import { CodesPromoComponent } from './admin/codes-promo/codes-promo.component';
 import { DetailCodeComponent } from './admin/codes-promo/detail-code/detail-code.component';
+import { CheckoutComponent } from './components/commandes/checkout/checkout.component';
+import { FaqComponent } from './components/faq/faq.component';
 const appRoutes: Routes = [
   { path: 'accueil', component: AccueilComponent },
   { path: 'add', canActivate: [AuthGuard], component: AddProduitComponent },
@@ -67,6 +69,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'produits', component: ProduitsComponent },
+  { path: 'checkout', component: CheckoutComponent },
+  { path: 'faq', component: FaqComponent },
   { path: 'mentions-legales', component: MentionsLegalesComponent },
   { path: 'mon-compte', component: MonCompteComponent },
   {
@@ -109,6 +113,8 @@ const appRoutes: Routes = [
     DetailCommandeComponent,
     CodesPromoComponent,
     DetailCodeComponent,
+    CheckoutComponent,
+    FaqComponent,
   ],
   imports: [
     BrowserModule,

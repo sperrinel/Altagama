@@ -28,12 +28,11 @@ export class PanierComponent implements OnInit {
   userSubscription: Subscription;
   modePaiement: boolean = false;
   livraisonForm;
-  toggleLivraison: boolean = undefined;
-  autreAdresseCommentaire: boolean = false;
   validationFraisLivraison: boolean = false;
   pretPourPaiement: boolean = false;
   price: number; // montant du panier + frais de livraison
   frais: number; // Permet d'indiquer à l'admin les frais de livraison de la commande.
+  codePostalVerification: boolean; //AJOUT 44 permet de continuer ou non le procesus de commande.
 
   constructor(
     private produitsService: ProduitsService,
@@ -45,30 +44,27 @@ export class PanierComponent implements OnInit {
   ) {
     this.livraisonForm = fb.group({
       choixLivraison: ['', Validators.required],
-      rue: [''],
-      codePostal: [''],
-      ville: [''],
-      pays: [''],
-      rueAutreAdresse: [''],
-      codePostalAutreAdresse: [''],
-      villeAutreAdresse: [''],
-      paysAutreAdresse: [''],
-      telephone: [''],
-      nom: [''],
-      prenom: [''],
-      autreAdresseRenseignee: [''],
+      rue: ['', Validators.required],
+      codePostal: ['', Validators.required],
+      ville: ['', Validators.required, , Validators.pattern],
+      pays: ['', Validators.required],
+      // rueAutreAdresse: ['', Validators.required],
+      // codePostalAutreAdresse: ['', Validators.required],
+      // villeAutreAdresse: ['', Validators.required],
+      // paysAutreAdresse: ['', Validators.required],
+      telephone: ['', Validators.required],
+      nom: ['', Validators.required],
+      prenom: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
     this.modePaiement = false;
-    this.autreAdresseCommentaire = false;
+
     this.pretPourPaiement = false;
-    this.toggleLivraison = undefined;
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log('modif');
-
         this.isAuth = true;
         // let dataUser = localStorage.getItem('user');
         // let parseUser = JSON.parse(dataUser);
@@ -165,24 +161,7 @@ export class PanierComponent implements OnInit {
   //   console.log(this.userEnCours);
   // }
 
-  livraisonSelected() {
-    this.autreAdresseCommentaire = false;
-    this.toggleLivraison = true;
-  }
-  boutiqueSelected() {
-    this.autreAdresseCommentaire = false;
-    this.toggleLivraison = false;
-  }
-
-  autreAdresseSelected() {
-    this.autreAdresseCommentaire = true;
-    this.toggleLivraison = false;
-  }
-
   onSubmitLivraisonForm() {
-    this.validationFraisLivraison = true; //Ferme le contenu du panier et affiche le total TTC
-    this.pretPourPaiement = true; //Affiche les boutons Paypal
-
     //1) ON RECUPERE LA SAISIE DE L'UTILISATEUR
     const formValue = this.livraisonForm.value;
     const autreAdresse = formValue['autreAdresse'];
@@ -198,6 +177,7 @@ export class PanierComponent implements OnInit {
         formValue['ville'].toUpperCase(),
         formValue['pays'].toUpperCase()
       );
+
       //3) SI L'UTILISATEUR CHOISI UNE AUTRE ADRESSE, LA VARIABLE autreAdresseClient NE CONTIENDRA PLUS L'ADRESSE PAR DEFAUT MAIS BIEN CELLE INDIQUÉ
       // ---> Pour la commande il faudra faire en sorte que si l'adresseDeLivraison et autreAdresse sont différent, alors l'adresse de livraison sera égale à l'autreAdresse
       // ---> A la fin de l'achat, autreAdresse redeviendra adresseDeLivraison (l'adresse par défaut du client).
@@ -211,6 +191,10 @@ export class PanierComponent implements OnInit {
 
       this.userEnCours.autreAdresse = autreAdresseClient;
     } else if (choixLivraison == 'autreAdresse') {
+      if (formValue['paysAutreAdresse'] == '') {
+        formValue['paysAutreAdresse'] = 'NON RENSEIGNE';
+      }
+
       autreAdresseClient = new Adresse(
         formValue['rueAutreAdresse'],
         formValue['codePostalAutreAdresse'],
@@ -246,21 +230,33 @@ export class PanierComponent implements OnInit {
       this.dataPanier
     );
 
-    //6) ON RENSEIGNE PRICE AVEC LE MONTANT TOTAL POUR EFFECTUER LE PAIEMENT PLUS TARD AVEC PAYPAL
-    this.price = this.dataPanier.valeurTotale + fraisDeLivraison;
-    this.frais = fraisDeLivraison;
+    //AJOUT 44
+    if (fraisDeLivraison == -1) {
+      alert(
+        'Pour les livraisons hors Loire Atlantique, merci de nous adresser votre commande par mail à contact.altagama@gmail.com'
+      );
+      return;
+    } else {
+      //6) ON RENSEIGNE PRICE AVEC LE MONTANT TOTAL POUR EFFECTUER LE PAIEMENT PLUS TARD AVEC PAYPAL
+      this.price = this.dataPanier.valeurTotale + fraisDeLivraison;
+      this.frais = fraisDeLivraison;
 
-    //7) ON CREER LA COMMANDE
-    // const commande = this.commandesService.creerCommandes(
-    //   this.panierService.panier,
-    //   this.price,
-    //   this.userEnCours,
-    //   this.frais
-    // );
+      // // 7) ON CREER LA COMMANDE (7 et 8 à mettre en commentaire)
+      // const commande = this.commandesService.creerCommandes(
+      //   this.panierService.panier,
+      //   this.price,
+      //   this.userEnCours,
+      //   this.frais
+      // );
 
-    //8) ON L'AJOUTE A LA LISTE DES COMMANDES
-    // this.commandesService.addcommande(commande);
-    this.userEnCours.autreAdresse = this.userEnCours.adresseDeLivraison; //Permettra de distinguer sur autreAdresse != d'adresseDeLivraison pour indiquer sur la commande où il faut livrer.
+      // // 8) ON L'AJOUTE A LA LISTE DES COMMANDES
+      // this.commandesService.addcommande(commande);
+
+      this.userEnCours.autreAdresse = this.userEnCours.adresseDeLivraison; //Permettra de distinguer sur autreAdresse != d'adresseDeLivraison pour indiquer sur la commande où il faut livrer.
+
+      this.validationFraisLivraison = true; //Ferme le contenu du panier et affiche le total TTC
+      this.pretPourPaiement = true; //Affiche les boutons Paypal
+    }
   }
 
   majorationFraisLivraison(
@@ -297,178 +293,16 @@ export class PanierComponent implements OnInit {
     } else if (choixLivraison == 'autreAdresse') {
       codePostal = userEnCours.autreAdresse.codePostal;
     }
+    this.codePostalVerification = this.checkSiHorsLoireAtlantique(codePostal);
 
-    let frais = 0;
-    let codesPostauxTab: { code: number; frais: number }[] = [
-      {
-        code: 44000,
-        frais: 9,
-      },
-      {
-        code: 44024,
-        frais: 9,
-      },
-      {
-        code: 44035,
-        frais: 9,
-      },
-      {
-        code: 44074,
-        frais: 9,
-      },
-      {
-        code: 44101,
-        frais: 9,
-      },
-      {
-        code: 44162,
-        frais: 9,
-      },
-      {
-        code: 44166,
-        frais: 9,
-      },
-      {
-        code: 44009,
-        frais: 9,
-      },
-      {
-        code: 44020,
-        frais: 9,
-      },
-      {
-        code: 44150,
-        frais: 9,
-      },
-      {
-        code: 44171,
-        frais: 9,
-      },
-      {
-        code: 44020,
-        frais: 9,
-      },
-      {
-        code: 44120,
-        frais: 9,
-      },
-      {
-        code: 44980,
-        frais: 9,
-      },
-      {
-        code: 44204,
-        frais: 9,
-      },
-      {
-        code: 44094,
-        frais: 9,
-      },
-      {
-        code: 44109,
-        frais: 9,
-      },
-      {
-        code: 44018,
-        frais: 9,
-      },
-      {
-        code: 44047,
-        frais: 9,
-      },
-      {
-        code: 44109,
-        frais: 9,
-      },
-      {
-        code: 44172,
-        frais: 9,
-      },
-      {
-        code: 44190,
-        frais: 9,
-      },
-      {
-        code: 44114,
-        frais: 9,
-      },
-      {
-        code: 44143,
-        frais: 9,
-      },
-      {
-        code: 44109,
-        frais: 9,
-      },
-      {
-        code: 44074,
-        frais: 9,
-      },
-      {
-        code: 44026,
-        frais: 9,
-      },
-      {
-        code: 44215,
-        frais: 9,
-      },
-      {
-        code: 44420,
-        frais: 4,
-      },
-      {
-        code: 44350,
-        frais: 4,
-      },
-      {
-        code: 44500,
-        frais: 4,
-      },
-      {
-        code: 44740,
-        frais: 4,
-      },
-      {
-        code: 44510,
-        frais: 4,
-      },
-      {
-        code: 44117,
-        frais: 4,
-      },
-      {
-        code: 44410,
-        frais: 4,
-      },
-      {
-        code: 44420,
-        frais: 4,
-      },
-      {
-        code: 44490,
-        frais: 4,
-      },
-      {
-        code: 44600,
-        frais: 4,
-      },
-      {
-        code: 44380,
-        frais: 4,
-      },
-      {
-        code: 44570,
-        frais: 4,
-      },
-    ];
+    //AJOUT 44, si la méthode retourne -1 c'est que la personne ne veut pas livrer dans le 44
 
-    let index = codesPostauxTab.findIndex(
-      (element) => element.code == codePostal
-    );
-
-    if (index !== -1) {
-      frais = codesPostauxTab[index].frais;
+    if (this.codePostalVerification == false) {
+      return -1;
     } else {
+      //AJOUT 44
+      let frais = 0;
+
       if (nbArticlePanier <= 6) {
         frais = 10;
       } else if (nbArticlePanier >= 7 && nbArticlePanier <= 12) {
@@ -478,8 +312,203 @@ export class PanierComponent implements OnInit {
       } else {
         frais = 25;
       }
+
+      return frais;
     }
-    return frais;
+  }
+  //     let codesPostauxTab: { code: number; frais: number }[] = [
+  //       {
+  //         code: 44000,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44024,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44035,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44074,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44101,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44162,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44166,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44009,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44020,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44150,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44171,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44020,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44120,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44980,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44204,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44094,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44109,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44018,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44047,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44109,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44172,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44190,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44114,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44143,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44109,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44074,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44026,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44215,
+  //         frais: 9,
+  //       },
+  //       {
+  //         code: 44420,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44350,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44500,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44740,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44510,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44117,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44410,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44420,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44490,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44600,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44380,
+  //         frais: 4,
+  //       },
+  //       {
+  //         code: 44570,
+  //         frais: 4,
+  //       },
+  //     ];
+
+  //     let index = codesPostauxTab.findIndex(
+  //       (element) => element.code == codePostal
+  //     );
+
+  //     if (index !== -1) {
+  //       frais = codesPostauxTab[index].frais;
+  //     } else {
+  //       if (nbArticlePanier <= 6) {
+  //         frais = 10;
+  //       } else if (nbArticlePanier >= 7 && nbArticlePanier <= 12) {
+  //         frais = 15;
+  //       } else if (nbArticlePanier >= 13 && nbArticlePanier <= 18) {
+  //         frais = 20;
+  //       } else {
+  //         frais = 25;
+  //       }
+  //     }
+  //     return frais;
+  //   }
+  // }
+
+  checkSiHorsLoireAtlantique(codePostal) {
+    //AJOUT 44
+    //AJOUT POUR LIVRAISON HORS LOIRE ATLANTIQUE
+
+    if (codePostal.startsWith(44, 0)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
@@ -543,3 +572,307 @@ export class PanierComponent implements OnInit {
 //   supprimerProduit(produit: Produits, retirerArticle?: boolean): void {
 //     this.panierService.supprimerProduitPanier(produit, retirerArticle);
 //   }
+
+// onSubmitLivraisonForm() {
+//   this.validationFraisLivraison = true; //Ferme le contenu du panier et affiche le total TTC
+//   this.pretPourPaiement = true; //Affiche les boutons Paypal
+
+//   //1) ON RECUPERE LA SAISIE DE L'UTILISATEUR
+//   const formValue = this.livraisonForm.value;
+//   const autreAdresse = formValue['autreAdresse'];
+//   let adresseLivraisonClient = this.userEnCours.adresseDeLivraison;
+//   let autreAdresseClient = this.userEnCours.adresseDeLivraison;
+//   const choixLivraison = formValue['choixLivraison'];
+
+//   //2) SI L'UTILISATEUR CHOISI UNE LIVRAISON A DOMICILE, L'ADRESSE DE LIVRAISON SERA CELLE QU'IL A INDIQUÉ
+//   if (choixLivraison == 'livraison') {
+//     adresseLivraisonClient = new Adresse(
+//       formValue['rue'],
+//       formValue['codePostal'],
+//       formValue['ville'].toUpperCase(),
+//       formValue['pays'].toUpperCase()
+//     );
+//     //3) SI L'UTILISATEUR CHOISI UNE AUTRE ADRESSE, LA VARIABLE autreAdresseClient NE CONTIENDRA PLUS L'ADRESSE PAR DEFAUT MAIS BIEN CELLE INDIQUÉ
+//     // ---> Pour la commande il faudra faire en sorte que si l'adresseDeLivraison et autreAdresse sont différent, alors l'adresse de livraison sera égale à l'autreAdresse
+//     // ---> A la fin de l'achat, autreAdresse redeviendra adresseDeLivraison (l'adresse par défaut du client).
+//   } else if (choixLivraison == 'boutique') {
+//     autreAdresseClient = new Adresse(
+//       '35 rue du Petit Savine',
+//       44570,
+//       'TRIGNAC',
+//       'FRANCE'
+//     );
+
+//     this.userEnCours.autreAdresse = autreAdresseClient;
+//   } else if (choixLivraison == 'autreAdresse') {
+//     autreAdresseClient = new Adresse(
+//       formValue['rueAutreAdresse'],
+//       formValue['codePostalAutreAdresse'],
+//       formValue['villeAutreAdresse'].toUpperCase(),
+//       formValue['paysAutreAdresse'].toUpperCase()
+//     );
+
+//     // const telephone = formValue['telephone'];
+//     // const prenom = formValue['prenom'];
+//     // const nom = formValue['nom'];
+//   }
+
+//   //4) ON MET A JOUR L'UTILISATEUR AVEC L'autreAdresseClient en BDD ainsi que les autres informations ayant été potentiellement modifiées pendant le remplissage du formulaire.
+//   const updateUserAdresseDeLivraison = new Users(
+//     this.userEnCours.email,
+//     this.userEnCours.role,
+//     this.userEnCours.idUser,
+//     this.userEnCours.prenom,
+//     this.userEnCours.nom.toUpperCase(),
+//     this.userEnCours.dateDeNaissance,
+//     this.userEnCours.telephone,
+//     this.userEnCours.adresseDeLivraison,
+//     this.userEnCours.adresseDeFacturation,
+//     autreAdresseClient
+//   );
+
+//   this.userService.updateUser(updateUserAdresseDeLivraison);
+
+//   //5) ON CALCUL LES FRAIS DE LIVRAISON, POUR CELA ON A BESOIN DE CONNAITRE LE CHOIX DE LIVRAISON + L'ADRESSE DE L'UTILISATEUR + LE CONTENU DU PANIER (ex: + de 300€ d'achat = frais offert)
+//   let fraisDeLivraison = this.majorationFraisLivraison(
+//     choixLivraison,
+//     this.userEnCours,
+//     this.dataPanier
+//   );
+
+//   //6) ON RENSEIGNE PRICE AVEC LE MONTANT TOTAL POUR EFFECTUER LE PAIEMENT PLUS TARD AVEC PAYPAL
+//   this.price = this.dataPanier.valeurTotale + fraisDeLivraison;
+//   this.frais = fraisDeLivraison;
+
+//   //7) ON CREER LA COMMANDE
+//   // const commande = this.commandesService.creerCommandes(
+//   //   this.panierService.panier,
+//   //   this.price,
+//   //   this.userEnCours,
+//   //   this.frais
+//   // );
+
+//   //8) ON L'AJOUTE A LA LISTE DES COMMANDES
+//   // this.commandesService.addcommande(commande);
+//   this.userEnCours.autreAdresse = this.userEnCours.adresseDeLivraison; //Permettra de distinguer sur autreAdresse != d'adresseDeLivraison pour indiquer sur la commande où il faut livrer.
+// }
+
+// majorationFraisLivraison(
+//   choixLivraison: string,
+//   userEnCours: Users,
+//   dataPanier: any
+// ): number {
+//   let valeurPanier: number = dataPanier.valeurTotale;
+//   let nbArticlePanier: number = dataPanier.nbArticle;
+//   let fraisDeLivraison: number = 0;
+//   if (
+//     choixLivraison == 'boutique' ||
+//     (choixLivraison == 'livraison' && valeurPanier >= 300) ||
+//     (choixLivraison == 'livraison' && nbArticlePanier >= 40) ||
+//     (choixLivraison == 'autreAdresse' && valeurPanier >= 300) ||
+//     (choixLivraison == 'autreAdresse' && nbArticlePanier >= 40)
+//   ) {
+//     return fraisDeLivraison;
+//   } else {
+//     return this.checkCodePostal(userEnCours, nbArticlePanier, choixLivraison);
+//   }
+// }
+
+// // Autre adresse: zone avec commentaire /!\ /!\
+// checkCodePostal(
+//   userEnCours,
+//   nbArticlePanier: number,
+//   choixLivraison: string
+// ): number {
+//   this.getUser(); //Subscription serait mieux.
+//   let codePostal;
+//   if (choixLivraison == 'livraison') {
+//     codePostal = userEnCours.adresseDeLivraison.codePostal;
+//   } else if (choixLivraison == 'autreAdresse') {
+//     codePostal = userEnCours.autreAdresse.codePostal;
+//   }
+
+//   let frais = 0;
+//   let codesPostauxTab: { code: number; frais: number }[] = [
+//     {
+//       code: 44000,
+//       frais: 9,
+//     },
+//     {
+//       code: 44024,
+//       frais: 9,
+//     },
+//     {
+//       code: 44035,
+//       frais: 9,
+//     },
+//     {
+//       code: 44074,
+//       frais: 9,
+//     },
+//     {
+//       code: 44101,
+//       frais: 9,
+//     },
+//     {
+//       code: 44162,
+//       frais: 9,
+//     },
+//     {
+//       code: 44166,
+//       frais: 9,
+//     },
+//     {
+//       code: 44009,
+//       frais: 9,
+//     },
+//     {
+//       code: 44020,
+//       frais: 9,
+//     },
+//     {
+//       code: 44150,
+//       frais: 9,
+//     },
+//     {
+//       code: 44171,
+//       frais: 9,
+//     },
+//     {
+//       code: 44020,
+//       frais: 9,
+//     },
+//     {
+//       code: 44120,
+//       frais: 9,
+//     },
+//     {
+//       code: 44980,
+//       frais: 9,
+//     },
+//     {
+//       code: 44204,
+//       frais: 9,
+//     },
+//     {
+//       code: 44094,
+//       frais: 9,
+//     },
+//     {
+//       code: 44109,
+//       frais: 9,
+//     },
+//     {
+//       code: 44018,
+//       frais: 9,
+//     },
+//     {
+//       code: 44047,
+//       frais: 9,
+//     },
+//     {
+//       code: 44109,
+//       frais: 9,
+//     },
+//     {
+//       code: 44172,
+//       frais: 9,
+//     },
+//     {
+//       code: 44190,
+//       frais: 9,
+//     },
+//     {
+//       code: 44114,
+//       frais: 9,
+//     },
+//     {
+//       code: 44143,
+//       frais: 9,
+//     },
+//     {
+//       code: 44109,
+//       frais: 9,
+//     },
+//     {
+//       code: 44074,
+//       frais: 9,
+//     },
+//     {
+//       code: 44026,
+//       frais: 9,
+//     },
+//     {
+//       code: 44215,
+//       frais: 9,
+//     },
+//     {
+//       code: 44420,
+//       frais: 4,
+//     },
+//     {
+//       code: 44350,
+//       frais: 4,
+//     },
+//     {
+//       code: 44500,
+//       frais: 4,
+//     },
+//     {
+//       code: 44740,
+//       frais: 4,
+//     },
+//     {
+//       code: 44510,
+//       frais: 4,
+//     },
+//     {
+//       code: 44117,
+//       frais: 4,
+//     },
+//     {
+//       code: 44410,
+//       frais: 4,
+//     },
+//     {
+//       code: 44420,
+//       frais: 4,
+//     },
+//     {
+//       code: 44490,
+//       frais: 4,
+//     },
+//     {
+//       code: 44600,
+//       frais: 4,
+//     },
+//     {
+//       code: 44380,
+//       frais: 4,
+//     },
+//     {
+//       code: 44570,
+//       frais: 4,
+//     },
+//   ];
+
+//   let index = codesPostauxTab.findIndex(
+//     (element) => element.code == codePostal
+//   );
+
+//   if (index !== -1) {
+//     frais = codesPostauxTab[index].frais;
+//   } else {
+//     if (nbArticlePanier <= 6) {
+//       frais = 10;
+//     } else if (nbArticlePanier >= 7 && nbArticlePanier <= 12) {
+//       frais = 15;
+//     } else if (nbArticlePanier >= 13 && nbArticlePanier <= 18) {
+//       frais = 20;
+//     } else {
+//       frais = 25;
+//     }
+//   }
+//   return frais;
+// }
+// }

@@ -184,6 +184,17 @@ span {
   font-size: 22px;
 }
 
-strong {
+.strongInfo {
   border-bottom-style: solid;
+}
+
+h3,
+h5 {
+  font-family: "BAHNSCHRIFT1", "AutumnSunrise", "arial", "sans-serif";
+  margin-bottom: 4%;
+}
+
+#titleReglement {
+  font-family: "BAHNSCHRIFT1", "AutumnSunrise", "arial", "sans-serif";
+  color: #651321;
 }

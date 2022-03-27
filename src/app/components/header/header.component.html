@@ -151,6 +151,11 @@
             Se déconnecter
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" style="cursor: pointer" [routerLink]="['/faq']">
+            FAQ
+          </a>
+        </li>
         <li
           class="nav-item"
           *ngIf="isAuth == true && userEnCours && userEnCours.role == 'admin'"
