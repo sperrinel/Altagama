@@ -99,6 +99,8 @@ export class ProduitsComponent implements OnInit {
 
   //Récupère l'id du produit grâce au btn activation de la modal de l'HTML et le donne à la modal via un eventEmitter
   editProduct(index) {
+    console.log(index);
+
     this.produitsService.getSingleProduit(index).then((produit: Produits) => {
       this.produit = produit;
       this.copieProduit = produit;

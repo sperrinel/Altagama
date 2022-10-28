@@ -46,6 +46,7 @@ import { CodesPromoComponent } from './admin/codes-promo/codes-promo.component';
 import { DetailCodeComponent } from './admin/codes-promo/detail-code/detail-code.component';
 import { CheckoutComponent } from './components/commandes/checkout/checkout.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { OffresParticulieresComponent } from './components/boutique/offres-particulieres/offres-particulieres.component';
 const appRoutes: Routes = [
   { path: 'accueil', component: AccueilComponent },
   { path: 'add', canActivate: [AuthGuard], component: AddProduitComponent },
@@ -70,9 +71,10 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'produits', component: ProduitsComponent },
   { path: 'checkout', component: CheckoutComponent },
-  { path: 'faq', component: FaqComponent },
+  // { path: 'faq', component: FaqComponent },
   { path: 'mentions-legales', component: MentionsLegalesComponent },
   { path: 'mon-compte', component: MonCompteComponent },
+  { path: 'offresParticulieres', component: OffresParticulieresComponent },
   {
     path: 'admin-systeme-Altagama',
     canActivate: [AuthGuard],
@@ -115,6 +117,7 @@ const appRoutes: Routes = [
     DetailCodeComponent,
     CheckoutComponent,
     FaqComponent,
+    OffresParticulieresComponent,
   ],
   imports: [
     BrowserModule,

@@ -96,6 +96,7 @@
             >
             <li *ngFor="let categorie of categories">
               <a
+                *ngIf="categorie.idCategory != 3"
                 class="dropdown-item white"
                 [routerLink]="['/categorie', categorie.idCategory]"
                 (click)="activeClass(6)"
@@ -105,8 +106,17 @@
             </li>
           </ul>
         </li>
+        <!-- <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/offresParticulieres"
+            (click)="activeClass(8)"
+          >
+            Offres particulières
+          </a>
+        </li> -->
         <li class="nav-item" *ngIf="isAuth == false">
-          <a class="nav-link" routerLink="/login" (click)="activeClass(8)">
+          <a class="nav-link" routerLink="/login" (click)="activeClass(9)">
             Se connecter
           </a>
         </li>
@@ -116,7 +126,7 @@
             class="nav-link"
             routerLink="/register"
             *ngIf="isAuth == false"
-            (click)="activeClass(9)"
+            (click)="activeClass(10)"
           >
             Créer un compte
           </a>
@@ -136,7 +146,7 @@
             class="nav-link"
             routerLink="/mon-compte"
             style="cursor: pointer"
-            (click)="activeClass(12)"
+            (click)="activeClass(11)"
           >
             Mon compte
           </a>
@@ -146,16 +156,16 @@
             class="nav-link"
             (click)="logout()"
             style="cursor: pointer"
-            (click)="activeClass(13)"
+            (click)="activeClass(12)"
           >
             Se déconnecter
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" style="cursor: pointer" [routerLink]="['/faq']">
             FAQ
           </a>
-        </li>
+        </li> -->
         <li
           class="nav-item"
           *ngIf="isAuth == true && userEnCours && userEnCours.role == 'admin'"
@@ -164,7 +174,7 @@
             [routerLink]="['/admin-systeme-Altagama']"
             class="nav-link"
             style="cursor: pointer"
-            (click)="activeClass(14)"
+            (click)="activeClass(13)"
           >
             admin
           </a>

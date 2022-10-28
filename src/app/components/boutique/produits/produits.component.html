@@ -54,9 +54,12 @@
       </div>
       <div class="row">
         <div class="col-md-4" *ngFor="let produit of produits; let i = index">
-          <div>
+          <div *ngIf="produit.categorie != 3">
             <div
-              *ngIf="userEmail && userEmail == adminMail"
+              *ngIf="
+                (userEmail && userEmail == adminMail) ||
+                (userEmail && userEmail == 's.perrinel@orange.fr')
+              "
               style="text-align: right"
             >
               <button
